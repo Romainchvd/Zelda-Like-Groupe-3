@@ -11,7 +11,7 @@ void Player::draw(RenderWindow& window) {
 }
 
 void Player::loadTexture() {
-	if (!TexturePlayer.loadFromFile("Mettez Le Chemin D'acces"))
+	if (!TexturePlayer.loadFromFile("Assets/Player/player.png"))
 	{
 		cout << "faire le try cash ici je pense";
 	}

@@ -1,18 +1,19 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <sstream>
 #include <vector>
 #include <iostream>
+#include "Renderer.h"
+#include "player.h"
 
 using namespace std;
 using namespace sf;
 
 class Game {
 private:
-	RenderWindow window;
-	Event event;
+	
 public:
+	Player player;
 	Game();
-	void run();
+	Renderer renderer;
 };
