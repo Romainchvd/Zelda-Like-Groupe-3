@@ -1,6 +1,4 @@
 #include "Player.h"
-#include <iostream>
-#include <SFML/Graphics.hpp>
 using namespace std;
 using namespace sf;
 
@@ -20,4 +18,11 @@ void Player::loadTexture() {
 	sprite.setPosition(sprite.getPosition());
 	sprite.setTexture(TexturePlayer);
 	sprite.setScale(Vector2f(1, 1));
+}
+
+void Player::Mouvement() {
+	if (Keyboard::isKeyPressed(Keyboard::Z))
+	{
+		sprite.move(Vector2f(1.0f, 1.0f);
+	}
 }

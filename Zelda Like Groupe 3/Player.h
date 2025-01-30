@@ -1,7 +1,6 @@
 #pragma once
 #ifndef PLAYER_H
 #define PLAYER_H
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Entity.h"
 using namespace std;
@@ -11,6 +10,7 @@ class Player :public Entity {
 private:
 	Texture TexturePlayer;
 public:
+	Sprite sprite;
 	Vector2i position;
 	int speed;
 	
@@ -18,5 +18,6 @@ public:
 	void update(float deltatime) override;
 	void draw(sf::RenderWindow& window) override;
 	void loadTexture();
+	void Mouvement();
 };
 #endif
