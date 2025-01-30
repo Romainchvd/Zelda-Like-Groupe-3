@@ -19,5 +19,6 @@ public:
 	void draw(sf::RenderWindow& window) override;
 	void loadTexture();
 	void Mouvement();
+	void Colision();
 };
 #endif

@@ -38,3 +38,21 @@ void Player::Mouvement() {
 		sprite.move(Vector2f(1.0f, 0.0f));
 	}
 }
+
+void Player::Colision() {
+	if (sprite.getPosition().x + sprite.getScale().x >= 1920)
+	{
+		sprite.move(Vector2f(-1.0f, 0.0f));
+	}
+	if (sprite.getPosition().x <= 0)
+	{
+		sprite.move(Vector2f(1.0f, 0.0f));
+	}
+	if (sprite.getPosition().y + sprite.getScale().y >= 1080)
+	{
+		sprite.move(Vector2f(0.0f, -1.0f));
+	}if (sprite.getPosition().y <= 0)
+	{
+		sprite.move(Vector2f(0.0f, 1.0f));
+	}
+}
