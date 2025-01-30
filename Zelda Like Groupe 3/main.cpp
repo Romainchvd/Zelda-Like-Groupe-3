@@ -7,5 +7,5 @@ using namespace sf;
 
 int main()
 {
-
+	
 }
