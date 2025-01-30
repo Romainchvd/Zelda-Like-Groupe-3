@@ -1,21 +1,22 @@
 #include "renderer.h"
 
-Renderer::Renderer() : window(sf::VideoMode(1920, 1080), "Zelda Like") {
+Renderer::Renderer() : event(), window(sf::VideoMode(1920, 1080), "Zelda Like") {
 	window.setFramerateLimit(144);
 }
 
-void Renderer::run() {
+void Renderer::Draw(Player& player) {
+	player.draw(window);
+	window.clear();
+	window.display();
+}
+
+void Renderer::run(Game& game) {
 	while (window.isOpen()) {
-		draw();
+		Draw(game.player);
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::Closed)
 				window.close();
 		}
 	}
-}
-
-void Renderer::draw() {
-	window.clear();
-	window.display();
 }

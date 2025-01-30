@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Player.h"
+#include "game.h"
 
 using namespace std;
 using namespace sf;
@@ -11,6 +13,6 @@ public:
 	Event event;
 	RenderWindow window;
 	Renderer();
-	void run();
-	void draw();
+	void run(Game& game);
+	void Draw(Player& player);
 };

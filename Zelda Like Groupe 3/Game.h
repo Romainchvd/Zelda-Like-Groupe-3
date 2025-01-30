@@ -4,13 +4,16 @@
 #include <vector>
 #include <iostream>
 #include "Renderer.h"
+#include "player.h"
 
 using namespace std;
 using namespace sf;
 
 class Game {
 private:
+	
 public:
+	Player player;
 	Game();
 	Renderer renderer;
 };

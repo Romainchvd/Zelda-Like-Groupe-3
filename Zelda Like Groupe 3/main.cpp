@@ -10,6 +10,6 @@ using namespace std;
 int main()
 {
 	Game game;
-	game.renderer.run();
+	game.renderer.run(game);
 	return 0;
 }
