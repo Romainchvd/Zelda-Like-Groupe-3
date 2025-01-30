@@ -1,10 +1,6 @@
 #pragma once
-#ifndef GAME_H
-#define GAME_H
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <SFML/Window.hpp>
 #include <sstream>
 #include <vector>
 #include <iostream>
@@ -15,9 +11,8 @@ using namespace sf;
 class Game {
 private:
 	RenderWindow window;
+	Event event;
 public:
 	Game();
 	void run();
 };
-
-#endif
