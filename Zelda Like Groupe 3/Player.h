@@ -1,27 +1,23 @@
 #pragma once
 #ifndef PLAYER_H
 #define PLAYER_H
-
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include <iostream>
-
-using namespace sf;
+#include "Entity.h"
 using namespace std;
+using namespace sf;
 
-class Player {
-private :
-	static unique_ptr<Player>player;
-    Player(); 
+class Player :public Entity {
+private:
+	Texture TexturePlayer;
 public:
-    static unique_ptr<Player> & getInstance() {
-        if (!player) {
-            player = make_unique<Player>();
-        }
-        return player;
-    }
+	Sprite sprite;
+	Vector2i position;
+	int speed;
+	
+	Player(Vector2i p, int s);
+	void update(float deltatime) override;
+	void draw(sf::RenderWindow& window) override;
+	void loadTexture();
+	void Mouvement();
 };
-unique_ptr<Player> Player::player = nullptr;
-
-
 #endif
