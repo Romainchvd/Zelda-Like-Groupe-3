@@ -23,6 +23,18 @@ void Player::loadTexture() {
 void Player::Mouvement() {
 	if (Keyboard::isKeyPressed(Keyboard::Z))
 	{
-		sprite.move(Vector2f(1.0f, 1.0f);
+		sprite.move(Vector2f(0.0f, 1.0f));
+	}
+	if (Keyboard::isKeyPressed(Keyboard::Q))
+	{
+		sprite.move(Vector2f(-1.0f, 0.0f));
+	}
+	if (Keyboard::isKeyPressed(Keyboard::S))
+	{
+		sprite.move(Vector2f(0.0f, -1.0f));
+	}
+	if (Keyboard::isKeyPressed(Keyboard::D))
+	{
+		sprite.move(Vector2f(1.0f, 0.0f));
 	}
 }
