@@ -3,6 +3,7 @@
 #define PLAYER_H
 #include <iostream>
 #include "Entity.h"
+
 using namespace std;
 using namespace sf;
 
