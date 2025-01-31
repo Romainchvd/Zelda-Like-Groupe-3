@@ -15,9 +15,13 @@ void Renderer::Draw(Player& player, PropManager& propManager) {
 
 void Renderer::run(Player& player, PropManager& propManager) {
 	player.loadTexture();
+	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
+	camera.setSize(Vector2f(1920.f/2, 1080.f/2));
 	while (window.isOpen()) {
 		player.Mouvement();
 		Draw(player, propManager);
+		camera.setCenter(player.sprite.getPosition());
+		window.setView(camera);
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::Closed)

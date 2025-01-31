@@ -17,25 +17,26 @@ void Player::loadTexture() {
 	}
 	sprite.setPosition(sprite.getPosition());
 	sprite.setTexture(TexturePlayer);
+	sprite.setOrigin(28, 112);
 	sprite.setScale(Vector2f(1, 1));
 }
 
 void Player::Mouvement() {
 	if (Keyboard::isKeyPressed(Keyboard::Z))
 	{
-		sprite.move(Vector2f(0.0f, -1.0f));
+		sprite.move(Vector2f(0.0f, -1.5f));
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Q))
 	{
-		sprite.move(Vector2f(-1.0f, 0.0f));
+		sprite.move(Vector2f(-1.5f, 0.0f));
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S))
 	{
-		sprite.move(Vector2f(0.0f, 1.0f));
+		sprite.move(Vector2f(0.0f, 1.5f));
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
-		sprite.move(Vector2f(1.0f, 0.0f));
+		sprite.move(Vector2f(1.5f, 0.0f));
 	}
 }
 
@@ -55,4 +56,8 @@ void Player::Colision() {
 	{
 		sprite.move(Vector2f(0.0f, 1.0f));
 	}
+}
+
+Vector2f Player::getPosition() const {
+	return position;
 }

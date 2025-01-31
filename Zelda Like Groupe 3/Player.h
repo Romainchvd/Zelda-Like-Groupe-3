@@ -12,7 +12,7 @@ private:
 	Texture TexturePlayer;
 public:
 	Sprite sprite;
-	Vector2i position;
+	Vector2f position;
 	int speed;
 	
 	Player(Vector2i p, int s);
@@ -21,5 +21,6 @@ public:
 	void loadTexture();
 	void Mouvement();
 	void Colision();
+	Vector2f getPosition() const;
 };
 #endif
