@@ -11,9 +11,6 @@ using namespace sf;
 
 class Game {
 private:
-	
 public:
-	Player player;
 	Game();
-	Renderer renderer;
 };

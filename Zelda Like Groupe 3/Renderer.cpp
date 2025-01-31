@@ -5,14 +5,17 @@ Renderer::Renderer() : event(), window(sf::VideoMode(1920, 1080), "Zelda Like") 
 }
 
 void Renderer::Draw(Player& player) {
-	player.draw(window);
 	window.clear();
+	player.draw(window);
+	cout << "player est draw" << endl;
 	window.display();
 }
 
-void Renderer::run(Game& game) {
+void Renderer::run(Player& player) {
+	player.loadTexture();
 	while (window.isOpen()) {
-		Draw(game.player);
+		player.Mouvement();
+		Draw(player);
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::Closed)
