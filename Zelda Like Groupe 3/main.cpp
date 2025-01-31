@@ -11,6 +11,7 @@ Player player1(Vector2i(100, 100), 10);
 int main()
 {
 	Game game;
+	player1.loadTexture();
 	game.propManager.readFile();
 	Renderer renderer;
 	renderer.run(player1, game.propManager);
