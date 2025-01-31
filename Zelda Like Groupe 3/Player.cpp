@@ -2,15 +2,31 @@
 using namespace std;
 using namespace sf;
 
-Player::Player(Vector2i p, int s) : position(p), speed(s) {}
+Player::Player(Vector2i p, int s) : position(p), speed(s), currentFrame(1), animationSpeed(2.0f), elapsedTime(0.0f), isMoving(false), isMovingLeft(false), isMovingRight(false) {
+}
 
-void Player::update(float deltatime) {}
+void Player::update(float deltatime) {
+	elapsedTime += deltatime;
+		if (elapsedTime >= animationSpeed) {
+			elapsedTime = 0.0f;
+			currentFrame++;
+			currentFrame %= 4;
+			sprite.setTexture(playerRunTexture[currentFrame]);
+			sprite.setScale(2.2f, 2.2f);
+			sprite.setOrigin(16, 16);
+		}
+}
 
 void Player::draw(RenderWindow& window) {
 	window.draw(sprite);
 }
 
 void Player::loadTexture() {
+	for (int i = 0; i < 4; ++i) {
+		if (!playerRunTexture[i].loadFromFile("Assets/Player/idle/idle" + to_string(i) + ".png")) {
+			cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
+		}
+	}
 	if (!TexturePlayer.loadFromFile("Assets/Player/player.png"))
 	{
 		cout << "faire le try cash ici je pense";

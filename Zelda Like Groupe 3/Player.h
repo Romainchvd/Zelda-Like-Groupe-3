@@ -9,7 +9,17 @@ using namespace sf;
 
 class Player :public Entity {
 private:
+	bool isMoving;
+	bool isMovingLeft;
+	bool isMovingRight;
+	bool isMovingDown;
+	bool isMovingUp;
+	float animationSpeed = 0.1f;
+	float elapsedTime;
+	int currentFrame = 0;
 	Texture TexturePlayer;
+	Texture playerRunTexture[4];
+	Sprite playersprite;
 public:
 	Sprite sprite;
 	Vector2f position;
