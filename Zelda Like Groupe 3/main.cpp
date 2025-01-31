@@ -6,7 +6,7 @@ using namespace std;
 
 
 
-Player player1(Vector2i(100, 100), 10);
+Player player1(10);
 
 int main()
 {

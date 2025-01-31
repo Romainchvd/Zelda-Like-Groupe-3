@@ -18,21 +18,27 @@ private:
 	float elapsedTime;
 	int currentFrame = 0;
 	int currentFrame2 = 0;
+	int currentFrame3 = 0;
+	int currentFrame4 = 0;
 	Texture TexturePlayer;
 	Texture playerRunTexture[6];
+	Texture playerRunUpTexture[4];
+	Texture playerRunDownTexture[4];
 	Texture playerIdleTexture[4];
 	Sprite playersprite;
+	Vector2f position;
 public:
 	Sprite sprite;
-	Vector2f position;
-	int speed;
 	
-	Player(Vector2i p, int s);
+	int speed;
+	FloatRect Phitbox;
+	Player(int s);
 	void update(float deltatime) override;
 	void draw(sf::RenderWindow& window) override;
 	void loadTexture();
 	void Mouvement();
 	void Colision();
 	Vector2f getPosition() const;
+	FloatRect getHitbox() const;
 };
 #endif

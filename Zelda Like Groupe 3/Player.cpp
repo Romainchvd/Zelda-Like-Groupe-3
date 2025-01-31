@@ -2,7 +2,7 @@
 using namespace std;
 using namespace sf;
 
-Player::Player(Vector2i p, int s) : position(p), speed(s), currentFrame(1), currentFrame2(1), animationSpeed(15.0f), elapsedTime(0.0f), isMoving(false), isMovingLeft(false), isMovingRight(false) {
+Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFrame3(1), currentFrame4(1), animationSpeed(15.0f), elapsedTime(0.0f), isMoving(false), isMovingLeft(false), isMovingRight(false) {
 }
 
 void Player::update(float deltatime) {
@@ -23,17 +23,37 @@ void Player::update(float deltatime) {
 	     }
 	}
 	else {
-		if (elapsedTime >= animationSpeed) {
-			elapsedTime = 0.0f;
-			currentFrame2++;
-			currentFrame2 %= 6;
-			sprite.setTexture(playerRunTexture[currentFrame2]);
-			sprite.setOrigin(16, 16);
-			if (isMovingRight) {
-				sprite.setScale(2.2f, 2.2f);
+		if (isMovingRight || isMovingLeft) {
+			if (elapsedTime >= animationSpeed) {
+				elapsedTime = 0.0f;
+				currentFrame2++;
+				currentFrame2 %= 6;
+				sprite.setTexture(playerRunTexture[currentFrame2]);
+				sprite.setOrigin(16, 16);
+				if (isMovingRight) {
+					sprite.setScale(2.2f, 2.2f);
+				}
+				if (isMovingLeft) {
+					sprite.setScale(-2.2f, 2.2f);
+				}
 			}
-			if (isMovingLeft) {
-				sprite.setScale(-2.2f, 2.2f);
+		}
+		else if (isMovingUp) {
+			if (elapsedTime >= animationSpeed) {
+				elapsedTime = 0.0f;
+				currentFrame3++;
+				currentFrame3 %= 4;
+				sprite.setTexture(playerRunUpTexture[currentFrame3]);
+				sprite.setOrigin(16, 16);
+			}
+		}
+		else if (isMovingDown) {
+			if (elapsedTime >= animationSpeed) {
+				elapsedTime = 0.0f;
+				currentFrame4++;
+				currentFrame4 %= 4;
+				sprite.setTexture(playerRunDownTexture[currentFrame4]);
+				sprite.setOrigin(16, 16);
 			}
 		}
 	}
@@ -41,6 +61,10 @@ void Player::update(float deltatime) {
 
 void Player::draw(RenderWindow& window) {
 	window.draw(sprite);
+	RectangleShape hitboxShape(sf::Vector2f(Phitbox.width, Phitbox.height));
+	hitboxShape.setPosition(Phitbox.left, Phitbox.top);
+	hitboxShape.setFillColor(sf::Color(255, 0, 0, 128));
+	window.draw(hitboxShape);
 }
 
 void Player::loadTexture() {
@@ -51,6 +75,16 @@ void Player::loadTexture() {
 	}
 	for (int i = 0; i < 4; ++i) {
 		if (!playerIdleTexture[i].loadFromFile("Assets/Player/idle/idle" + to_string(i) + ".png")) {
+			cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
+		}
+	}
+	for (int i = 0; i < 4; ++i) {
+		if (!playerRunUpTexture[i].loadFromFile("Assets/Player/runup/runup" + to_string(i) + ".png")) {
+			cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
+		}
+	}
+	for (int i = 0; i < 4; ++i) {
+		if (!playerRunDownTexture[i].loadFromFile("Assets/Player/rundown/rundown" + to_string(i) + ".png")) {
 			cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
 		}
 	}
@@ -66,15 +100,34 @@ void Player::loadTexture() {
 }
 
 void Player::Mouvement() {
-	Vector2f oldPosition = position;
 	isMoving = false;
-	//isMovingUp = false;
-	//isMovingDown = false;
+	isMovingUp = false;
+	isMovingDown = false;
+	isMovingRight = false;
+	isMovingLeft = false;
 	if (Keyboard::isKeyPressed(Keyboard::Z))
 	{
 		isMoving = true;
 		isMovingUp = true;
 		sprite.move(Vector2f(0.0f, -1.5f));
+		position.y -= 1.5f;
+		Phitbox = sprite.getGlobalBounds();
+		Phitbox.width = 100.0f;
+		Phitbox.height = 70.0f;
+		Phitbox.left = position.x + 4558;
+		Phitbox.top = position.y + 2240;
+	}
+	if (Keyboard::isKeyPressed(Keyboard::S))
+	{
+		isMoving = true;
+		isMovingDown = true;
+		sprite.move(Vector2f(0.0f, 1.5f));
+		position.y += 1.5f;
+		Phitbox = sprite.getGlobalBounds();
+		Phitbox.width = 100.0f;
+		Phitbox.height = 70.0f;
+		Phitbox.left = position.x + 4558;
+		Phitbox.top = position.y + 2310;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Q))
 	{
@@ -82,12 +135,12 @@ void Player::Mouvement() {
 		isMovingRight = false;
 		isMovingLeft = true;
 		sprite.move(Vector2f(-1.5f, 0.0f));
-	}
-	if (Keyboard::isKeyPressed(Keyboard::S))
-	{
-		isMoving = true;
-		isMovingDown = true;
-		sprite.move(Vector2f(0.0f, 1.5f));
+		position.x -= 1.5f;
+		Phitbox = sprite.getGlobalBounds();
+		Phitbox.width = 70.0f;
+		Phitbox.height = 100.0f;
+		Phitbox.left = position.x + 4546;
+		Phitbox.top = position.y + 2260;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
@@ -95,8 +148,13 @@ void Player::Mouvement() {
 		isMovingLeft = false;
 		isMovingRight = true;
 		sprite.move(Vector2f(1.5f, 0.0f));
+		position.x += 1.5f;
+		Phitbox = sprite.getGlobalBounds();
+		Phitbox.width = 70.0f;
+		Phitbox.height = 100.0f;
+		Phitbox.left = position.x + 4600;
+		Phitbox.top = position.y + 2260;
 	}
-	
 }
 
 void Player::Colision() {
@@ -119,4 +177,8 @@ void Player::Colision() {
 
 Vector2f Player::getPosition() const {
 	return position;
+}
+
+FloatRect Player::getHitbox() const {
+	return Phitbox;
 }
