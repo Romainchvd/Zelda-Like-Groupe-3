@@ -19,6 +19,7 @@ void Renderer::run(Player& player, PropManager& propManager) {
 	camera.setSize(Vector2f(1920.f/2, 1080.f/2));
 	while (window.isOpen()) {
 		player.Mouvement();
+		player.update(0.1);
 		Draw(player, propManager);
 		camera.setCenter(player.sprite.getPosition());
 		window.setView(camera);
