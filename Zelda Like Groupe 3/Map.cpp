@@ -244,7 +244,7 @@ void PropManager::readFile()
 			else if (c == 'K')
 				creerProp(GUARD_HOUSE_DL, position.x, position.y, SECOND_LAYER);
 			else if (c == 'L')
-				creerProp(GUARD_HOUSE_DR, position.x, position.y, SECOND_LAYER);
+				creerProp(GUARD_HOUSE_DR, position.x, position.y, SECOND_LAYER);//24 //48
 
 			position.x += 96;
 		}
