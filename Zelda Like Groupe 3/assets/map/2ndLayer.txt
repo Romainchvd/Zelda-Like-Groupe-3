@@ -1,7 +1,10 @@
- HHHHHHH    
-JGGGGGGGI 
-J0/1234/I
-J6//////I
-J///////I   
-J//555//I
+ ////////H///////////
+/////////GH//IJCDH/H/
+/0/1234//HGCDKLEFG/G/
+/6///////GHEFHHHHH/H/
+/////////HG//GGGGG/G/
+///555///G//////////
+/////////H/H/H/H/H/H
+/////////GHGHGHGHGHG
+//////////G/G/G/G/G/
 ;

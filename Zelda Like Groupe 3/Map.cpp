@@ -18,41 +18,29 @@ void Prop::setTexture()
 	case HOUSEUR:
 		if (!texture.loadFromFile("assets/houseUR.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
 		break;
-	case TOWERD:
-		if (!texture.loadFromFile("assets/towerD.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
+	case TOWER_BASE:
+		if (!texture.loadFromFile("assets/towerBase.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
 		break;
-	case TOWERUL:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
+	case TOWER_BOTTOM:
+		if (!texture.loadFromFile("assets/towerBottom.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
 		break;
 	case STONE:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
+		if (!texture.loadFromFile("assets/stone.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
 		break;
 	case HOUSEFLOOR:
 		if (!texture.loadFromFile("assets/woodenplanks.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
 		break;
 	case GRASS:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
+		if (!texture.loadFromFile("assets/grass.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
 		break;
-	case CWALLL:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
-		break;
-	case TOWER:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
-		break;
-	case TOWERUR:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
-		break;
-	case TOWERL:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
-		break;
-	case CWALLR:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
+	case TOWER_TOP:
+		if (!texture.loadFromFile("assets/towerTop.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
 		break;
 	case CWALLH:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
+		if (!texture.loadFromFile("assets/castleWallH.png")) cerr << "Erreur lors du chargement de la texture de mur de citadelle horizontal" << endl;
 		break;
-	case CWALLD:
-		if (!texture.loadFromFile("assets/towerU.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
+	case CWALLV:
+		if (!texture.loadFromFile("assets/castleWallV.png")) cerr << "Erreur lors du chargement de la texture de mur de citadelle vertical" << endl;
 		break;
 	case HOUSEWALL:
 		if (!texture.loadFromFile("assets/housewall.png")) cerr << "Erreur lors du chargement de la texture de mur de la maison" << endl;
@@ -86,6 +74,24 @@ void Prop::setTexture()
 		break;
 	case CARPET:
 		if (!texture.loadFromFile("assets/carpet.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
+	case TREE_TOP:
+		if (!texture.loadFromFile("assets/treeTop.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
+	case TREE_BOTTOM:
+		if (!texture.loadFromFile("assets/treeBottom.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
+	case GUARD_HOUSE_DL:
+		if (!texture.loadFromFile("assets/guardHouseDL.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
+	case GUARD_HOUSE_DR:
+		if (!texture.loadFromFile("assets/guardHouseDR.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
+	case GUARD_HOUSE_UL:
+		if (!texture.loadFromFile("assets/guardHouseUL.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
+	case GUARD_HOUSE_UR:
+		if (!texture.loadFromFile("assets/guardHouseUR.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
 		break;
 	default:
 		break;
@@ -161,36 +167,12 @@ void PropManager::readFile()
 		{
 			if (c == '0')
 				creerProp(HOUSEFLOOR, position.x, position.y, FIRST_LAYER);
-			else if (c == '1')
-				creerProp(HOUSEUL, position.x, position.y, FIRST_LAYER);
-			else if (c == '2')
-				creerProp(HOUSEUR, position.x, position.y, FIRST_LAYER);
-			else if (c == '3')
-				creerProp(HOUSEDL, position.x, position.y, FIRST_LAYER);
-			else if (c == '4')
-				creerProp(HOUSEDR, position.x, position.y, FIRST_LAYER);
+			//Attention espace vide disponible
 			else if (c == '5')
 				creerProp(GRASS, position.x, position.y, FIRST_LAYER);
 			else if (c == '6')
 				creerProp(STONE, position.x, position.y, FIRST_LAYER);
-			else if (c == '7')
-				creerProp(CWALLD, position.x, position.y, FIRST_LAYER);
-			else if (c == '8')
-				creerProp(CWALLR, position.x, position.y, FIRST_LAYER);
-			else if (c == '9')
-				creerProp(CWALLH, position.x, position.y, FIRST_LAYER);
-			else if (c == 'A')
-				creerProp(TOWERUL, position.x, position.y, FIRST_LAYER);
-			else if (c == 'B')
-				creerProp(TOWERUR, position.x, position.y, FIRST_LAYER);
-			else if (c == 'C')
-				creerProp(TOWER, position.x, position.y, FIRST_LAYER);
-			else if (c == 'D')
-				creerProp(TOWERD, position.x, position.y, FIRST_LAYER);
-			else if (c == 'E')
-				creerProp(CWALLD, position.x, position.y, FIRST_LAYER);
-			else if (c == 'F')
-				creerProp(CWALLH, position.x, position.y, FIRST_LAYER);
+			//Attention espace vide disponible
 			else if (c == 'G')
 				creerProp(HOUSEWALL, position.x, position.y, FIRST_LAYER);
 			else if (c == 'H')
@@ -221,7 +203,7 @@ void PropManager::readFile()
 		{
 			if (c == '0')
 				creerProp(BED_TOP, position.x, position.y, SECOND_LAYER);
-			else if(c == '1')
+			else if (c == '1')
 				creerProp(SINK, position.x, position.y, SECOND_LAYER);
 			else if (c == '2')
 				creerProp(COUNTER, position.x, position.y, SECOND_LAYER);
@@ -233,6 +215,36 @@ void PropManager::readFile()
 				creerProp(CARPET, position.x, position.y, SECOND_LAYER);
 			else if (c == '6')
 				creerProp(BED_BOTTOM, position.x, position.y, SECOND_LAYER);
+			else if (c == '7')
+				creerProp(TOWER_BOTTOM, position.x, position.y, SECOND_LAYER);
+			else if (c == '8')
+				creerProp(TOWER_BASE, position.x, position.y, SECOND_LAYER);
+			else if (c == '9')
+				creerProp(TOWER_TOP, position.x, position.y, SECOND_LAYER);
+			else if (c == 'A')
+				creerProp(CWALLH, position.x, position.y, SECOND_LAYER);
+			else if (c == 'B')
+				creerProp(CWALLV, position.x, position.y, SECOND_LAYER);
+			else if (c == 'C')
+				creerProp(HOUSEUL, position.x, position.y, SECOND_LAYER);
+			else if (c == 'D')
+				creerProp(HOUSEUR, position.x, position.y, SECOND_LAYER);
+			else if (c == 'E')
+				creerProp(HOUSEDL, position.x, position.y, SECOND_LAYER);
+			else if (c == 'F')
+				creerProp(HOUSEDR, position.x, position.y, SECOND_LAYER);
+			else if (c == 'G')
+				creerProp(TREE_BOTTOM, position.x, position.y, SECOND_LAYER);
+			else if (c == 'H')
+				creerProp(TREE_TOP, position.x, position.y, SECOND_LAYER);
+			else if (c == 'I')
+				creerProp(GUARD_HOUSE_UL, position.x, position.y, SECOND_LAYER);
+			else if (c == 'J')
+				creerProp(GUARD_HOUSE_UR, position.x, position.y, SECOND_LAYER);
+			else if (c == 'K')
+				creerProp(GUARD_HOUSE_DL, position.x, position.y, SECOND_LAYER);
+			else if (c == 'L')
+				creerProp(GUARD_HOUSE_DR, position.x, position.y, SECOND_LAYER);
 
 			position.x += 96;
 		}
