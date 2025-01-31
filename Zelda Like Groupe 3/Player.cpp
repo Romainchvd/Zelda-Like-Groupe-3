@@ -7,7 +7,7 @@ Player::Player(Vector2i p, int s) : position(p), speed(s), currentFrame(1), curr
 
 void Player::update(float deltatime) {
 	elapsedTime += deltatime;
-	if (isMoving) {
+	if (!isMoving) {
 		if (elapsedTime >= animationSpeed) {
 			elapsedTime = 0.0f;
 			currentFrame++;
@@ -21,7 +21,9 @@ void Player::update(float deltatime) {
 				sprite.setScale(-2.2f, 2.2f);
 			}
 	     }
-		else {
+	}
+	else {
+		if (elapsedTime >= animationSpeed) {
 			elapsedTime = 0.0f;
 			currentFrame2++;
 			currentFrame2 %= 6;
@@ -65,31 +67,36 @@ void Player::loadTexture() {
 
 void Player::Mouvement() {
 	Vector2f oldPosition = position;
+	isMoving = false;
 	//isMovingUp = false;
 	//isMovingDown = false;
 	if (Keyboard::isKeyPressed(Keyboard::Z))
 	{
+		isMoving = true;
 		isMovingUp = true;
 		sprite.move(Vector2f(0.0f, -1.5f));
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Q))
 	{
+		isMoving = true;
 		isMovingRight = false;
 		isMovingLeft = true;
 		sprite.move(Vector2f(-1.5f, 0.0f));
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S))
 	{
+		isMoving = true;
 		isMovingDown = true;
 		sprite.move(Vector2f(0.0f, 1.5f));
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
+		isMoving = true;
 		isMovingLeft = false;
 		isMovingRight = true;
 		sprite.move(Vector2f(1.5f, 0.0f));
 	}
-	isMoving = (position != oldPosition);
+	
 }
 
 void Player::Colision() {
