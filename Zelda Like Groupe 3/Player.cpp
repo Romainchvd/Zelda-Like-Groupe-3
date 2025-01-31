@@ -15,7 +15,7 @@ void Player::loadTexture() {
 	{
 		cout << "faire le try cash ici je pense";
 	}
-	sprite.setPosition(sprite.getPosition());
+	sprite.setPosition(250, 200);
 	sprite.setTexture(TexturePlayer);
 	sprite.setOrigin(28, 112);
 	sprite.setScale(Vector2f(1, 1));
