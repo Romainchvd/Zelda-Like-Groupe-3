@@ -1,5 +1,5 @@
 #include "Game.h"
-Renderer::Renderer() : event(), window(sf::VideoMode(1920, 1080), "Zelda Like") {
+Renderer::Renderer() : event(), window(sf::VideoMode(1920, 1080), "Zelda Like", Style::Fullscreen) {
 	window.setFramerateLimit(144);
 }
 
@@ -26,6 +26,11 @@ void Renderer::run(Player& player, PropManager& propManager) {
 		{
 			if (event.type == Event::Closed)
 				window.close();
+			if (event.type == Event::KeyPressed)
+			{
+				if (event.key.code == Keyboard::Enter)
+					window.close();
+			}
 		}
 	}
 }
