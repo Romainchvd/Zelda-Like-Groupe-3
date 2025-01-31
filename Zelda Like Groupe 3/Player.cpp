@@ -2,19 +2,39 @@
 using namespace std;
 using namespace sf;
 
-Player::Player(Vector2i p, int s) : position(p), speed(s), currentFrame(1), animationSpeed(2.0f), elapsedTime(0.0f), isMoving(false), isMovingLeft(false), isMovingRight(false) {
+Player::Player(Vector2i p, int s) : position(p), speed(s), currentFrame(1), currentFrame2(1), animationSpeed(15.0f), elapsedTime(0.0f), isMoving(false), isMovingLeft(false), isMovingRight(false) {
 }
 
 void Player::update(float deltatime) {
 	elapsedTime += deltatime;
+	if (isMoving) {
 		if (elapsedTime >= animationSpeed) {
 			elapsedTime = 0.0f;
 			currentFrame++;
 			currentFrame %= 4;
-			sprite.setTexture(playerRunTexture[currentFrame]);
-			sprite.setScale(2.2f, 2.2f);
+			sprite.setTexture(playerIdleTexture[currentFrame]);
 			sprite.setOrigin(16, 16);
+			if (isMovingRight) {
+				sprite.setScale(2.2f, 2.2f);
+			}
+			if (isMovingLeft) {
+				sprite.setScale(-2.2f, 2.2f);
+			}
+	     }
+		else {
+			elapsedTime = 0.0f;
+			currentFrame2++;
+			currentFrame2 %= 6;
+			sprite.setTexture(playerRunTexture[currentFrame2]);
+			sprite.setOrigin(16, 16);
+			if (isMovingRight) {
+				sprite.setScale(2.2f, 2.2f);
+			}
+			if (isMovingLeft) {
+				sprite.setScale(-2.2f, 2.2f);
+			}
 		}
+	}
 }
 
 void Player::draw(RenderWindow& window) {
@@ -22,8 +42,13 @@ void Player::draw(RenderWindow& window) {
 }
 
 void Player::loadTexture() {
+	for (int i = 0; i < 6; ++i) {
+		if (!playerRunTexture[i].loadFromFile("Assets/Player/run/run" + to_string(i) + ".png")) {
+			cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
+		}
+	}
 	for (int i = 0; i < 4; ++i) {
-		if (!playerRunTexture[i].loadFromFile("Assets/Player/idle/idle" + to_string(i) + ".png")) {
+		if (!playerIdleTexture[i].loadFromFile("Assets/Player/idle/idle" + to_string(i) + ".png")) {
 			cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
 		}
 	}
@@ -31,30 +56,40 @@ void Player::loadTexture() {
 	{
 		cout << "faire le try cash ici je pense";
 	}
-	sprite.setPosition(250, 200); //Maison
+//	sprite.setPosition(250, 200); //Maison
 	sprite.setPosition(48 * 96 ,24 * 96); // Exterieur
-	sprite.setTexture(TexturePlayer);
+	//sprite.setTexture(TexturePlayer);
 	sprite.setOrigin(28, 112);
-	sprite.setScale(Vector2f(1, 1));
+	sprite.setScale(Vector2f(2.2f, 2.2f));
 }
 
 void Player::Mouvement() {
+	Vector2f oldPosition = position;
+	//isMovingUp = false;
+	//isMovingDown = false;
 	if (Keyboard::isKeyPressed(Keyboard::Z))
 	{
+		isMovingUp = true;
 		sprite.move(Vector2f(0.0f, -1.5f));
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Q))
 	{
+		isMovingRight = false;
+		isMovingLeft = true;
 		sprite.move(Vector2f(-1.5f, 0.0f));
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S))
 	{
+		isMovingDown = true;
 		sprite.move(Vector2f(0.0f, 1.5f));
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
+		isMovingLeft = false;
+		isMovingRight = true;
 		sprite.move(Vector2f(1.5f, 0.0f));
 	}
+	isMoving = (position != oldPosition);
 }
 
 void Player::Colision() {

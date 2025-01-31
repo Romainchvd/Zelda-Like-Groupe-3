@@ -17,8 +17,10 @@ private:
 	float animationSpeed = 0.1f;
 	float elapsedTime;
 	int currentFrame = 0;
+	int currentFrame2 = 0;
 	Texture TexturePlayer;
-	Texture playerRunTexture[4];
+	Texture playerRunTexture[6];
+	Texture playerIdleTexture[4];
 	Sprite playersprite;
 public:
 	Sprite sprite;
