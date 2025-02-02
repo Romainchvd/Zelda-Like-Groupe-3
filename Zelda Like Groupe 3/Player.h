@@ -3,6 +3,7 @@
 #define PLAYER_H
 #include <iostream>
 #include "Entity.h"
+#include "testPlayer2.h"
 
 using namespace std;
 using namespace sf;
@@ -38,7 +39,7 @@ public:
 	void draw(sf::RenderWindow& window) override;
 	void loadTexture();
 	void Mouvement();
-	void Colision();
+	/*void Colision(playTest& playTest);*/
 	Vector2f getPosition() const;
 	FloatRect getHitbox() const;
 };
