@@ -31,6 +31,7 @@ public:
 	Sprite sprite;
 	
 	int speed;
+	int keyCounter = 0;
 	FloatRect Phitbox;
 	Player(int s);
 	void update(float deltatime) override;

@@ -99,6 +99,12 @@ void Prop::setTexture()
 	case SPIKES_T:
 		if (!texture.loadFromFile("assets/spikesT.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
 		break;
+	case DOOR:
+		if (!texture.loadFromFile("assets/door.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+		break;
+	case KEY:
+		if (!texture.loadFromFile("assets/key.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+		break;
 	default:
 		break;
 	}
@@ -255,6 +261,10 @@ void PropManager::readFile()
 				creerProp(SPIKES_T, position.x, position.y, SECOND_LAYER);
 			else if (c == 'N')
 				creerProp(SPIKES_F, position.x, position.y, SECOND_LAYER);
+			else if (c == 'O')
+				creerProp(DOOR, position.x, position.y, SECOND_LAYER);
+			else if (c == 'P')
+				creerProp(KEY, position.x, position.y, SECOND_LAYER);
 
 			position.x += 96;
 		}
@@ -303,5 +313,22 @@ void Spikes::checkInterruptor(Player& player)
 				interruptorCanChangeState = false;
 			}
 		}
+	}
+}
+void Prop::addKey(Player& player, PropManager& manager)
+{
+	if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == KEY)
+	{
+		player.keyCounter++;
+		manager.detruireProp(this);
+	}
+}
+
+void Prop::useKey(Player& player, PropManager& manager)
+{
+	if (player.keyCounter > 0 && player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == DOOR)
+	{
+		player.keyCounter--;
+		manager.detruireProp(this);
 	}
 }
