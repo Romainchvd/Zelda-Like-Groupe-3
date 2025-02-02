@@ -93,6 +93,12 @@ void Prop::setTexture()
 	case GUARD_HOUSE_UR:
 		if (!texture.loadFromFile("assets/guardHouseUR.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
 		break;
+	case SPIKES_F:
+		if (!texture.loadFromFile("assets/spikesF.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
+	case SPIKES_T:
+		if (!texture.loadFromFile("assets/spikesT.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
 	default:
 		break;
 	}
@@ -245,6 +251,10 @@ void PropManager::readFile()
 				creerProp(GUARD_HOUSE_DL, position.x, position.y, SECOND_LAYER);
 			else if (c == 'L')
 				creerProp(GUARD_HOUSE_DR, position.x, position.y, SECOND_LAYER);//24 //48
+			else if (c == 'M')
+				creerProp(SPIKES_T, position.x, position.y, SECOND_LAYER);
+			else if (c == 'N')
+				creerProp(SPIKES_F, position.x, position.y, SECOND_LAYER);
 
 			position.x += 96;
 		}
@@ -255,3 +265,43 @@ void PropManager::readFile()
 }
 vector<Prop*> PropManager::getFirstLayer() { return firstLayer; }
 vector<Prop*> PropManager::getSecondLayer() { return secondLayer; }
+
+
+Spikes::Spikes()
+{
+	if (!spikesActivated.loadFromFile("assets/spikesT.png")) cerr << "Erreur lors du chargement de la texture de pics on" << endl;
+	if (!spikesDisabled.loadFromFile("assets/spikesF.png")) cerr << "Erreur lors du chargement de la texture de pics off" << endl;
+	if (!interruptorActivated.loadFromFile("assets/interruptorT.png")) cerr << "Erreur lors du chargement de la texture d'interrupteur on" << endl;
+	if (!interruptorDisabled.loadFromFile("assets/interruptorF.png")) cerr << "Erreur lors du chargement de la texture d'interrupteur off" << endl;
+	if (interruptorIsActivated)
+	{
+		sprite.setTexture(spikesDisabled);
+		interruptor.setTexture(interruptorActivated);
+	}
+	else
+	{
+		sprite.setTexture(spikesActivated);
+		interruptor.setTexture(interruptorDisabled);
+	}
+}
+void Spikes::checkInterruptor(Player& player)
+{
+	if (interruptorCanChangeState)
+	{
+		if (player.sprite.getGlobalBounds().intersects(interruptor.getGlobalBounds()))
+		{
+			if (interruptorIsActivated)
+			{
+				interruptor.setTexture(interruptorDisabled);
+				sprite.setTexture(spikesActivated);
+				interruptorCanChangeState = false;
+			}
+			else if (!interruptorIsActivated)
+			{
+				interruptor.setTexture(interruptorActivated);
+				sprite.setTexture(spikesDisabled);
+				interruptorCanChangeState = false;
+			}
+		}
+	}
+}

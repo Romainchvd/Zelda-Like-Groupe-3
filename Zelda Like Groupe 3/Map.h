@@ -1,15 +1,13 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <vector>
+#include "Player.h"
 #include <fstream>
-#include <iostream>
-#include <stdexcept>
 
 using namespace std;
 using namespace sf;
 enum Id {
 	STONE, HOUSEFLOOR, GRASS, HOUSEUR, HOUSEUL, HOUSEDL, HOUSEDR, TOWER_BOTTOM, TOWER_TOP, TOWER_BASE, CWALLH, CWALLV, HOUSEWALL, HOUSEROOFH, HOUSEROOFR, HOUSEROOFL,
-	BED_TOP, BED_BOTTOM, KITCHEN, DRESSER, SINK, COUNTER, CARPET, TREE_BOTTOM, TREE_TOP, GUARD_HOUSE_DL, GUARD_HOUSE_DR, GUARD_HOUSE_UL, GUARD_HOUSE_UR
+	BED_TOP, BED_BOTTOM, KITCHEN, DRESSER, SINK, COUNTER, CARPET, TREE_BOTTOM, TREE_TOP, GUARD_HOUSE_DL, GUARD_HOUSE_DR, GUARD_HOUSE_UL, GUARD_HOUSE_UR, SPIKES_T, SPIKES_F,
+	INTERRUPTOR_T, INTERRUPTOR_F
 };
 enum Layer {FIRST_LAYER, SECOND_LAYER};
 
@@ -37,4 +35,24 @@ public:
 	void readFile();
 	vector<Prop*> getFirstLayer();
 	vector<Prop*> getSecondLayer();
+};
+//Les classes suivantes sont en développement et ne doivent pas être utilisée car non flexibles.
+class Interruptor
+{
+public:
+	Texture interruptorActivated;
+	Texture interruptorDisabled;
+	Sprite interruptor;
+	bool interruptorIsActivated = false;
+	bool interruptorCanChangeState = true;
+};
+
+class Spikes : public Interruptor
+{
+public:
+	Texture spikesActivated;
+	Texture spikesDisabled;
+	Sprite sprite;
+	void checkInterruptor(Player& player);
+	Spikes();
 };
