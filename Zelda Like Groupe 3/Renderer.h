@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Player.h"
+#include "Enemy1.h"
 #include "Map.h"
 #include "testPlayer2.h"
 
