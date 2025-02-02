@@ -10,6 +10,7 @@ void Renderer::Draw(Player& player, PropManager& propManager) {
 	for (int i = 0; i < propManager.getSecondLayer().size(); i++)
 		window.draw(propManager.getSecondLayer()[i]->sprite);
 	player.draw(window);
+	/*playtest.draw(window);*/
 	window.display();
 }
 
@@ -21,6 +22,7 @@ void Renderer::run(Player& player, PropManager& propManager) {
 		
 		player.Mouvement();
 		player.update(1);
+		/*player.Colision(playtest);*/
 		Draw(player, propManager);
 		camera.setCenter(player.sprite.getPosition());
 		window.setView(camera);
