@@ -93,6 +93,24 @@ void Prop::setTexture()
 	case GUARD_HOUSE_UR:
 		if (!texture.loadFromFile("assets/guardHouseUR.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
 		break;
+	case SPIKES_F:
+		if (!texture.loadFromFile("assets/spikesF.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
+	case SPIKES_T:
+		if (!texture.loadFromFile("assets/spikesT.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
+	case DOOR:
+		if (!texture.loadFromFile("assets/door.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+		break;
+	case KEY:
+		if (!texture.loadFromFile("assets/key.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+		break;
+	case FENCES_H:
+		if (!texture.loadFromFile("assets/fencesH.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+	case FENCES_V:
+		if (!texture.loadFromFile("assets/fencesV.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+		break;
+		break;
 	default:
 		break;
 	}
@@ -245,6 +263,18 @@ void PropManager::readFile()
 				creerProp(GUARD_HOUSE_DL, position.x, position.y, SECOND_LAYER);
 			else if (c == 'L')
 				creerProp(GUARD_HOUSE_DR, position.x, position.y, SECOND_LAYER);//24 //48
+			else if (c == 'M')
+				creerProp(SPIKES_T, position.x, position.y, SECOND_LAYER);
+			else if (c == 'N')
+				creerProp(SPIKES_F, position.x, position.y, SECOND_LAYER);
+			else if (c == 'O')
+				creerProp(DOOR, position.x, position.y, SECOND_LAYER);
+			else if (c == 'P')
+				creerProp(KEY, position.x, position.y, SECOND_LAYER);
+			else if (c == 'Q')
+				creerProp(FENCES_H, position.x, position.y, SECOND_LAYER);
+			else if (c == 'R')
+				creerProp(FENCES_V, position.x, position.y, SECOND_LAYER);
 
 			position.x += 96;
 		}
@@ -255,3 +285,60 @@ void PropManager::readFile()
 }
 vector<Prop*> PropManager::getFirstLayer() { return firstLayer; }
 vector<Prop*> PropManager::getSecondLayer() { return secondLayer; }
+
+
+Spikes::Spikes()
+{
+	if (!spikesActivated.loadFromFile("assets/spikesT.png")) cerr << "Erreur lors du chargement de la texture de pics on" << endl;
+	if (!spikesDisabled.loadFromFile("assets/spikesF.png")) cerr << "Erreur lors du chargement de la texture de pics off" << endl;
+	if (!interruptorActivated.loadFromFile("assets/interruptorT.png")) cerr << "Erreur lors du chargement de la texture d'interrupteur on" << endl;
+	if (!interruptorDisabled.loadFromFile("assets/interruptorF.png")) cerr << "Erreur lors du chargement de la texture d'interrupteur off" << endl;
+	if (interruptorIsActivated)
+	{
+		sprite.setTexture(spikesDisabled);
+		interruptor.setTexture(interruptorActivated);
+	}
+	else
+	{
+		sprite.setTexture(spikesActivated);
+		interruptor.setTexture(interruptorDisabled);
+	}
+}
+void Spikes::checkInterruptor(Player& player)
+{
+	if (interruptorCanChangeState)
+	{
+		if (player.sprite.getGlobalBounds().intersects(interruptor.getGlobalBounds()))
+		{
+			if (interruptorIsActivated)
+			{
+				interruptor.setTexture(interruptorDisabled);
+				sprite.setTexture(spikesActivated);
+				interruptorCanChangeState = false;
+			}
+			else if (!interruptorIsActivated)
+			{
+				interruptor.setTexture(interruptorActivated);
+				sprite.setTexture(spikesDisabled);
+				interruptorCanChangeState = false;
+			}
+		}
+	}
+}
+void Prop::addKey(Player& player, PropManager& manager)
+{
+	if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == KEY)
+	{
+		player.keyCounter++;
+		manager.detruireProp(this);
+	}
+}
+
+void Prop::useKey(Player& player, PropManager& manager)
+{
+	if (player.keyCounter > 0 && player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == DOOR)
+	{
+		player.keyCounter--;
+		manager.detruireProp(this);
+	}
+}

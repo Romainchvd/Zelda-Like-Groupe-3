@@ -19,13 +19,17 @@ void Renderer::run(Player& player, PropManager& propManager) {
 	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
 	camera.setSize(Vector2f(1920.f/2, 1080.f/2));
 	while (window.isOpen()) {
-		
 		player.Mouvement();
 		player.update(1);
 		/*player.Colision(playtest);*/
 		Draw(player, propManager);
 		camera.setCenter(player.sprite.getPosition());
 		window.setView(camera);
+		for (int i = 0; i < propManager.getSecondLayer().size(); i++)
+		{
+			propManager.getSecondLayer()[i]->addKey(player, propManager);
+			propManager.getSecondLayer()[i]->useKey(player, propManager);
+		}
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::Closed)
