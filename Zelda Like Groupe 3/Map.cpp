@@ -37,10 +37,10 @@ void Prop::setTexture()
 		if (!texture.loadFromFile("assets/towerTop.png")) cerr << "Erreur lors du chargement de la texture de maison" << endl;
 		break;
 	case CWALLH:
-		if (!texture.loadFromFile("assets/castleWallH.png")) cerr << "Erreur lors du chargement de la texture de mur de citadelle horizontal" << endl;
+		if (!texture.loadFromFile("assets/EcastleWallH.png")) cerr << "Erreur lors du chargement de la texture de mur de citadelle horizontal" << endl;
 		break;
 	case CWALLV:
-		if (!texture.loadFromFile("assets/castleWallV.png")) cerr << "Erreur lors du chargement de la texture de mur de citadelle vertical" << endl;
+		if (!texture.loadFromFile("assets/EcastleWallV.png")) cerr << "Erreur lors du chargement de la texture de mur de citadelle vertical" << endl;
 		break;
 	case HOUSEWALL:
 		if (!texture.loadFromFile("assets/housewall.png")) cerr << "Erreur lors du chargement de la texture de mur de la maison" << endl;
