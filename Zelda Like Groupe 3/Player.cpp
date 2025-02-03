@@ -4,6 +4,12 @@ using namespace std;
 using namespace sf;
 
 Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFrame3(1), currentFrame4(1), animationSpeed(15.0f), elapsedTime(0.0f), isMoving(false), isMovingLeft(false), isMovingRight(false) {
+	if (!TexturePressE.loadFromFile("assets/InputTools/PressE.png")) {
+		cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
+	}
+	PressE.setTexture(TexturePressE);
+	PressE.setPosition(48.5 * 96, 37.5 * 96);
+	PressE.setScale(0.192f, 0.192f);
 }
 
 void Player::update(float deltatime) {
@@ -59,7 +65,7 @@ void Player::update(float deltatime) {
 			}
 		}
 	}
-	//cout << sprite.getPosition().x << ", " << sprite.getPosition().y << endl;
+	PressE.setPosition(sprite.getPosition().x + 20,sprite.getPosition().y -110);
 }
 
 void Player::draw(RenderWindow& window) {
@@ -68,6 +74,16 @@ void Player::draw(RenderWindow& window) {
 	hitboxShape.setPosition(Phitbox.left, Phitbox.top);
 	hitboxShape.setFillColor(sf::Color(255, 0, 0, 128));
 	window.draw(hitboxShape);
+	if (isOnCarpet == true)
+	{
+		cout << "il passse dedans" << endl;
+		DrawPressE(window);
+	}
+
+}
+
+void Player::DrawPressE(RenderWindow& window) {
+	window.draw(PressE);
 }
 
 void Player::loadTexture() {
@@ -96,7 +112,7 @@ void Player::loadTexture() {
 		cout << "faire le try cash ici je pense";
 	}
 //	sprite.setPosition(250, 200); //Maison
-	sprite.setPosition(48.5 * 96 ,37.5 * 96); // Exterieur
+	sprite.setPosition(48.5 * 96, 37.5 * 96); // Exterieur
 	//sprite.setTexture(TexturePlayer);
 	sprite.setOrigin(10, 14);
 	sprite.setScale(Vector2f(2.2f, 2.2f));
@@ -189,10 +205,23 @@ void Player::Colision(Prop* prop) {
 void Player::Interact(Prop* prop) {
 	if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible)
 	{
-		cout << "finir interacction" << endl;
+		
+		isOnCarpet = true;
+	}
+	else if ((sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible) == false && ClockPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds())
+	{
+		isOnCarpet = false;
+		ClockPressE.restart();
 	}
 	
+	if (isOnCarpet)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::E)) {
+			sprite.setPosition(2 * 96, 5 * 96);
+		}
+	}
 }
+
 
 
 Vector2f Player::getPosition() const {

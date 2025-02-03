@@ -3,6 +3,7 @@
 #define PLAYER_H
 #include <iostream>
 #include "Entity.h"
+
 class Prop;
 class PropManager;
 
@@ -28,11 +29,13 @@ private:
 	Texture playerRunUpTexture[4];
 	Texture playerRunDownTexture[4];
 	Texture playerIdleTexture[4];
+	Texture TexturePressE;
 	Sprite playersprite;
 	Vector2f position;
 public:
+	bool isOnCarpet = false;
 	Sprite sprite;
-	
+	Sprite PressE;
 	int speed;
 	int keyCounter = 0;
 	FloatRect Phitbox;
@@ -43,7 +46,10 @@ public:
 	void Mouvement();
 	void Colision(Prop* prop);
 	void Interact(Prop* prop);
+	void DrawPressE(RenderWindow& window);
 	Vector2f getPosition() const;
 	FloatRect getHitbox() const;
+	Clock ClockPressE;
+	Time PressEDiration = seconds(0.2f);
 };
 #endif

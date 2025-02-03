@@ -76,7 +76,7 @@ void Prop::setTexture()
 		if (!texture.loadFromFile("assets/carpet.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
 		break;
 	case CARPET_OUTDOOR:
-		if (!texture.loadFromFile("assets/carpetE.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		if (!texture.loadFromFile("assets/carpetE.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl; 
 		break;
 	case TREE_TOP:
 		if (!texture.loadFromFile("assets/treeTop.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
@@ -112,7 +112,6 @@ void Prop::setTexture()
 		if (!texture.loadFromFile("assets/fencesH.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 	case FENCES_V:
 		if (!texture.loadFromFile("assets/fencesV.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
-		break;
 		break;
 	default:
 		break;
