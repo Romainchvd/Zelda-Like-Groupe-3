@@ -3,7 +3,6 @@
 #include "Player.h"
 #include "Enemy1.h"
 #include "Map.h"
-#include "testPlayer2.h"
 
 using namespace std;
 using namespace sf;
