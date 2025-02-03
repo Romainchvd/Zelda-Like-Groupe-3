@@ -164,30 +164,35 @@ void Player::Colision(Prop* prop) {
 	{
 		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingUp)
 		{
-			cout << "il y a colision" << endl;
 			sprite.move(Vector2f(0.0f, 1.5f));
 			position.y += 1.5f;
 		}
 		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingLeft)
 		{
-			cout << "il y a colision" << endl;
 			sprite.move(Vector2f(1.5f, 0.0f));
 			position.x += 1.5f;
 		}
 		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingDown)
 		{
-			cout << "il y a colision" << endl;
 			sprite.move(Vector2f(0.0f, -1.5f));
 			position.y -= 1.5f;
 		}
 		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingRight)
 		{
-			cout << "il y a colision" << endl;
 			sprite.move(Vector2f(-1.5f, 0.0f));
 			position.x -= 1.5f;
 		}
 	}
 }
+
+void Player::Interact(Prop* prop) {
+	if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible)
+	{
+		cout << "finir interacction" << endl;
+	}
+	
+}
+
 
 Vector2f Player::getPosition() const {
 	return position;

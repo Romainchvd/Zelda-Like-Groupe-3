@@ -21,6 +21,7 @@ public:
 	void setTexture();
 	Id id;
 	bool isPossibleColision = false;
+	bool InteractionPossible = false;
 	void addKey(Player& player, PropManager& manager);
 	void useKey(Player& player, PropManager& manager);
 	Prop(Id i);
@@ -33,7 +34,7 @@ protected:
 	vector<Prop*> secondLayer;
 public:
 	~PropManager();
-	Prop* creerProp(Id id, int x, int y, Layer layer, bool c);
+	Prop* creerProp(Id id, int x, int y, Layer layer, bool c, bool i);
 	void detruireProp(Prop* prop);
 	void readFile();
 	vector<Prop*> getFirstLayer();

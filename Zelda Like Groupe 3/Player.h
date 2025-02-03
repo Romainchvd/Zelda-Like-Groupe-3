@@ -42,6 +42,7 @@ public:
 	void loadTexture();
 	void Mouvement();
 	void Colision(Prop* prop);
+	void Interact(Prop* prop);
 	Vector2f getPosition() const;
 	FloatRect getHitbox() const;
 };
