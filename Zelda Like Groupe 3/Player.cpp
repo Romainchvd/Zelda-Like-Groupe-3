@@ -96,7 +96,7 @@ void Player::loadTexture() {
 		cout << "faire le try cash ici je pense";
 	}
 //	sprite.setPosition(250, 200); //Maison
-	sprite.setPosition(48 * 96 ,37 * 96); // Exterieur
+	sprite.setPosition(48.5 * 96 ,37.5 * 96); // Exterieur
 	//sprite.setTexture(TexturePlayer);
 	sprite.setOrigin(10, 14);
 	sprite.setScale(Vector2f(2.2f, 2.2f));
