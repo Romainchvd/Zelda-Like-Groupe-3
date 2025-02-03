@@ -133,7 +133,7 @@ PropManager::~PropManager()
 	}
 	secondLayer.clear();
 }
-Prop* PropManager::creerProp(Id id, int x, int y, Layer layer)
+Prop* PropManager::creerProp(Id id, int x, int y, Layer layer, bool c)
 {
 	Prop* p = new Prop(id);
 	if(layer == FIRST_LAYER)
@@ -144,6 +144,7 @@ Prop* PropManager::creerProp(Id id, int x, int y, Layer layer)
 		secondLayer.push_back(p);
 	p->setTexture();
 	p->sprite.setPosition(x, y);
+	p->isPossibleColision = c;
 	return p;
 }
 
@@ -184,21 +185,21 @@ void PropManager::readFile()
 		for (char c : line)
 		{
 			if (c == '0')
-				creerProp(HOUSEFLOOR, position.x, position.y, FIRST_LAYER);
+				creerProp(HOUSEFLOOR, position.x, position.y, FIRST_LAYER, false);
 			//Attention espace vide disponible
 			else if (c == '5')
-				creerProp(GRASS, position.x, position.y, FIRST_LAYER);
+				creerProp(GRASS, position.x, position.y, FIRST_LAYER, false);
 			else if (c == '6')
-				creerProp(STONE, position.x, position.y, FIRST_LAYER);
+				creerProp(STONE, position.x, position.y, FIRST_LAYER, false);
 			//Attention espace vide disponible
 			else if (c == 'G')
-				creerProp(HOUSEWALL, position.x, position.y, FIRST_LAYER);
+				creerProp(HOUSEWALL, position.x, position.y, FIRST_LAYER, true);
 			else if (c == 'H')
-				creerProp(HOUSEROOFH, position.x, position.y, FIRST_LAYER);
+				creerProp(HOUSEROOFH, position.x, position.y, FIRST_LAYER, true);
 			else if (c == 'I')
-				creerProp(HOUSEROOFL, position.x, position.y, FIRST_LAYER);
+				creerProp(HOUSEROOFL, position.x, position.y, FIRST_LAYER, true);
 			else if (c == 'J')
-				creerProp(HOUSEROOFR, position.x, position.y, FIRST_LAYER);
+				creerProp(HOUSEROOFR, position.x, position.y, FIRST_LAYER, true);
 			
 
 			position.x += 96;
@@ -220,61 +221,61 @@ void PropManager::readFile()
 		for (char c : line)
 		{
 			if (c == '0')
-				creerProp(BED_TOP, position.x, position.y, SECOND_LAYER);
+				creerProp(BED_TOP, position.x, position.y, SECOND_LAYER, true);
 			else if (c == '1')
-				creerProp(SINK, position.x, position.y, SECOND_LAYER);
+				creerProp(SINK, position.x, position.y, SECOND_LAYER, true);
 			else if (c == '2')
-				creerProp(COUNTER, position.x, position.y, SECOND_LAYER);
+				creerProp(COUNTER, position.x, position.y, SECOND_LAYER, true);
 			else if (c == '3')
-				creerProp(KITCHEN, position.x, position.y, SECOND_LAYER);
+				creerProp(KITCHEN, position.x, position.y, SECOND_LAYER, true);
 			else if (c == '4')
-				creerProp(DRESSER, position.x, position.y, SECOND_LAYER);
+				creerProp(DRESSER, position.x, position.y, SECOND_LAYER, true);
 			else if (c == '5')
-				creerProp(CARPET, position.x, position.y, SECOND_LAYER);
+				creerProp(CARPET, position.x, position.y, SECOND_LAYER, false);
 			else if (c == '6')
-				creerProp(BED_BOTTOM, position.x, position.y, SECOND_LAYER);
+				creerProp(BED_BOTTOM, position.x, position.y, SECOND_LAYER, true);
 			else if (c == '7')
-				creerProp(TOWER_BOTTOM, position.x, position.y, SECOND_LAYER);
+				creerProp(TOWER_BOTTOM, position.x, position.y, SECOND_LAYER, true);
 			else if (c == '8')
-				creerProp(TOWER_BASE, position.x, position.y, SECOND_LAYER);
+				creerProp(TOWER_BASE, position.x, position.y, SECOND_LAYER, true);
 			else if (c == '9')
-				creerProp(TOWER_TOP, position.x, position.y, SECOND_LAYER);
+				creerProp(TOWER_TOP, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'A')
-				creerProp(CWALLH, position.x, position.y, SECOND_LAYER);
+				creerProp(CWALLH, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'B')
-				creerProp(CWALLV, position.x, position.y, SECOND_LAYER);
+				creerProp(CWALLV, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'C')
-				creerProp(HOUSEUL, position.x, position.y, SECOND_LAYER);
+				creerProp(HOUSEUL, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'D')
-				creerProp(HOUSEUR, position.x, position.y, SECOND_LAYER);
+				creerProp(HOUSEUR, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'E')
-				creerProp(HOUSEDL, position.x, position.y, SECOND_LAYER);
+				creerProp(HOUSEDL, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'F')
-				creerProp(HOUSEDR, position.x, position.y, SECOND_LAYER);
+				creerProp(HOUSEDR, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'G')
-				creerProp(TREE_BOTTOM, position.x, position.y, SECOND_LAYER);
+				creerProp(TREE_BOTTOM, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'H')
-				creerProp(TREE_TOP, position.x, position.y, SECOND_LAYER);
+				creerProp(TREE_TOP, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'I')
-				creerProp(GUARD_HOUSE_UL, position.x, position.y, SECOND_LAYER);
+				creerProp(GUARD_HOUSE_UL, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'J')
-				creerProp(GUARD_HOUSE_UR, position.x, position.y, SECOND_LAYER);
+				creerProp(GUARD_HOUSE_UR, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'K')
-				creerProp(GUARD_HOUSE_DL, position.x, position.y, SECOND_LAYER);
+				creerProp(GUARD_HOUSE_DL, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'L')
-				creerProp(GUARD_HOUSE_DR, position.x, position.y, SECOND_LAYER);//24 //48
+				creerProp(GUARD_HOUSE_DR, position.x, position.y, SECOND_LAYER, true);//24 //48
 			else if (c == 'M')
-				creerProp(SPIKES_T, position.x, position.y, SECOND_LAYER);
+				creerProp(SPIKES_T, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'N')
-				creerProp(SPIKES_F, position.x, position.y, SECOND_LAYER);
+				creerProp(SPIKES_F, position.x, position.y, SECOND_LAYER, false);
 			else if (c == 'O')
-				creerProp(DOOR, position.x, position.y, SECOND_LAYER);
+				creerProp(DOOR, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'P')
-				creerProp(KEY, position.x, position.y, SECOND_LAYER);
+				creerProp(KEY, position.x, position.y, SECOND_LAYER, false);
 			else if (c == 'Q')
-				creerProp(FENCES_H, position.x, position.y, SECOND_LAYER);
+				creerProp(FENCES_H, position.x, position.y, SECOND_LAYER, true);
 			else if (c == 'R')
-				creerProp(FENCES_V, position.x, position.y, SECOND_LAYER);
+				creerProp(FENCES_V, position.x, position.y, SECOND_LAYER, true);
 
 			position.x += 96;
 		}

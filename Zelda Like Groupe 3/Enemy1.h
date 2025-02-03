@@ -9,7 +9,14 @@ using namespace sf;
 
 class Enemy1 :public Entity {
 private:
+	bool isMoving;
+	float animationSpeed = 0.1f;
+	float elapsedTime;
+	int currentFrame = 0;
+	int currentFrame2 = 0;
 	Sprite enemy1sprite;
+	Texture enemy1RunTexture[4];
+	Texture enemy1IdleTexture[4];
 	Vector2f position;
 public:
 	float health = 100.0f;
@@ -26,6 +33,7 @@ public:
 	void loadTexture();
 	FloatRect getHitbox() const;
 	FloatRect getFollowHitbox() const;
+	void update(float deltaTime) override;
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Map.h"
 using namespace std;
 using namespace sf;
 
@@ -158,44 +159,36 @@ void Player::Mouvement() {
 		Phitbox.top = position.y + 2260;
 	}
 }
-//void Player::Colision(playTest& playTest) {
-//	
-//
-//	/*FloatRect playerBounds = sprite.getGlobalBounds();
-//	FloatRect rectBounds = playTest.sprite.getGlobalBounds();
-//
-//	float ColisionMoveLeft = playerBounds.left + playerBounds.width - rectBounds.left;
-//	float ColisionMoveRight = rectBounds.left + rectBounds.width - playerBounds.left;
-//	float ColisionMoveTop = playerBounds.top + playerBounds.height - rectBounds.top;
-//	float ColisionMoveBottom = rectBounds.top + rectBounds.height - playerBounds.top;*/
-//
-//	/*if (playerBounds.intersects(rectBounds))
-//	{
-//		if (ColisionMoveLeft < ColisionMoveRight && ColisionMoveLeft < ColisionMoveTop 
-//			&& ColisionMoveLeft < ColisionMoveBottom)
-//		{
-//			sprite.move(Vector2f(-ColisionMoveLeft, 0.0f));
-//		}
-//	}*/
-//
-//	/*if (sprite.getGlobalBounds().intersects(playTest.sprite.getGlobalBounds()) && isMovingRight)
-//	{
-//		sprite.move(Vector2f(-1.5f, 0.0f));
-//	}
-//	if (sprite.getGlobalBounds().intersects(playTest.sprite.getGlobalBounds()) && isMovingLeft)
-//	{
-//		sprite.move(Vector2f(1.5f, 0.0f));
-//	}
-//	if (sprite.getGlobalBounds().intersects(playTest.sprite.getGlobalBounds()) && isMovingUp)
-//	{
-//		sprite.move(Vector2f(0.0f, 1.5f));
-//	}
-//	if (sprite.getGlobalBounds().intersects(playTest.sprite.getGlobalBounds()) && isMovingDown)
-//	{
-//		sprite.move(Vector2f(0.0f, -1.5f));
-//	}*/
-//
-//}
+void Player::Colision(Prop* prop) {
+	
+	if (prop->isPossibleColision)
+	{
+		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingUp)
+		{
+			cout << "il y a colision" << endl;
+			sprite.move(Vector2f(0.0f, 1.5f));
+			position.y += 1.5f;
+		}
+		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingLeft)
+		{
+			cout << "il y a colision" << endl;
+			sprite.move(Vector2f(1.5f, 0.0f));
+			position.x += 1.5f;
+		}
+		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingDown)
+		{
+			cout << "il y a colision" << endl;
+			sprite.move(Vector2f(0.0f, -1.5f));
+			position.y -= 1.5f;
+		}
+		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingRight)
+		{
+			cout << "il y a colision" << endl;
+			sprite.move(Vector2f(-1.5f, 0.0f));
+			position.x -= 1.5f;
+		}
+	}
+}
 
 Vector2f Player::getPosition() const {
 	return position;

@@ -8,7 +8,7 @@
 class Game {
 private:
 public:
-	//vector<unique_ptr<Enemy1>> enemy1;
+	vector<unique_ptr<Enemy1>> enemy1;
 	PropManager propManager;
 	Game();
 };
