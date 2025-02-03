@@ -75,6 +75,9 @@ void Prop::setTexture()
 	case CARPET:
 		if (!texture.loadFromFile("assets/carpet.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
 		break;
+	case CARPET_OUTDOOR:
+		if (!texture.loadFromFile("assets/carpetE.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
+		break;
 	case TREE_TOP:
 		if (!texture.loadFromFile("assets/treeTop.png")) cerr << "Erreur lors du chargement de la texture de commode" << endl;
 		break;
@@ -277,6 +280,8 @@ void PropManager::readFile()
 				creerProp(FENCES_H, position.x, position.y, SECOND_LAYER, true, false);
 			else if (c == 'R')
 				creerProp(FENCES_V, position.x, position.y, SECOND_LAYER, true, false);
+			else if (c == 'S')
+				creerProp(CARPET_OUTDOOR, position.x, position.y, SECOND_LAYER, false, true);
 
 			position.x += 96;
 		}
