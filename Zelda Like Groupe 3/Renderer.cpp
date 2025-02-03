@@ -31,6 +31,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 		player.update(1);
 		for (auto& enemy : enemy1) {
 			enemy->update(1);
+			enemy->updateMovement(player);
 		}
 		/*player.Colision(playtest);*/
 		Draw(player, propManager, enemy1);
