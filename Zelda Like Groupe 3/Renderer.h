@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "Map.h"
-#include "testPlayer2.h"
 
 using namespace std;
 using namespace sf;
