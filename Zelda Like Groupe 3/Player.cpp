@@ -13,7 +13,8 @@ void Player::update(float deltatime) {
 			currentFrame++;
 			currentFrame %= 4;
 			sprite.setTexture(playerIdleTexture[currentFrame]);
-			sprite.setOrigin(16, 16);
+			sprite.setOrigin(10, 14);
+			sprite.setTextureRect(IntRect(0, 0, 20, 28));
 			if (isMovingRight) {
 				sprite.setScale(2.2f, 2.2f);
 			}
@@ -29,7 +30,7 @@ void Player::update(float deltatime) {
 				currentFrame2++;
 				currentFrame2 %= 6;
 				sprite.setTexture(playerRunTexture[currentFrame2]);
-				sprite.setOrigin(16, 16);
+				sprite.setOrigin(10, 14);
 				if (isMovingRight) {
 					sprite.setScale(2.2f, 2.2f);
 				}
@@ -44,7 +45,7 @@ void Player::update(float deltatime) {
 				currentFrame3++;
 				currentFrame3 %= 4;
 				sprite.setTexture(playerRunUpTexture[currentFrame3]);
-				sprite.setOrigin(16, 16);
+				sprite.setOrigin(10, 14);
 			}
 		}
 		else if (isMovingDown) {
@@ -53,7 +54,7 @@ void Player::update(float deltatime) {
 				currentFrame4++;
 				currentFrame4 %= 4;
 				sprite.setTexture(playerRunDownTexture[currentFrame4]);
-				sprite.setOrigin(16, 16);
+				sprite.setOrigin(10, 14);
 			}
 		}
 	}
@@ -94,9 +95,9 @@ void Player::loadTexture() {
 		cout << "faire le try cash ici je pense";
 	}
 //	sprite.setPosition(250, 200); //Maison
-	sprite.setPosition(48 * 96 ,24 * 96); // Exterieur
+	sprite.setPosition(48 * 96 ,37 * 96); // Exterieur
 	//sprite.setTexture(TexturePlayer);
-	sprite.setOrigin(28, 112);
+	sprite.setOrigin(10, 14);
 	sprite.setScale(Vector2f(2.2f, 2.2f));
 }
 
