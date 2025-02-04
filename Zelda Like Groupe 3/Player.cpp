@@ -113,6 +113,8 @@ void Player::loadTexture() {
 	}
 //	sprite.setPosition(250, 200); //Maison
 //  sprite.setPosition(20*96, 96*5); //Maison garde
+	position.x = 48.5 * 96;
+	position.y = 37.5 * 96;
 	sprite.setPosition(48.5 * 96, 37.5 * 96); // Exterieur
 	//sprite.setTexture(TexturePlayer);
 	sprite.setOrigin(10, 14);
@@ -120,6 +122,7 @@ void Player::loadTexture() {
 }
 
 void Player::Mouvement() {
+	//cout << position.x << " " << position.y << endl;
 	isMoving = false;
 	isMovingUp = false;
 	isMovingDown = false;

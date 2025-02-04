@@ -5,7 +5,6 @@ using namespace std;
 
 Texture enemy1;
 
-
 void Enemy1::loadTexture() {
     for (int i = 0; i < 4; ++i) {
        if (! enemy1IdleTexture[i].loadFromFile("Assets/Enemies/idle/idle" + to_string(i) + ".png")) {
@@ -30,30 +29,32 @@ Enemy1::Enemy1(Vector2f startPosition) : position(startPosition), currentFrame(1
     followHitbox.left = position.x;
     followHitbox.top = position.y;
 	enemy1sprite.setScale(0.4f, 0.4f);
+    enemy1sprite.setOrigin(12, 20);
     maxHealth = 100.0f;
 }
 
 void Enemy1::updateMovement(const Player& player) {
-    followHitbox.left = position.x;
-    followHitbox.top = position.y;
-   // Vector2f direction = player.getPosition() - position;
-   // float distance = hypot(direction.x, direction.y);
-    cout << followHitbox.left << "      " << player.Phitbox.left << endl;
-
-    cout << followHitbox.top << "      " << player.Phitbox.top << endl;
-    if (followHitbox.contains(player.Phitbox.left, player.Phitbox.top)) {
-        cout << "ok" << endl;
-        isFollowing = true;
+    Vector2f direction = player.getPosition() - position;
+    float distance = hypot(direction.x, direction.y);
+    
+    if (Keyboard::isKeyPressed(Keyboard::T)) {
+        cout << "Position ennemi:" << position.x << "  " << position.y << endl;
+        cout << "Position joueur:" << player.getPosition().x << "  " << player.getPosition().y << endl;
+        
+        cout << distance << endl;
     }
-
-    /*if (isFollowing && !isDead) {
-        if (distance > 1.0f) {
+    if (enemy1sprite.getGlobalBounds().intersects(player.sprite.getGlobalBounds())) {
+        cout << "ok" << endl;
+    }
+    if (!isDead) {
+     
+        if (distance < 300) {
             direction /= distance;
-            position += direction * 40.0f;
+            position += direction * 0.4f;
         }
-    }*/
-    else if (!isDead) {
-        position.x -= 0.1f;
+        else {
+            position.x -= 0.2f;
+        }
     }
     else if (isDead) {
         position.x -= 1.f;
@@ -73,9 +74,10 @@ void Enemy1::checkDeath() {
 
 void Enemy1::draw(RenderWindow& window) {
 	window.draw(enemy1sprite);
-    RectangleShape hitboxShape(sf::Vector2f(enemy1sprite.getGlobalBounds().width *5, enemy1sprite.getGlobalBounds().height * 5));
+    RectangleShape hitboxShape(sf::Vector2f(enemy1sprite.getGlobalBounds().width , enemy1sprite.getGlobalBounds().height ));
     hitboxShape.setPosition(followHitbox.left, followHitbox.top);
     hitboxShape.setFillColor(sf::Color(255, 255, 0, 128));
+    followHitbox = hitboxShape.getGlobalBounds();
     window.draw(hitboxShape);
 }
 
