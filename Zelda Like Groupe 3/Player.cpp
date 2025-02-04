@@ -66,7 +66,7 @@ void Player::update(float deltatime) {
 		}
 	}
 	PressE.setPosition(sprite.getPosition().x + 20,sprite.getPosition().y -110);
-	cout << sprite.getPosition().x << "<" << sprite.getPosition().y << endl;
+	cout << canPressE << endl;
 }
 
 void Player::draw(RenderWindow& window) {
@@ -85,7 +85,7 @@ void Player::draw(RenderWindow& window) {
 
 void Player::DrawPressE(RenderWindow& window) {
 	window.draw(PressE);
-	cout << canPressE << endl;
+	
 }
 
 void Player::loadTexture() {
@@ -221,22 +221,22 @@ void Player::Interact(unique_ptr<Prop>& prop) {
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			sprite.setPosition(4 * 96, 4 * 96);
-		}
-		if (ClockCanPressE.getElapsedTime().asSeconds() < PressEDiration.asSeconds())
-		{
 			canPressE = false;
-			if (ClockCanPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds())
-			{
-				canPressE = true;
-				ClockCanPressE.restart();
-			}	
+			ClockCanPressE.restart();
 		}
 	}
+	if (ClockCanPressE.getElapsedTime().asSeconds() > CanPressEDiration.asSeconds() && canPressE == false)
+	{
+		canPressE = true;		
+	}
+	
 	if (isOnCarpet && sprite.getPosition().x >= 58 * 96 && sprite.getPosition().y >= 31 * 96
 		&& sprite.getPosition().x <= 61 * 96 && sprite.getPosition().y <= 32 * 96 && canPressE)
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			sprite.setPosition(19 * 96, 5 * 96);
+			canPressE = false;
+			ClockCanPressE.restart();
 		}
 	}
 	if (isOnCarpet && sprite.getPosition().x >= 3 * 96 && sprite.getPosition().y >= 5 * 96
@@ -244,6 +244,8 @@ void Player::Interact(unique_ptr<Prop>& prop) {
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			sprite.setPosition(48.5 * 96, 38.5 * 96);
+			canPressE = false;
+			ClockCanPressE.restart();
 		}
 	}
 	if (isOnCarpet && sprite.getPosition().x >= 20 * 96 && sprite.getPosition().y >= 5 * 96
@@ -251,6 +253,8 @@ void Player::Interact(unique_ptr<Prop>& prop) {
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			sprite.setPosition(57.9 * 96, 32 * 96);
+			canPressE = false;
+			ClockCanPressE.restart();
 		}
 	}
 }

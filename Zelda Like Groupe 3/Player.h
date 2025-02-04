@@ -51,5 +51,5 @@ public:
 	Clock ClockPressE;
 	Time PressEDiration = seconds(0.2f);
 	Clock ClockCanPressE;
-	Time CanPressEDiration = seconds(1.0f);
+	Time CanPressEDiration = seconds(3.0f);
 };
