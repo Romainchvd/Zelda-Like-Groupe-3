@@ -1,8 +1,7 @@
 #pragma once
-#ifndef PLAYER_H
-#define PLAYER_H
 #include <iostream>
 #include "Entity.h"
+
 class Prop;
 class PropManager;
 
@@ -28,11 +27,13 @@ private:
 	Texture playerRunUpTexture[4];
 	Texture playerRunDownTexture[4];
 	Texture playerIdleTexture[4];
+	Texture TexturePressE;
 	Sprite playersprite;
 	Vector2f position;
 public:
+	bool isOnCarpet = false;
 	Sprite sprite;
-	
+	Sprite PressE;
 	int speed;
 	int keyCounter = 0;
 	FloatRect Phitbox;
@@ -41,8 +42,11 @@ public:
 	void draw(sf::RenderWindow& window) override;
 	void loadTexture();
 	void Mouvement();
-	void Colision(Prop* prop);
+	void Colision(unique_ptr<Prop>& prop);
+	void Interact(unique_ptr<Prop>& prop);
+	void DrawPressE(RenderWindow& window);
 	Vector2f getPosition() const;
 	FloatRect getHitbox() const;
+	Clock ClockPressE;
+	Time PressEDiration = seconds(0.2f);
 };
-#endif

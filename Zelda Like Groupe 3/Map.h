@@ -5,9 +5,9 @@
 using namespace std;
 using namespace sf;
 enum Id {
-	STONE, HOUSEFLOOR, GRASS, HOUSEUR, HOUSEUL, HOUSEDL, HOUSEDR, TOWER_BOTTOM, TOWER_TOP, TOWER_BASE, CWALLH, CWALLV, HOUSEWALL, HOUSEROOFH, HOUSEROOFR, HOUSEROOFL,
-	BED_TOP, BED_BOTTOM, KITCHEN, DRESSER, SINK, COUNTER, CARPET, TREE_BOTTOM, TREE_TOP, GUARD_HOUSE_DL, GUARD_HOUSE_DR, GUARD_HOUSE_UL, GUARD_HOUSE_UR, SPIKES_T, SPIKES_F,
-	INTERRUPTOR_T, INTERRUPTOR_F, KEY, DOOR, FENCES_H, FENCES_V
+	STONE, HOUSEFLOOR, GRASS, HOUSEUR, HOUSEUL, HOUSEDL, HOUSEDR, TOWER_BOTTOM, TOWER_TOP, TOWER_BASE, CWALLH, CWALLD, CWALLV, HOUSEWALL, HOUSEROOFU, HOUSEROOFR, HOUSEROOFL, HOUSEROOFD,
+	BED_TOP, BED_BOTTOM, KITCHEN, DRESSER, SINK, COUNTER, CARPET, CARPET_OUTDOOR, TREE_BOTTOM, TREE_TOP, GUARD_HOUSE_DL, GUARD_HOUSE_DR, GUARD_HOUSE_UL, GUARD_HOUSE_UR, SPIKES_T, SPIKES_F,
+	INTERRUPTOR_T, INTERRUPTOR_F, KEY, DOOR, FENCES_H, FENCES_V, CASTLE_DOOR_E, CASTLE_WALL_E, CASTLE_WINDOW_E, FLAG, GATE
 };
 enum Layer {FIRST_LAYER, SECOND_LAYER};
 
@@ -21,6 +21,7 @@ public:
 	void setTexture();
 	Id id;
 	bool isPossibleColision = false;
+	bool InteractionPossible = false;
 	void addKey(Player& player, PropManager& manager);
 	void useKey(Player& player, PropManager& manager);
 	Prop(Id i);
@@ -29,15 +30,14 @@ public:
 class PropManager
 {
 protected:
-	vector<Prop*> firstLayer;
-	vector<Prop*> secondLayer;
+	vector<unique_ptr<Prop>> firstLayer;
+	vector<unique_ptr<Prop>> secondLayer;
 public:
-	~PropManager();
-	Prop* creerProp(Id id, int x, int y, Layer layer, bool c);
-	void detruireProp(Prop* prop);
+	void creerProp(Id id, int x, int y, Layer layer, bool c, bool i);
+	void detruireProp(unique_ptr<Prop>& prop);
 	void readFile();
-	vector<Prop*> getFirstLayer();
-	vector<Prop*> getSecondLayer();
+	vector<unique_ptr<Prop>>& getFirstLayer();
+	vector<unique_ptr<Prop>>& getSecondLayer();
 };
 //Les classes suivantes sont en développement et ne doivent pas être utilisée car non flexibles.
 class Interruptor

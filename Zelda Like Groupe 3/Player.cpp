@@ -4,6 +4,12 @@ using namespace std;
 using namespace sf;
 
 Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFrame3(1), currentFrame4(1), animationSpeed(15.0f), elapsedTime(0.0f), isMoving(false), isMovingLeft(false), isMovingRight(false) {
+	if (!TexturePressE.loadFromFile("assets/InputTools/PressE.png")) {
+		cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
+	}
+	PressE.setTexture(TexturePressE);
+	PressE.setPosition(48.5 * 96, 37.5 * 96);
+	PressE.setScale(0.192f, 0.192f);
 }
 
 void Player::update(float deltatime) {
@@ -14,7 +20,8 @@ void Player::update(float deltatime) {
 			currentFrame++;
 			currentFrame %= 4;
 			sprite.setTexture(playerIdleTexture[currentFrame]);
-			sprite.setOrigin(16, 16);
+			sprite.setOrigin(10, 14);
+			sprite.setTextureRect(IntRect(0, 0, 20, 28));
 			if (isMovingRight) {
 				sprite.setScale(2.2f, 2.2f);
 			}
@@ -30,7 +37,7 @@ void Player::update(float deltatime) {
 				currentFrame2++;
 				currentFrame2 %= 6;
 				sprite.setTexture(playerRunTexture[currentFrame2]);
-				sprite.setOrigin(16, 16);
+				sprite.setOrigin(10, 14);
 				if (isMovingRight) {
 					sprite.setScale(2.2f, 2.2f);
 				}
@@ -45,7 +52,7 @@ void Player::update(float deltatime) {
 				currentFrame3++;
 				currentFrame3 %= 4;
 				sprite.setTexture(playerRunUpTexture[currentFrame3]);
-				sprite.setOrigin(16, 16);
+				sprite.setOrigin(10, 14);
 			}
 		}
 		else if (isMovingDown) {
@@ -54,11 +61,11 @@ void Player::update(float deltatime) {
 				currentFrame4++;
 				currentFrame4 %= 4;
 				sprite.setTexture(playerRunDownTexture[currentFrame4]);
-				sprite.setOrigin(16, 16);
+				sprite.setOrigin(10, 14);
 			}
 		}
 	}
-	//cout << sprite.getPosition().x << ", " << sprite.getPosition().y << endl;
+	PressE.setPosition(sprite.getPosition().x + 20,sprite.getPosition().y -110);
 }
 
 void Player::draw(RenderWindow& window) {
@@ -67,6 +74,16 @@ void Player::draw(RenderWindow& window) {
 	hitboxShape.setPosition(Phitbox.left, Phitbox.top);
 	hitboxShape.setFillColor(sf::Color(255, 0, 0, 128));
 	window.draw(hitboxShape);
+	if (isOnCarpet == true)
+	{
+		cout << "il passse dedans" << endl;
+		DrawPressE(window);
+	}
+
+}
+
+void Player::DrawPressE(RenderWindow& window) {
+	window.draw(PressE);
 }
 
 void Player::loadTexture() {
@@ -90,18 +107,18 @@ void Player::loadTexture() {
 			cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
 		}
 	}
-	if (!TexturePlayer.loadFromFile("Assets/Player/player.png"))
-	{
-		cout << "faire le try cash ici je pense";
-	}
 //	sprite.setPosition(250, 200); //Maison
-	sprite.setPosition(48 * 96 ,24 * 96); // Exterieur
+//  sprite.setPosition(20*96, 96*5); //Maison garde
+	position.x = 48.5 * 96;
+	position.y = 37.5 * 96;
+	sprite.setPosition(48.5 * 96, 37.5 * 96); // Exterieur
 	//sprite.setTexture(TexturePlayer);
-	sprite.setOrigin(28, 112);
+	sprite.setOrigin(10, 14);
 	sprite.setScale(Vector2f(2.2f, 2.2f));
 }
 
 void Player::Mouvement() {
+	//cout << position.x << " " << position.y << endl;
 	isMoving = false;
 	isMovingUp = false;
 	isMovingDown = false;
@@ -158,36 +175,62 @@ void Player::Mouvement() {
 		Phitbox.top = position.y + 2260;
 	}
 }
-void Player::Colision(Prop* prop) {
+void Player::Colision(unique_ptr<Prop>& prop) {
 	
 	if (prop->isPossibleColision)
 	{
 		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingUp)
 		{
-			cout << "il y a colision" << endl;
 			sprite.move(Vector2f(0.0f, 1.5f));
 			position.y += 1.5f;
 		}
 		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingLeft)
 		{
-			cout << "il y a colision" << endl;
 			sprite.move(Vector2f(1.5f, 0.0f));
 			position.x += 1.5f;
 		}
 		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingDown)
 		{
-			cout << "il y a colision" << endl;
 			sprite.move(Vector2f(0.0f, -1.5f));
 			position.y -= 1.5f;
 		}
 		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && isMovingRight)
 		{
-			cout << "il y a colision" << endl;
 			sprite.move(Vector2f(-1.5f, 0.0f));
 			position.x -= 1.5f;
 		}
 	}
 }
+
+void Player::Interact(unique_ptr<Prop>& prop) {
+	if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible)
+	{
+		
+		isOnCarpet = true;
+	}
+	else if ((sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible) == false && ClockPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds())
+	{
+		isOnCarpet = false;
+		ClockPressE.restart();
+	}
+	
+	if (isOnCarpet && sprite.getPosition().x >= 47 * 96 && sprite.getPosition().y >= 35 * 96 
+		&& sprite.getPosition().x <= 50 * 96 && sprite.getPosition().y <= 38 * 96)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::E)) {
+			sprite.setPosition(3 * 96, 5 * 96);
+		}
+	}
+	if (isOnCarpet && sprite.getPosition().x >= 58 * 96 && sprite.getPosition().y >= 29 * 96
+		&& sprite.getPosition().x <= 61 * 96 && sprite.getPosition().y <= 32 * 96)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::E)) {
+			sprite.setPosition(19 * 96, 5 * 96);
+		}
+	}
+}
+
+
 
 Vector2f Player::getPosition() const {
 	return position;

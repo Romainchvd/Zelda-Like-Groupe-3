@@ -15,7 +15,7 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 		enemy->draw(window);
 	}
 	player.draw(window);
-	/*playtest.draw(window);*/
+	/*window.draw(player.PressE);*/
 	window.display();
 }
 
@@ -33,7 +33,6 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			enemy->update(1);
 			enemy->updateMovement(player);
 		}
-		/*player.Colision(playtest);*/
 		Draw(player, propManager, enemy1);
 		camera.setCenter(player.sprite.getPosition());
 		window.setView(camera);
@@ -46,9 +45,11 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 		//colision player
 		for (int i = 0; i < propManager.getFirstLayer().size(); i++) {
 			player.Colision(propManager.getFirstLayer()[i]);
+			player.Interact(propManager.getFirstLayer()[i]);
 		}
 		for (int i = 0; i < propManager.getSecondLayer().size(); i++) {
 			player.Colision(propManager.getSecondLayer()[i]);
+			player.Interact(propManager.getSecondLayer()[i]);
 		}
 		//
 		while (window.pollEvent(event))

@@ -1,8 +1,7 @@
 #pragma once
-#ifndef ENEMY1_H
-#define ENEMY1_H
 #include <iostream>
 #include "Player.h"
+#include <cmath>
 
 using namespace std;
 using namespace sf;
@@ -35,5 +34,3 @@ public:
 	FloatRect getFollowHitbox() const;
 	void update(float deltaTime) override;
 };
-
-#endif
