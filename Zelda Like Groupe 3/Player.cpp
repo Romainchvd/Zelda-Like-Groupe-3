@@ -219,7 +219,14 @@ void Player::Interact(unique_ptr<Prop>& prop) {
 		&& sprite.getPosition().x <= 50 * 96 && sprite.getPosition().y <= 38 * 96)
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
-			sprite.setPosition(2 * 96, 5 * 96);
+			sprite.setPosition(3 * 96, 5 * 96);
+		}
+	}
+	if (isOnCarpet && sprite.getPosition().x >= 58 * 96 && sprite.getPosition().y >= 29 * 96
+		&& sprite.getPosition().x <= 61 * 96 && sprite.getPosition().y <= 32 * 96)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::E)) {
+			sprite.setPosition(19 * 96, 5 * 96);
 		}
 	}
 }
