@@ -66,6 +66,7 @@ void Player::update(float deltatime) {
 		}
 	}
 	PressE.setPosition(sprite.getPosition().x + 20,sprite.getPosition().y -110);
+	cout << sprite.getPosition().x << "<" << sprite.getPosition().y << endl;
 }
 
 void Player::draw(RenderWindow& window) {
@@ -84,6 +85,7 @@ void Player::draw(RenderWindow& window) {
 
 void Player::DrawPressE(RenderWindow& window) {
 	window.draw(PressE);
+	cout << canPressE << endl;
 }
 
 void Player::loadTexture() {
@@ -205,27 +207,50 @@ void Player::Colision(unique_ptr<Prop>& prop) {
 void Player::Interact(unique_ptr<Prop>& prop) {
 	if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible)
 	{
-		
 		isOnCarpet = true;
 	}
-	else if ((sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible) == false && ClockPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds())
+	else if ((sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible) == false 
+		&& ClockPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds())
 	{
 		isOnCarpet = false;
 		ClockPressE.restart();
 	}
 	
 	if (isOnCarpet && sprite.getPosition().x >= 47 * 96 && sprite.getPosition().y >= 35 * 96 
-		&& sprite.getPosition().x <= 50 * 96 && sprite.getPosition().y <= 38 * 96)
+		&& sprite.getPosition().x <= 50 * 96 && sprite.getPosition().y <= 38 * 96 && canPressE)
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
-			sprite.setPosition(3 * 96, 5 * 96);
+			sprite.setPosition(4 * 96, 4 * 96);
+		}
+		if (ClockCanPressE.getElapsedTime().asSeconds() < PressEDiration.asSeconds())
+		{
+			canPressE = false;
+			if (ClockCanPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds())
+			{
+				canPressE = true;
+				ClockCanPressE.restart();
+			}	
 		}
 	}
-	if (isOnCarpet && sprite.getPosition().x >= 58 * 96 && sprite.getPosition().y >= 29 * 96
-		&& sprite.getPosition().x <= 61 * 96 && sprite.getPosition().y <= 32 * 96)
+	if (isOnCarpet && sprite.getPosition().x >= 58 * 96 && sprite.getPosition().y >= 31 * 96
+		&& sprite.getPosition().x <= 61 * 96 && sprite.getPosition().y <= 32 * 96 && canPressE)
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			sprite.setPosition(19 * 96, 5 * 96);
+		}
+	}
+	if (isOnCarpet && sprite.getPosition().x >= 3 * 96 && sprite.getPosition().y >= 5 * 96
+		&& sprite.getPosition().x <= 5 * 96 && sprite.getPosition().y <= 6 * 96 && canPressE)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::E)) {
+			sprite.setPosition(48.5 * 96, 38.5 * 96);
+		}
+	}
+	if (isOnCarpet && sprite.getPosition().x >= 20 * 96 && sprite.getPosition().y >= 5 * 96
+		&& sprite.getPosition().x <= 21 * 96 && sprite.getPosition().y <= 6 * 96 && canPressE)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::E)) {
+			sprite.setPosition(57.9 * 96, 32 * 96);
 		}
 	}
 }

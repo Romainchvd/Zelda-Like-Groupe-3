@@ -32,6 +32,7 @@ private:
 	Vector2f position;
 public:
 	bool isOnCarpet = false;
+	bool canPressE = true;
 	Sprite sprite;
 	Sprite PressE;
 	int speed;
@@ -49,4 +50,6 @@ public:
 	FloatRect getHitbox() const;
 	Clock ClockPressE;
 	Time PressEDiration = seconds(0.2f);
+	Clock ClockCanPressE;
+	Time CanPressEDiration = seconds(1.0f);
 };
