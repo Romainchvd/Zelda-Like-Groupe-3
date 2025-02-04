@@ -1,6 +1,4 @@
 #pragma once
-#ifndef PLAYER_H
-#define PLAYER_H
 #include <iostream>
 #include "Entity.h"
 
@@ -52,4 +50,3 @@ public:
 	Clock ClockPressE;
 	Time PressEDiration = seconds(0.2f);
 };
-#endif

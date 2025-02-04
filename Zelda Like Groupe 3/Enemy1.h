@@ -1,6 +1,4 @@
 #pragma once
-#ifndef ENEMY1_H
-#define ENEMY1_H
 #include <iostream>
 #include "Player.h"
 
@@ -35,5 +33,3 @@ public:
 	FloatRect getFollowHitbox() const;
 	void update(float deltaTime) override;
 };
-
-#endif

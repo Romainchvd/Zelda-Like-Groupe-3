@@ -131,6 +131,12 @@ void Prop::setTexture()
 		case FLAG:
 			if (!texture.loadFromFile("assets/flag.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
+		case GATE:
+			if (!texture.loadFromFile("assets/gateClosed.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CWALLD:
+			if (!texture.loadFromFile("assets/EcastleWallHD.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
 		default:
 			break;
 		}
@@ -301,6 +307,10 @@ void PropManager::readFile()
 				creerProp(CARPET_OUTDOOR, position.x, position.y, SECOND_LAYER, false, true);
 			else if (c == 'T')
 				creerProp(FLAG, position.x, position.y, SECOND_LAYER, false, false);
+			else if (c == 'U')
+				creerProp(GATE, position.x, position.y, SECOND_LAYER, true, false);
+			else if (c == 'V')
+				creerProp(CWALLD, position.x, position.y, SECOND_LAYER, true, false);
 
 			position.x += 96;
 		}
@@ -375,5 +385,12 @@ void Prop::useKey(Player& player, PropManager& manager)
 
 		if (it != manager.getSecondLayer().end())
 			manager.getSecondLayer().erase(it);
+	}
+	else if (player.keyCounter > 0 && player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == GATE)
+	{
+		player.keyCounter--;
+		if(!this->texture.loadFromFile("Assets/gateOpened.png")) cerr << "Erreur lors du chargement de texture de porte ouverte";
+		this->sprite.setTexture(this->texture);
+		this->isPossibleColision = false;
 	}
 }
