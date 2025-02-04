@@ -215,7 +215,8 @@ void Player::Interact(unique_ptr<Prop>& prop) {
 		ClockPressE.restart();
 	}
 	
-	if (isOnCarpet)
+	if (isOnCarpet && sprite.getPosition().x >= 47 * 96 && sprite.getPosition().y >= 35 * 96 
+		&& sprite.getPosition().x <= 50 * 96 && sprite.getPosition().y <= 38 * 96)
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			sprite.setPosition(2 * 96, 5 * 96);
