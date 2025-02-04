@@ -4,7 +4,7 @@
 
 void Prop::setTexture()
 {
-	if(this != nullptr)
+	if (this != nullptr)
 	{
 		switch (id)
 		{
@@ -131,6 +131,21 @@ void Prop::setTexture()
 		case FLAG:
 			if (!texture.loadFromFile("assets/flag.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
+		case CASTLEFLOOR:
+			if (!texture.loadFromFile("assets/castleFloor.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_RIGHT:
+			if (!texture.loadFromFile("assets/castleWallR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_UP:
+			if (!texture.loadFromFile("assets/castleWallU.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_DOWN:
+			if (!texture.loadFromFile("assets/castleWallD.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_LEFT:
+			if (!texture.loadFromFile("assets/castleWallL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
 		case GATE:
 			if (!texture.loadFromFile("assets/gateClosed.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
@@ -156,30 +171,30 @@ void PropManager::creerProp(Id id, int x, int y, Layer layer, bool c, bool i)
 	p->sprite.setPosition(x, y);
 	p->isPossibleColision = c;
 	p->InteractionPossible = i;
-	if(layer == FIRST_LAYER)
+	if (layer == FIRST_LAYER)
 	{
 		firstLayer.push_back(move(p));
 	}
-	else if(layer == SECOND_LAYER)
+	else if (layer == SECOND_LAYER)
 		secondLayer.push_back(move(p));
-	
+
 }
 
 void PropManager::detruireProp(unique_ptr<Prop>& prop)
 {
 	auto it = std::find_if(firstLayer.begin(), firstLayer.end(),
-        [&prop](const std::unique_ptr<Prop>& p) { return p.get() == prop.get(); });
+		[&prop](const std::unique_ptr<Prop>& p) { return p.get() == prop.get(); });
 
-    if (it != firstLayer.end()) {
-        firstLayer.erase(it);
-    }
+	if (it != firstLayer.end()) {
+		firstLayer.erase(it);
+	}
 
-    it = std::find_if(secondLayer.begin(), secondLayer.end(),
-        [&prop](const std::unique_ptr<Prop>& p) { return p.get() == prop.get(); });
+	it = std::find_if(secondLayer.begin(), secondLayer.end(),
+		[&prop](const std::unique_ptr<Prop>& p) { return p.get() == prop.get(); });
 
-    if (it != secondLayer.end()) {
-        secondLayer.erase(it);
-    }
+	if (it != secondLayer.end()) {
+		secondLayer.erase(it);
+	}
 }
 
 
@@ -227,7 +242,7 @@ void PropManager::readFile()
 				creerProp(HOUSEROOFL, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'J')
 				creerProp(HOUSEROOFR, position.x, position.y, FIRST_LAYER, true, false);
-			
+
 
 			position.x += 96;
 		}
@@ -311,6 +326,17 @@ void PropManager::readFile()
 				creerProp(GATE, position.x, position.y, SECOND_LAYER, true, false);
 			else if (c == 'V')
 				creerProp(CWALLD, position.x, position.y, SECOND_LAYER, true, false);
+			else if (c == 'W')
+				creerProp(CASTLEWALL_RIGHT, position.x, position.y, SECOND_LAYER, true, false);
+			else if (c == 'X')
+				creerProp(CASTLEWALL_LEFT, position.x, position.y, SECOND_LAYER, true, false);
+			else if (c == 'Y')
+				creerProp(CASTLEFLOOR, position.x, position.y, SECOND_LAYER, false, false);
+			else if (c == 'Z')
+				creerProp(CASTLEWALL_UP, position.x, position.y, SECOND_LAYER, true, false);
+			else if (c == 'a')
+				creerProp(CASTLEWALL_DOWN, position.x, position.y, SECOND_LAYER, true, false);
+
 
 			position.x += 96;
 		}
@@ -379,7 +405,7 @@ void Prop::useKey(Player& player, PropManager& manager)
 	if (player.keyCounter > 0 && player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == DOOR)
 	{
 		player.keyCounter--;
-		
+
 		auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
 			[this](const unique_ptr<Prop>& p) { return p.get() == this; });
 
@@ -389,7 +415,7 @@ void Prop::useKey(Player& player, PropManager& manager)
 	else if (player.keyCounter > 0 && player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == GATE)
 	{
 		player.keyCounter--;
-		if(!this->texture.loadFromFile("Assets/gateOpened.png")) cerr << "Erreur lors du chargement de texture de porte ouverte";
+		if (!this->texture.loadFromFile("Assets/gateOpened.png")) cerr << "Erreur lors du chargement de texture de porte ouverte";
 		this->sprite.setTexture(this->texture);
 		this->isPossibleColision = false;
 	}
