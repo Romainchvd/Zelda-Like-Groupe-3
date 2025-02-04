@@ -119,6 +119,18 @@ void Prop::setTexture()
 		case FENCES_V:
 			if (!texture.loadFromFile("assets/fencesV.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
+		case CASTLE_DOOR:
+			if (!texture.loadFromFile("assets/castleDoor.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLE_WALL:
+			if (!texture.loadFromFile("assets/castleWall.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLE_WINDOW:
+			if (!texture.loadFromFile("assets/castleWindow.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case FLAG:
+			if (!texture.loadFromFile("assets/flag.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
 		default:
 			break;
 		}
@@ -194,6 +206,12 @@ void PropManager::readFile()
 				creerProp(GRASS, position.x, position.y, FIRST_LAYER, false, false);
 			else if (c == '6')
 				creerProp(STONE, position.x, position.y, FIRST_LAYER, false, false);
+			else if (c == '7')
+				creerProp(CASTLE_DOOR, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == '8')
+				creerProp(CASTLE_WALL, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == '9')
+				creerProp(CASTLE_WINDOW, position.x, position.y, FIRST_LAYER, true, false);
 			//Attention espace vide disponible
 			else if (c == 'G')
 				creerProp(HOUSEWALL, position.x, position.y, FIRST_LAYER, true, false);
@@ -281,6 +299,8 @@ void PropManager::readFile()
 				creerProp(FENCES_V, position.x, position.y, SECOND_LAYER, true, false);
 			else if (c == 'S')
 				creerProp(CARPET_OUTDOOR, position.x, position.y, SECOND_LAYER, false, true);
+			else if (c == 'T')
+				creerProp(FLAG, position.x, position.y, SECOND_LAYER, false, false);
 
 			position.x += 96;
 		}
