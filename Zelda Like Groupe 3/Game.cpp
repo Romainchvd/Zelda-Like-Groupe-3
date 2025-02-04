@@ -28,5 +28,10 @@ Game::Game() {
 
 
 }
+	enemy1.emplace_back(std::make_unique<Enemy1>(Vector2f(5000.0f, 2300.f)));
+	for (auto it = enemy1.begin(); it != enemy1.end();) {
+		std::cout << "ok" << endl;
+		it++;
+	}
 };
 

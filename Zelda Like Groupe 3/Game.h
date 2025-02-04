@@ -17,5 +17,7 @@ public:
 	void win();
 	void lose();
 	void draw(sf::RenderWindow& window);
+	PropManager propManager;
+	vector<unique_ptr<Enemy1>> enemy1;
 	};
-};
+	
