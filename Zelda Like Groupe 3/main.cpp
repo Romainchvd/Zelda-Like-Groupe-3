@@ -10,7 +10,7 @@ Player player1(10);
 
 int main()
 {
-	Game game;
+	Game game(1920, 1080);
 	player1.loadTexture();
 	game.propManager.readFile();
 	Renderer renderer;
