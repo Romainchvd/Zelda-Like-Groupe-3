@@ -45,8 +45,11 @@ void Prop::setTexture()
 	case HOUSEWALL:
 		if (!texture.loadFromFile("assets/housewall.png")) cerr << "Erreur lors du chargement de la texture de mur de la maison" << endl;
 		break;
-	case HOUSEROOFH:
-		if (!texture.loadFromFile("assets/houseRoofH.png")) cerr << "Erreur lors du chargement de la texture de mur horizontal interieur de la maison" << endl;
+	case HOUSEROOFU:
+		if (!texture.loadFromFile("assets/houseRoofU.png")) cerr << "Erreur lors du chargement de la texture de mur horizontal interieur de la maison" << endl;
+		break;
+	case HOUSEROOFD:
+		if (!texture.loadFromFile("assets/houseRoofD.png")) cerr << "Erreur lors du chargement de la texture de mur horizontal interieur de la maison" << endl;
 		break;
 	case HOUSEROOFR:
 		if (!texture.loadFromFile("assets/houseRoofR.png")) cerr << "Erreur lors du chargement de la texture de mur droit interieur de la maison" << endl;
@@ -189,7 +192,8 @@ void PropManager::readFile()
 		{
 			if (c == '0')
 				creerProp(HOUSEFLOOR, position.x, position.y, FIRST_LAYER, false, false);
-			//Attention espace vide disponible
+			else if (c == '1')
+				creerProp(HOUSEROOFD, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == '5')
 				creerProp(GRASS, position.x, position.y, FIRST_LAYER, false, false);
 			else if (c == '6')
@@ -198,7 +202,7 @@ void PropManager::readFile()
 			else if (c == 'G')
 				creerProp(HOUSEWALL, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'H')
-				creerProp(HOUSEROOFH, position.x, position.y, FIRST_LAYER, true, false);
+				creerProp(HOUSEROOFU, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'I')
 				creerProp(HOUSEROOFL, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'J')
