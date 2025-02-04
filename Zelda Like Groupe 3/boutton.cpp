@@ -1,5 +1,5 @@
 include "boutton.h"
-
+#include "Game.h"
 Boutton::Play(){}
 x = 120;
 y = 50;
@@ -10,6 +10,7 @@ shape.setPosition(x, y);
 }
 void Boutton::click() {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) && (mouseRect.interscts(BackButtonRect) {
+		Game::GAME_STATE = PLAYING;
 	}
 }
 void Boutton::draw(sf::RenderWindow& window) {
