@@ -145,12 +145,10 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="testPlayer2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="testPlayer2.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer.h" />
