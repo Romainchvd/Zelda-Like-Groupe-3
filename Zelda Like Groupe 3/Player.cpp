@@ -176,7 +176,7 @@ void Player::Mouvement() {
 		Phitbox.top = position.y + 2260;
 	}
 }
-void Player::Colision(Prop* prop) {
+void Player::Colision(unique_ptr<Prop>& prop) {
 	
 	if (prop->isPossibleColision)
 	{
@@ -203,7 +203,7 @@ void Player::Colision(Prop* prop) {
 	}
 }
 
-void Player::Interact(Prop* prop) {
+void Player::Interact(unique_ptr<Prop>& prop) {
 	if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible)
 	{
 		

@@ -30,15 +30,14 @@ public:
 class PropManager
 {
 protected:
-	vector<Prop*> firstLayer;
-	vector<Prop*> secondLayer;
+	vector<unique_ptr<Prop>> firstLayer;
+	vector<unique_ptr<Prop>> secondLayer;
 public:
-	~PropManager();
-	Prop* creerProp(Id id, int x, int y, Layer layer, bool c, bool i);
-	void detruireProp(Prop* prop);
+	void creerProp(Id id, int x, int y, Layer layer, bool c, bool i);
+	void detruireProp(unique_ptr<Prop>& prop);
 	void readFile();
-	vector<Prop*> getFirstLayer();
-	vector<Prop*> getSecondLayer();
+	vector<unique_ptr<Prop>>& getFirstLayer();
+	vector<unique_ptr<Prop>>& getSecondLayer();
 };
 //Les classes suivantes sont en développement et ne doivent pas être utilisée car non flexibles.
 class Interruptor

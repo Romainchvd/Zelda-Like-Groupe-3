@@ -44,8 +44,8 @@ public:
 	void draw(sf::RenderWindow& window) override;
 	void loadTexture();
 	void Mouvement();
-	void Colision(Prop* prop);
-	void Interact(Prop* prop);
+	void Colision(unique_ptr<Prop>& prop);
+	void Interact(unique_ptr<Prop>& prop);
 	void DrawPressE(RenderWindow& window);
 	Vector2f getPosition() const;
 	FloatRect getHitbox() const;
