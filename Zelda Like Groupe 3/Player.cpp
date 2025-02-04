@@ -109,6 +109,8 @@ void Player::loadTexture() {
 	}
 //	sprite.setPosition(250, 200); //Maison
 //  sprite.setPosition(20*96, 96*5); //Maison garde
+	position.x = 48.5 * 96;
+	position.y = 37.5 * 96;
 	sprite.setPosition(48.5 * 96, 37.5 * 96); // Exterieur
 	//sprite.setTexture(TexturePlayer);
 	sprite.setOrigin(10, 14);
@@ -116,6 +118,7 @@ void Player::loadTexture() {
 }
 
 void Player::Mouvement() {
+	//cout << position.x << " " << position.y << endl;
 	isMoving = false;
 	isMovingUp = false;
 	isMovingDown = false;
@@ -211,10 +214,18 @@ void Player::Interact(unique_ptr<Prop>& prop) {
 		ClockPressE.restart();
 	}
 	
-	if (isOnCarpet)
+	if (isOnCarpet && sprite.getPosition().x >= 47 * 96 && sprite.getPosition().y >= 35 * 96 
+		&& sprite.getPosition().x <= 50 * 96 && sprite.getPosition().y <= 38 * 96)
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
-			sprite.setPosition(2 * 96, 5 * 96);
+			sprite.setPosition(3 * 96, 5 * 96);
+		}
+	}
+	if (isOnCarpet && sprite.getPosition().x >= 58 * 96 && sprite.getPosition().y >= 29 * 96
+		&& sprite.getPosition().x <= 61 * 96 && sprite.getPosition().y <= 32 * 96)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::E)) {
+			sprite.setPosition(19 * 96, 5 * 96);
 		}
 	}
 }
