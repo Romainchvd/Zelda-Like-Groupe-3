@@ -3,6 +3,7 @@
 #define ENEMY1_H
 #include <iostream>
 #include "Player.h"
+#include <cmath>
 
 using namespace std;
 using namespace sf;
