@@ -30,7 +30,8 @@ Enemy1::Enemy1(Vector2f startPosition) : position(startPosition), currentFrame(1
     followHitbox.top = position.y;
 	enemy1sprite.setScale(0.4f, 0.4f);
     enemy1sprite.setOrigin(12, 20);
-    maxHealth = 100.0f;
+    maxHealth = 100;
+    health = maxHealth;
 }
 
 void Enemy1::updateMovement(const Player& player) {

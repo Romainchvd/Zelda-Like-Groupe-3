@@ -11,7 +11,6 @@ using namespace sf;
 
 class Player :public Entity {
 private:
-	int attack = 10;
 	bool isMoving;
 	bool isMovingLeft;
 	bool isMovingRight;
@@ -68,7 +67,6 @@ public:
 	SoundBuffer collectB;
 	SoundBuffer solvedB;
 	void swordAttackCheck();
-
 	template<typename T1>
 	void swordAttack(T1& enemy)
 	{

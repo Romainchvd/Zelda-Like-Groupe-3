@@ -22,7 +22,9 @@ Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFram
 	collect.setBuffer(collectB);
 	if (!swordB.loadFromFile("Assets/sounds/slash.ogg")) throw("Erreur lors du chargement du son: attaque à l'épée");
 	sword.setBuffer(swordB);
-
+	health = 100;
+	maxHealth = health;
+	attack = 10;
 }
 
 void Player::update(float deltatime) {
