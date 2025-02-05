@@ -123,7 +123,7 @@ void Player::loadTexture() {
 		}
 	}
 	sprite.setPosition(250, 296); //Maison
-//    sprite.setPosition(20*96, 96*5); //Maison garde
+//  sprite.setPosition(20*96, 96*5); //Maison garde
 //	sprite.setPosition(112 * 96, 38 * 96); //Donjon Entrée
 	position.x = 48.5 * 96;
 	position.y = 37.5 * 96;
@@ -224,12 +224,16 @@ void Player::Interact(unique_ptr<Prop>& prop) {
 		isOnCarpet = true;
 	}
 	else if ((sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible) == false 
-		&& ClockPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds())
+		      && ClockPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds()) 
 	{
 		isOnCarpet = false;
 		ClockPressE.restart();
-	}
+    }
 	
+	if (ClockCanPressE.getElapsedTime().asSeconds() > CanPressEDiration.asSeconds() && canPressE == false)
+	{
+		canPressE = true;
+	}
 	if (isOnCarpet && sprite.getPosition().x >= 47 * 96 && sprite.getPosition().y >= 35 * 96 
 		&& sprite.getPosition().x <= 50 * 96 && sprite.getPosition().y <= 38 * 96 && canPressE)
 	{
@@ -239,11 +243,6 @@ void Player::Interact(unique_ptr<Prop>& prop) {
 			ClockCanPressE.restart();
 		}
 	}
-	if (ClockCanPressE.getElapsedTime().asSeconds() > CanPressEDiration.asSeconds() && canPressE == false)
-	{
-		canPressE = true;		
-	}
-	
 	if (isOnCarpet && sprite.getPosition().x >= 58 * 96 && sprite.getPosition().y >= 31 * 96
 		&& sprite.getPosition().x <= 61 * 96 && sprite.getPosition().y <= 32 * 96 && canPressE)
 	{
@@ -267,6 +266,15 @@ void Player::Interact(unique_ptr<Prop>& prop) {
 	{
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			sprite.setPosition(57.9 * 96, 32 * 96);
+			canPressE = false;
+			ClockCanPressE.restart();
+		}
+	}
+	if (isOnCarpet && sprite.getPosition().x >= 40 * 96 && sprite.getPosition().y >= 22 * 96
+		&& sprite.getPosition().x <= 43 * 96 && sprite.getPosition().y <= 23 * 96 && canPressE)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::E)) {
+			sprite.setPosition(110 * 96, 38 * 96);
 			canPressE = false;
 			ClockCanPressE.restart();
 		}
