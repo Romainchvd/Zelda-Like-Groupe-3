@@ -16,5 +16,6 @@ int main()
 	game.propManager.readFile();
 	Renderer renderer;
 	renderer.run(player1, game.propManager , game.enemy1, game);
+	
 	return 0;
 }
