@@ -179,6 +179,9 @@ void Prop::setTexture()
 		case CHEST:
 			if (!texture.loadFromFile("assets/chestClosed.png")) cerr << "Erreur lors du chargement de la texture de coffre" << endl;
 			break;
+		case SWORD:
+			if (!texture.loadFromFile("assets/sword.png")) cerr << "Erreur lors du chargement de la texture de l'epee" << endl;
+			break;
 		default:
 			break;
 		}
@@ -380,6 +383,8 @@ void PropManager::readFile()
 				creerProp(CWALLD, position.x, position.y, SECOND_LAYER, true, false);
 			else if (c == 'W')
 				creerProp(CHEST, position.x, position.y, SECOND_LAYER, true, true);
+			else if (c == 'X')
+				creerProp(SWORD, position.x, position.y, SECOND_LAYER, false, false);
 			
 
 
@@ -431,18 +436,34 @@ void Spikes::checkInterruptor(Player& player)
 		}
 	}
 }
-void Prop::addKey(Player& player, PropManager& manager)
+void Prop::collectProp(Player& player, PropManager& manager)
 {
-	if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == KEY)
+	if (id == KEY)
 	{
-		player.keyCounter++;
-		player.collect.play();
+		if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()))
+		{
+			player.keyCounter++;
+			player.collect.play();
 
-		auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
-			[this](const unique_ptr<Prop>& p) { return p.get() == this; });
+			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
+				[this](const unique_ptr<Prop>& p) { return p.get() == this; });
 
-		if (it != manager.getSecondLayer().end())
-			manager.getSecondLayer().erase(it);
+			if (it != manager.getSecondLayer().end())
+				manager.getSecondLayer().erase(it);
+		}
+	}
+	else if (id == SWORD)
+	{
+		if(player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()))
+		{
+			player.hasSword = true;
+			player.collect.play();
+			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
+				[this](const unique_ptr<Prop>& p) { return p.get() == this; });
+
+			if (it != manager.getSecondLayer().end())
+				manager.getSecondLayer().erase(it);
+		}
 	}
 }
 

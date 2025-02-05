@@ -10,7 +10,7 @@ using namespace std;
 using namespace sf;
 
 class Player :public Entity {
-private:
+protected:
 	bool isMoving;
 	bool isMovingLeft;
 	bool isMovingRight;
@@ -36,6 +36,7 @@ public:
 	bool canPressE = true;
 	bool canAttack = true;
 	bool isAttacking = false;
+	bool hasSword = false;
 	Sprite sprite;
 	Sprite PressE;
 	int speed;
@@ -59,7 +60,7 @@ public:
 	Clock chestCanPressEClock;
 	Time swordUsingDuration = seconds(0.1);
 	Time swordCooldown = seconds(1);
-	Time CanPressEDiration = seconds(3.0f);
+	Time CanPressEDiration = seconds(1);
 	Time chestCanPressETimeToDisapear = seconds(0.1);
 	Sound sword;
 	Sound chest;
@@ -80,10 +81,13 @@ public:
 	{
 		if constexpr (is_same_v<T1, unique_ptr<Enemy1>>)
 		{
-			cout << "Good" << endl;
-			enemy->health -= attack;
-			cout << enemy->health << endl;
-			isAttacking = false;
+			if(sprite.getGlobalBounds().intersects(enemy->enemy1sprite.getGlobalBounds()))
+			{
+				cout << "Good" << endl;
+				enemy->health -= attack;
+				enemy->hit.play();
+				isAttacking = false;
+			}
 		}
 	}
 };
