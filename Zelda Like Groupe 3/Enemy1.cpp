@@ -32,9 +32,12 @@ Enemy1::Enemy1(Vector2f startPosition) : position(startPosition), currentFrame(1
     enemy1sprite.setOrigin(11, 17);
     maxHealth = 100.0f;
     health = maxHealth;
+    if (!hitB.loadFromFile("Assets/sounds/hit.ogg")) throw("Erreur lors du chargement du son hit pour l'ennemi");
+    hit.setBuffer(hitB);
 }
 
 void Enemy1::updateMovement(const Player& player) {
+    direction = player.getPosition() - position;
     float previousX = position.x;
     Vector2f direction = player.getPosition() - position;
     float distance = hypot(direction.x, direction.y);
@@ -101,6 +104,30 @@ void Enemy1::update(float deltatime) {
 			currentFrame++;
 	        currentFrame %= 4;
 			enemy1sprite.setTexture(enemy1IdleTexture[currentFrame]);
+			//sprite.setOrigin(16, 16);
+		}
+	//}
+	//else {
+			//if (elapsedTime >= animationSpeed) {
+				//elapsedTime = 0.0f;
+				//currentFrame2++;
+				//currentFrame2 %= 4;
+				//sprite.setTexture(enemy1RunTexture[currentFrame2]);
+				//sprite.setOrigin(16, 16);	
+		//}
+	//}
+}
+
+void Enemy1::Colision(unique_ptr<Prop>& prop) {
+    if (prop->isPossibleColision)
+    {
+        if (enemy1sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()))
+        { 
+            
+            
+        }
+    }
+}
 		}
 	}
 	else {

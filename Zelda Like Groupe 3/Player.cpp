@@ -94,7 +94,7 @@ void Player::draw(RenderWindow& window) {
 	{
 		//cout << "il passse dedans" << endl;
 		DrawPressE(window);
-		cout << boolalpha << closeToChest << endl;
+		//cout << boolalpha << closeToChest << endl;
 	}
 
 }
@@ -125,6 +125,7 @@ void Player::loadTexture() {
 		}
 	}
 	sprite.setPosition(250, 296); //Maison
+
 //  sprite.setPosition(20*96, 96*5); //Maison garde
 //	sprite.setPosition(112 * 96, 38 * 96); //Donjon Entrée
 	position = sprite.getPosition();
@@ -310,6 +311,14 @@ FloatRect Player::getHitbox() const {
 
 void Player::swordAttackCheck()
 {
+	if (hasSword)
+	{
+		attack = 20;
+	}
+	else
+	{
+		attack = 10;
+	}
 	if (swordClock.getElapsedTime().asSeconds() > swordCooldown.asSeconds() && canAttack == false)
 	{
 		canAttack = true;
@@ -321,7 +330,8 @@ void Player::swordAttackCheck()
 	if (canAttack && Mouse::isButtonPressed(Mouse::Left))
 	{
 		swordClock.restart();
-		sword.play();
+		if (hasSword)
+			sword.play();
 		isAttacking = true;
 	}
 }

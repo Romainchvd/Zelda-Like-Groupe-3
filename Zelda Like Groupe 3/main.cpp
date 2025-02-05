@@ -5,7 +5,6 @@
 using namespace std;
 
 
-
 Player player1(10);
 
 int main()
