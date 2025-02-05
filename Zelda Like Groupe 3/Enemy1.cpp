@@ -51,24 +51,24 @@ void Enemy1::updateMovement(const Player& player) {
             direction /= distance;
             position += direction * 0.6f;
             isMoving = true;
-            {
-                cout << "il est à mois de 300" << endl;
-            isMoving = false;
-            position.x -= 0.0f;
-            }
+            
+            
+           
         }
         else {
-            //position.x -= 0.2f;
+            cout << "il est à mois de 300" << endl;
+            isMoving = false;
+            position.x -= 0.0f;
         }
-  
-    // cout << followHitbox.getPosition().x << endl;
-    // cout << followHitbox.getPosition().y << endl;
     }
-   // else {
-      //  enemy1sprite.setScale(2.2f, 2.2f);
-   // }
+    if (position.x > previousX) {
+        enemy1sprite.setScale(2.2f, 2.2f);
+    }
+     else {
+        enemy1sprite.setScale(-2.2f, 2.2f);
+    }
     enemy1sprite.setPosition(position);
-    previousX = position.x;
+
 }
 
 
