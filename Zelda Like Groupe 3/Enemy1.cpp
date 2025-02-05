@@ -119,8 +119,7 @@ void Enemy1::Colision(unique_ptr<Prop>& prop) {
     {
         if (enemy1sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()))
         { 
-            
-            
+            cout << "enemi est colision" << endl;
         }
     }
 }
