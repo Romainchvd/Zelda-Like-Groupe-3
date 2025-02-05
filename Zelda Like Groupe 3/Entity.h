@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 using namespace std;
 using namespace sf;
 
@@ -8,6 +9,7 @@ public:
 	Sprite sprite;
 	virtual void update(float deltaTime) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
-
+	Sound hit;
+	SoundBuffer hitB;
 };
 

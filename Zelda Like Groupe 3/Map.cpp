@@ -421,6 +421,7 @@ void Prop::addKey(Player& player, PropManager& manager)
 	if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == KEY)
 	{
 		player.keyCounter++;
+		player.collect.play();
 
 		auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
 			[this](const unique_ptr<Prop>& p) { return p.get() == this; });
@@ -435,7 +436,7 @@ void Prop::useKey(Player& player, PropManager& manager)
 	if (player.keyCounter > 0 && player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == DOOR)
 	{
 		player.keyCounter--;
-
+		player.solved.play();
 		auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
 			[this](const unique_ptr<Prop>& p) { return p.get() == this; });
 
@@ -445,6 +446,7 @@ void Prop::useKey(Player& player, PropManager& manager)
 	else if (player.keyCounter > 0 && player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == GATE)
 	{
 		player.keyCounter--;
+		player.solved.play();
 		if (!this->texture.loadFromFile("Assets/gateOpened.png")) cerr << "Erreur lors du chargement de texture de porte ouverte";
 		this->sprite.setTexture(this->texture);
 		this->isPossibleColision = false;

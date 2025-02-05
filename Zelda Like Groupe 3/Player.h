@@ -52,4 +52,12 @@ public:
 	Time PressEDiration = seconds(0.2f);
 	Clock ClockCanPressE;
 	Time CanPressEDiration = seconds(3.0f);
+	Sound sword;
+	Sound chest;
+	Sound collect;
+	Sound solved;
+	SoundBuffer swordB;
+	SoundBuffer chestB;
+	SoundBuffer collectB;
+	SoundBuffer solvedB;
 };

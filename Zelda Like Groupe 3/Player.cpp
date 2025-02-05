@@ -5,11 +5,18 @@ using namespace sf;
 
 Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFrame3(1), currentFrame4(1), animationSpeed(15.0f), elapsedTime(0.0f), isMoving(false), isMovingLeft(false), isMovingRight(false) {
 	if (!TexturePressE.loadFromFile("assets/InputTools/PressE.png")) {
-		cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
-	}
+		cerr << "Erreur lors du chargement de l'image run du joueur" << endl; }
 	PressE.setTexture(TexturePressE);
 	PressE.setPosition(48.5 * 96, 37.5 * 96);
 	PressE.setScale(0.192f, 0.192f);
+	if (!hitB.loadFromFile("Assets/sounds/hit.ogg")) throw("Erreur lors du chargement du son : hit");
+	hit.setBuffer(hitB);
+	if (!chestB.loadFromFile("Assets/sounds/chest.ogg")) throw("Erreur lors du chargement du son: coffre");
+	chest.setBuffer(chestB);
+	if (!solvedB.loadFromFile("Assets/sounds/solved.ogg")) throw("Erreur lors du chargement du son: solved");
+	solved.setBuffer(solvedB);
+	if (!collectB.loadFromFile("Assets/sounds/collected.ogg")) throw("Erreur lors du chargement du son: coffre");
+	collect.setBuffer(collectB);
 }
 
 void Player::update(float deltatime) {
