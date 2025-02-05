@@ -293,11 +293,11 @@ void Player::Interact(unique_ptr<Prop>& prop, RenderWindow& window) {
 		playerGB.left -= detectionZone.y;
 		playerGB.width += 2 * detectionZone.x;
 		playerGB.height += 2 * detectionZone.y;
-		closeToChest = false;
 		if (playerGB.intersects(prop->sprite.getGlobalBounds()))
 		{
 			closeToChest = true;
 			DrawPressE(window);
+			
 			if (Keyboard::isKeyPressed(Keyboard::E))
 			{
 				closeToChest = false;
@@ -308,6 +308,11 @@ void Player::Interact(unique_ptr<Prop>& prop, RenderWindow& window) {
 				collect.play();
 			}
 		}
+	}
+	if (chestCanPressEClock.getElapsedTime().asSeconds() > chestCanPressETimeToDisapear.asSeconds() && closeToChest)
+	{
+		closeToChest = false;
+		chestCanPressEClock.restart();
 	}
 }
 

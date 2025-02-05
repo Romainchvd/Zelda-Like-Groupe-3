@@ -56,9 +56,11 @@ public:
 	Clock ClockCanPressE;
 	Clock swordClock;
 	Clock isUsingSwordClock;
+	Clock chestCanPressEClock;
 	Time swordUsingDuration = seconds(0.1);
 	Time swordCooldown = seconds(1);
 	Time CanPressEDiration = seconds(3.0f);
+	Time chestCanPressETimeToDisapear = seconds(0.1);
 	Sound sword;
 	Sound chest;
 	Sound collect;
