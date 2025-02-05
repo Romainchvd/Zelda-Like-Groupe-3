@@ -10,7 +10,7 @@ using namespace std;
 using namespace sf;
 
 class Player :public Entity {
-private:
+protected:
 	bool isMoving;
 	bool isMovingLeft;
 	bool isMovingRight;
@@ -80,10 +80,13 @@ public:
 	{
 		if constexpr (is_same_v<T1, unique_ptr<Enemy1>>)
 		{
-			cout << "Good" << endl;
-			enemy->health -= attack;
-			cout << enemy->health << endl;
-			isAttacking = false;
+			if(sprite.getGlobalBounds().intersects(enemy->enemy1sprite.getGlobalBounds()))
+			{
+				cout << "Good" << endl;
+				enemy->health -= attack;
+				cout << enemy->health << endl;
+				isAttacking = false;
+			}
 		}
 	}
 };
