@@ -9,7 +9,7 @@ Game::Game(float x, float y) {
 	victoryFont.loadFromFile("assets/font/victoryFont.ttf");
 	victoryText.setFont(victoryFont);
 	shape.setFillColor(sf::Color::Black);
-	enemy1.emplace_back(std::make_unique<Enemy1>(Vector2f(5000.0f, 2300.f)));
+	enemy1.emplace_back(std::make_unique<Enemy1>(Vector2f(4600.0f, 3500.f)));
 	for (auto it = enemy1.begin(); it != enemy1.end();) {
 		std::cout << "ok" << endl;
 		it++;
