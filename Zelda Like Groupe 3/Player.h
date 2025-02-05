@@ -32,6 +32,7 @@ private:
 	Vector2f position;
 public:
 	bool isOnCarpet = false;
+	bool closeToChest = false;
 	bool canPressE = true;
 	bool canAttack = true;
 	bool isAttacking = false;
@@ -46,7 +47,7 @@ public:
 	void loadTexture();
 	void Mouvement();
 	void Colision(unique_ptr<Prop>& prop);
-	void Interact(unique_ptr<Prop>& prop);
+	void Interact(unique_ptr<Prop>& prop, RenderWindow& window);
 	void DrawPressE(RenderWindow& window);
 	Vector2f getPosition() const;
 	FloatRect getHitbox() const;

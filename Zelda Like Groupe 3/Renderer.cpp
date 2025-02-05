@@ -67,11 +67,11 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 		//colision player
 		for (int i = 0; i < propManager.getFirstLayer().size(); i++) {
 			player.Colision(propManager.getFirstLayer()[i]);
-			player.Interact(propManager.getFirstLayer()[i]);
+			player.Interact(propManager.getFirstLayer()[i], window);
 		}
 		for (int i = 0; i < propManager.getSecondLayer().size(); i++) {
 			player.Colision(propManager.getSecondLayer()[i]);
-			player.Interact(propManager.getSecondLayer()[i]);
+			player.Interact(propManager.getSecondLayer()[i], window);
 		}
 		//
 		while (window.pollEvent(event))
