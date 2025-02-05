@@ -152,6 +152,12 @@ void Prop::setTexture()
 		case CASTLEWALL_DOWNRIGHT:
 			if (!texture.loadFromFile("assets/castleWallDR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
+		case CASTLEWALL_DOWNLEFTE:
+			if (!texture.loadFromFile("assets/castleWallDLE.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_DOWNRIGHTE:
+			if (!texture.loadFromFile("assets/castleWallDRE.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
 		case CASTLEWALL_UPRIGHT:
 			if (!texture.loadFromFile("assets/castleWallUR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
@@ -281,6 +287,10 @@ void PropManager::readFile()
 				creerProp(CASTLEWALL_UP, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'a')
 				creerProp(CASTLEWALL_DOWN, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'b')
+				creerProp(CASTLEWALL_DOWNLEFTE, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'c')
+				creerProp(CASTLEWALL_DOWNRIGHTE, position.x, position.y, FIRST_LAYER, true, false);
 
 
 			position.x += 96;

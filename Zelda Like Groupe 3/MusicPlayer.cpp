@@ -19,6 +19,7 @@ void MusicPlayer::loadFile()
 	//if (!epilogue.openFromFile("Assets/music/boss2.ogg")) throw("Musique introuvable: boss2");
 	if (!castle.openFromFile("Assets/music/castle.ogg")) throw("Musique introuvable: chateau");
 	castle.setLoop(true);
+	castle.setVolume(50);
 }
 void MusicPlayer::playCastle()
 {

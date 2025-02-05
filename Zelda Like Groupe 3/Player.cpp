@@ -116,9 +116,9 @@ void Player::loadTexture() {
 			cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
 		}
 	}
-	sprite.setPosition(250, 296); //Maison
+//	sprite.setPosition(250, 296); //Maison
 //    sprite.setPosition(20*96, 96*5); //Maison garde
-//	sprite.setPosition(112 * 96, 38 * 96); //Donjon Entrée
+	sprite.setPosition(112 * 96, 38 * 96); //Donjon Entrée
 	position.x = 48.5 * 96;
 	position.y = 37.5 * 96;
 //	sprite.setPosition(48.5 * 96, 37.5 * 96); // Exterieur
