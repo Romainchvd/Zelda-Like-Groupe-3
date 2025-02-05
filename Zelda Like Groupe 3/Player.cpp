@@ -33,7 +33,39 @@ Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFram
 
 void Player::update(float deltatime) {
 	elapsedTime += deltatime;
-	if (!isMoving) {
+	if (sword.getStatus() == Sound::Playing && hasSword) {
+		if (elapsedTime >= animationSpeed) {
+			elapsedTime = 0.0f;
+			currentFrame2++;
+			currentFrame2 %= 4;
+			sprite.setTexture(playerAttackSwordTexture[currentFrame2]);
+			sprite.setOrigin(10, 14);
+			sprite.setTextureRect(IntRect(0, 0, 35, 31));
+			if (isMovingRight) {
+				sprite.setScale(2.2f, 2.2f);
+			}
+			else if (isMovingLeft) {
+				sprite.setScale(-2.2f, 2.2f);
+			}
+		}
+	}
+	else if (!isMoving && hasSword && sword.getStatus() != Sound::Playing) {
+		if (elapsedTime >= animationSpeed) {
+			elapsedTime = 0.0f;
+			currentFrame++;
+			currentFrame %= 4;
+			sprite.setTexture(playerIdleSwordTexture[currentFrame]);
+			sprite.setOrigin(10, 14);
+			sprite.setTextureRect(IntRect(0, 0, 30, 27));
+			if (isMovingRight) {
+				sprite.setScale(2.2f, 2.2f);
+			}
+			else if (isMovingLeft) {
+				sprite.setScale(-2.2f, 2.2f);
+			}
+		}
+	}
+	else if (!isMoving && !hasSword) {
 		if (elapsedTime >= animationSpeed) {
 			elapsedTime = 0.0f;
 			currentFrame++;
@@ -44,11 +76,12 @@ void Player::update(float deltatime) {
 			if (isMovingRight) {
 				sprite.setScale(2.2f, 2.2f);
 			}
-			if (isMovingLeft) {
+			else if (isMovingLeft) {
 				sprite.setScale(-2.2f, 2.2f);
 			}
 	     }
 	}
+	
 	else {
 		if (isMovingRight || isMovingLeft) {
 			if (elapsedTime >= animationSpeed) {
@@ -57,30 +90,34 @@ void Player::update(float deltatime) {
 				currentFrame2 %= 6;
 				sprite.setTexture(playerRunTexture[currentFrame2]);
 				sprite.setOrigin(10, 14);
+				sprite.setTextureRect(IntRect(0, 0, 20, 28));
 				if (isMovingRight) {
 					sprite.setScale(2.2f, 2.2f);
 				}
-				if (isMovingLeft) {
+				else if (isMovingLeft) {
 					sprite.setScale(-2.2f, 2.2f);
 				}
 			}
 		}
-		else if (isMovingUp) {
+		
+		else if (isMovingUp && !hasSword && sword.getStatus() != Sound::Playing) {
 			if (elapsedTime >= animationSpeed) {
 				elapsedTime = 0.0f;
 				currentFrame3++;
 				currentFrame3 %= 4;
 				sprite.setTexture(playerRunUpTexture[currentFrame3]);
 				sprite.setOrigin(10, 14);
+				sprite.setTextureRect(IntRect(0, 0, 20, 28));
 			}
 		}
-		else if (isMovingDown) {
+		else if (isMovingDown && !hasSword && sword.getStatus() != Sound::Playing) {
 			if (elapsedTime >= animationSpeed) {
 				elapsedTime = 0.0f;
 				currentFrame4++;
 				currentFrame4 %= 4;
 				sprite.setTexture(playerRunDownTexture[currentFrame4]);
 				sprite.setOrigin(10, 14);
+				sprite.setTextureRect(IntRect(0, 0, 20, 28));
 			}
 		}
 	}
@@ -126,6 +163,18 @@ void Player::loadTexture() {
 	for (int i = 0; i < 4; ++i) {
 		if (!playerRunDownTexture[i].loadFromFile("Assets/Player/rundown/rundown" + to_string(i) + ".png")) {
 			cerr << "Erreur lors du chargement de l'image run du joueur" << endl;
+		}
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		if (!playerAttackSwordTexture[i].loadFromFile("Assets/Player/sword_attack/" + to_string(i+1) + ".png")) {
+			cerr << "Erreur lors du chargement de l'image swordAttack du joueur" << endl;
+		}
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		if (!playerIdleSwordTexture[i].loadFromFile("Assets/Player/sword_idle/" + to_string(i+1) + ".png")) {
+			cerr << "Erreur lors du chargement de l'image swordAttack du joueur" << endl;
 		}
 	}
 	sprite.setPosition(250, 296); //Maison
