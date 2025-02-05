@@ -102,16 +102,15 @@ void Enemy1::update(float deltatime) {
 			currentFrame++;
 	        currentFrame %= 4;
 			enemy1sprite.setTexture(enemy1IdleTexture[currentFrame]);
-			
 		}
 	}
-	else {
-			if (elapsedTime >= animationSpeed) {
-				elapsedTime = 0.0f;
-				currentFrame2++;
-				currentFrame2 %= 4;
-                enemy1sprite.setTexture(enemy1RunTexture[currentFrame2]);
-		}
+     else {
+        if (elapsedTime >= animationSpeed) {
+            elapsedTime = 0.0f;
+            currentFrame2++;
+            currentFrame2 %= 4;
+            enemy1sprite.setTexture(enemy1RunTexture[currentFrame2]);
+        }
 	}
 }
 
@@ -125,6 +124,3 @@ void Enemy1::Colision(unique_ptr<Prop>& prop) {
         }
     }
 }
-		
-	
-	
