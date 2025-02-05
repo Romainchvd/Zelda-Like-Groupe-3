@@ -6,7 +6,7 @@ Game::Game(float x, float y) {
 		//std::cout << "ok";
 //}
 	shape.setSize(Vector2f(x, y));
-	victoryFont.loadFromFile("assets/font.victoryFont.ttf");
+	victoryFont.loadFromFile("assets/font/victoryFont.ttf");
 	victoryText.setFont(victoryFont);
 	shape.setFillColor(sf::Color::Black);
 }

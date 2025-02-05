@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "Enemy1.h"
 
 Renderer::Renderer() : event(), window(sf::VideoMode(1920, 1080), "Zelda Like", Style::Fullscreen) {
 	window.setFramerateLimit(144);
@@ -19,7 +18,7 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 	window.display();
 }
 
-void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1) {
+void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, Game& game) {
 	player.loadTexture();
 	for (auto& enemy : enemy1) {
 		enemy->loadTexture();
@@ -27,6 +26,11 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
 	camera.setSize(Vector2f(1920.f/2, 1080.f/2));
 	while (window.isOpen()) {
+		for(int i = 0; i < propManager.getFirstLayer().size(); i++)
+			game.musicManager.playMusic(player, propManager.getFirstLayer()[i]);
+		for (int i = 0; i < propManager.getSecondLayer().size(); i++)
+			game.musicManager.playMusic(player, propManager.getSecondLayer()[i]);
+
 		player.Mouvement();
 		player.update(1);
 		for (auto& enemy : enemy1) {
