@@ -16,6 +16,8 @@ private:
 	bool isMovingRight;
 	bool isMovingDown;
 	bool isMovingUp;
+	bool canAttack;
+	bool isAttacking = false;
 	float animationSpeed = 0.1f;
 	float elapsedTime;
 	int currentFrame = 0;
@@ -51,6 +53,8 @@ public:
 	Clock ClockPressE;
 	Time PressEDiration = seconds(0.2f);
 	Clock ClockCanPressE;
+	Clock swordClock;
+	Time swordCooldown = seconds(1);
 	Time CanPressEDiration = seconds(3.0f);
 	Sound sword;
 	Sound chest;
@@ -60,4 +64,5 @@ public:
 	SoundBuffer chestB;
 	SoundBuffer collectB;
 	SoundBuffer solvedB;
+	void swordAttack();
 };

@@ -276,3 +276,11 @@ Vector2f Player::getPosition() const {
 FloatRect Player::getHitbox() const {
 	return Phitbox;
 }
+
+void Player::swordAttack()
+{
+	if (swordClock.getElapsedTime().asSeconds() > swordCooldown.asSeconds())
+	{
+		canAttack = true;
+	}
+}
