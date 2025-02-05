@@ -146,11 +146,29 @@ void Prop::setTexture()
 		case CASTLEWALL_LEFT:
 			if (!texture.loadFromFile("assets/castleWallL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
+		case CASTLEWALL_DOWNLEFT:
+			if (!texture.loadFromFile("assets/castleWallDL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_DOWNRIGHT:
+			if (!texture.loadFromFile("assets/castleWallDR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_UPRIGHT:
+			if (!texture.loadFromFile("assets/castleWallUR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_UPLEFT:
+			if (!texture.loadFromFile("assets/castleWallUL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
 		case GATE:
 			if (!texture.loadFromFile("assets/gateClosed.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
 		case CWALLD:
 			if (!texture.loadFromFile("assets/EcastleWallHD.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLE_SQUARE_UR:
+			if (!texture.loadFromFile("assets/castleWallSquareUR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLE_SQUARE_UL:
+			if (!texture.loadFromFile("assets/castleWallSquareUL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
 		default:
 			break;
@@ -233,7 +251,18 @@ void PropManager::readFile()
 				creerProp(CASTLE_WALL_E, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == '9')
 				creerProp(CASTLE_WINDOW_E, position.x, position.y, FIRST_LAYER, true, false);
-			//Attention espace vide disponible
+			else if (c == 'A')
+				creerProp(CASTLEWALL_DOWNLEFT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'B')
+				creerProp(CASTLEWALL_DOWNRIGHT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'C')
+				creerProp(CASTLEWALL_UPLEFT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'D')
+				creerProp(CASTLEWALL_UPRIGHT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'E')
+				creerProp(CASTLE_SQUARE_UR, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'F')
+				creerProp(CASTLE_SQUARE_UL, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'G')
 				creerProp(HOUSEWALL, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'H')
@@ -242,6 +271,16 @@ void PropManager::readFile()
 				creerProp(HOUSEROOFL, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'J')
 				creerProp(HOUSEROOFR, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'W')
+				creerProp(CASTLEWALL_RIGHT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'X')
+				creerProp(CASTLEWALL_LEFT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'Y')
+				creerProp(CASTLEFLOOR, position.x, position.y, FIRST_LAYER, false, false);
+			else if (c == 'Z')
+				creerProp(CASTLEWALL_UP, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'a')
+				creerProp(CASTLEWALL_DOWN, position.x, position.y, FIRST_LAYER, true, false);
 
 
 			position.x += 96;
@@ -326,16 +365,7 @@ void PropManager::readFile()
 				creerProp(GATE, position.x, position.y, SECOND_LAYER, true, false);
 			else if (c == 'V')
 				creerProp(CWALLD, position.x, position.y, SECOND_LAYER, true, false);
-			else if (c == 'W')
-				creerProp(CASTLEWALL_RIGHT, position.x, position.y, SECOND_LAYER, true, false);
-			else if (c == 'X')
-				creerProp(CASTLEWALL_LEFT, position.x, position.y, SECOND_LAYER, true, false);
-			else if (c == 'Y')
-				creerProp(CASTLEFLOOR, position.x, position.y, SECOND_LAYER, false, false);
-			else if (c == 'Z')
-				creerProp(CASTLEWALL_UP, position.x, position.y, SECOND_LAYER, true, false);
-			else if (c == 'a')
-				creerProp(CASTLEWALL_DOWN, position.x, position.y, SECOND_LAYER, true, false);
+			
 
 
 			position.x += 96;

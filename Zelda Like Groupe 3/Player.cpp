@@ -111,9 +111,10 @@ void Player::loadTexture() {
 	}
 //	sprite.setPosition(250, 200); //Maison
 //  sprite.setPosition(20*96, 96*5); //Maison garde
+	sprite.setPosition(112 * 96, 38 * 96); //Donjon Entrée
 	position.x = 48.5 * 96;
 	position.y = 37.5 * 96;
-	sprite.setPosition(48.5 * 96, 37.5 * 96); // Exterieur
+//	sprite.setPosition(48.5 * 96, 37.5 * 96); // Exterieur
 	//sprite.setTexture(TexturePlayer);
 	sprite.setOrigin(10, 14);
 	sprite.setScale(Vector2f(2.2f, 2.2f));
