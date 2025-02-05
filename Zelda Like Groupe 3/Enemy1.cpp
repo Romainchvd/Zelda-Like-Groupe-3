@@ -104,18 +104,16 @@ void Enemy1::update(float deltatime) {
 			currentFrame++;
 	        currentFrame %= 4;
 			enemy1sprite.setTexture(enemy1IdleTexture[currentFrame]);
-			//sprite.setOrigin(16, 16);
 		}
-	//}
-	//else {
-			//if (elapsedTime >= animationSpeed) {
-				//elapsedTime = 0.0f;
-				//currentFrame2++;
-				//currentFrame2 %= 4;
-				//sprite.setTexture(enemy1RunTexture[currentFrame2]);
-				//sprite.setOrigin(16, 16);	
-		//}
-	//}
+	}
+     else {
+        if (elapsedTime >= animationSpeed) {
+            elapsedTime = 0.0f;
+            currentFrame2++;
+            currentFrame2 %= 4;
+            enemy1sprite.setTexture(enemy1RunTexture[currentFrame2]);
+        }
+	}
 }
 
 void Enemy1::Colision(unique_ptr<Prop>& prop) {
@@ -127,15 +125,4 @@ void Enemy1::Colision(unique_ptr<Prop>& prop) {
             
         }
     }
-}
-		}
-	}
-	else {
-		if (elapsedTime >= animationSpeed) {
-			elapsedTime = 0.0f;
-			currentFrame2++;
-			currentFrame2 %= 4;
-            enemy1sprite.setTexture(enemy1RunTexture[currentFrame2]);
-		}
-	}
 }
