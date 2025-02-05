@@ -54,16 +54,12 @@ void Enemy1::updateMovement(const Player& player) {
     if (!isDead) {
      
         if (distance < 300) {
-            //direction /= distance;
-            //position += direction * 0.4f;
-            if (enemy1sprite.getPosition().y <= player.sprite.getPosition().y)
-            {
-                cout << "il est à mois de 300" << endl;
-                enemy1sprite.move(Vector2f(0.0f, 1.0f));
-            }
+            direction /= distance;
+            position += direction * 0.4f;
+            
         }
         else {
-            //position.x -= 0.2f;
+            position.x -= 0.2f;
         }
     }
     else if (isDead) {
