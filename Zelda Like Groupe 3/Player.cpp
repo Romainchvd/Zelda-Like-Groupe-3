@@ -22,7 +22,13 @@ Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFram
 	collect.setBuffer(collectB);
 	if (!swordB.loadFromFile("Assets/sounds/slash.ogg")) throw("Erreur lors du chargement du son: attaque à l'épée");
 	sword.setBuffer(swordB);
-
+	health = 100;
+	maxHealth = health;
+	attack = 10;
+	if (!UIFont.loadFromFile("Assets/Font/victoryFont.ttf")) throw("Erreur lors du chargement de la police d'interface de jeu");
+	keyNumber.setFont(UIFont);
+	if (keyInterfaceTexture.loadFromFile("Assets/key.png"));
+	keyInterface.setTexture(keyInterfaceTexture);
 }
 
 void Player::update(float deltatime) {
@@ -88,17 +94,17 @@ void Player::draw(RenderWindow& window) {
 	hitboxShape.setPosition(Phitbox.left, Phitbox.top);
 	hitboxShape.setFillColor(sf::Color(255, 0, 0, 128));
 	window.draw(hitboxShape);
-	if (isOnCarpet == true)
+	if (isOnCarpet == true || closeToChest == true)
 	{
 		//cout << "il passse dedans" << endl;
 		DrawPressE(window);
+		cout << boolalpha << closeToChest << endl;
 	}
 
 }
 
 void Player::DrawPressE(RenderWindow& window) {
 	window.draw(PressE);
-	
 }
 
 void Player::loadTexture() {
@@ -218,66 +224,99 @@ void Player::Colision(unique_ptr<Prop>& prop) {
 	}
 }
 
-void Player::Interact(unique_ptr<Prop>& prop) {
-	if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible)
+void Player::Interact(unique_ptr<Prop>& prop, RenderWindow& window) {
+	if(prop->id == CARPET || prop->id == CARPET_OUTDOOR)
 	{
-		isOnCarpet = true;
-	}
-	else if ((sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible) == false 
-		      && ClockPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds()) 
-	{
-		isOnCarpet = false;
-		ClockPressE.restart();
-    }
-	
-	if (ClockCanPressE.getElapsedTime().asSeconds() > CanPressEDiration.asSeconds() && canPressE == false)
-	{
-		canPressE = true;
-	}
-	if (isOnCarpet && sprite.getPosition().x >= 47 * 96 && sprite.getPosition().y >= 35 * 96 
-		&& sprite.getPosition().x <= 50 * 96 && sprite.getPosition().y <= 38 * 96 && canPressE)
-	{
-		if (Keyboard::isKeyPressed(Keyboard::E)) {
-			sprite.setPosition(4 * 96, 4 * 96);
-			canPressE = false;
-			ClockCanPressE.restart();
+		if (sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible)
+		{
+			isOnCarpet = true;
+		}
+		else if ((sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()) && prop->InteractionPossible) == false
+			&& ClockPressE.getElapsedTime().asSeconds() > PressEDiration.asSeconds())
+		{
+			isOnCarpet = false;
+			ClockPressE.restart();
+		}
+
+		if (ClockCanPressE.getElapsedTime().asSeconds() > CanPressEDiration.asSeconds() && canPressE == false)
+		{
+			canPressE = true;
+		}
+		if (isOnCarpet && sprite.getPosition().x >= 47 * 96 && sprite.getPosition().y >= 35 * 96
+			&& sprite.getPosition().x <= 50 * 96 && sprite.getPosition().y <= 38 * 96 && canPressE)
+		{
+			if (Keyboard::isKeyPressed(Keyboard::E)) {
+				sprite.setPosition(4 * 96, 4 * 96);
+				canPressE = false;
+				ClockCanPressE.restart();
+			}
+		}
+		if (isOnCarpet && sprite.getPosition().x >= 58 * 96 && sprite.getPosition().y >= 31 * 96
+			&& sprite.getPosition().x <= 61 * 96 && sprite.getPosition().y <= 32 * 96 && canPressE)
+		{
+			if (Keyboard::isKeyPressed(Keyboard::E)) {
+				sprite.setPosition(19 * 96, 5 * 96);
+				canPressE = false;
+				ClockCanPressE.restart();
+			}
+		}
+		if (isOnCarpet && sprite.getPosition().x >= 3 * 96 && sprite.getPosition().y >= 5 * 96
+			&& sprite.getPosition().x <= 5 * 96 && sprite.getPosition().y <= 6 * 96 && canPressE)
+		{
+			if (Keyboard::isKeyPressed(Keyboard::E)) {
+				sprite.setPosition(48.5 * 96, 38.5 * 96);
+				canPressE = false;
+				ClockCanPressE.restart();
+			}
+		}
+		if (isOnCarpet && sprite.getPosition().x >= 20 * 96 && sprite.getPosition().y >= 5 * 96
+			&& sprite.getPosition().x <= 21 * 96 && sprite.getPosition().y <= 6 * 96 && canPressE)
+		{
+			if (Keyboard::isKeyPressed(Keyboard::E)) {
+				sprite.setPosition(57.9 * 96, 32 * 96);
+				canPressE = false;
+				ClockCanPressE.restart();
+			}
+		}
+		if (isOnCarpet && sprite.getPosition().x >= 40 * 96 && sprite.getPosition().y >= 22 * 96
+			&& sprite.getPosition().x <= 43 * 96 && sprite.getPosition().y <= 23 * 96 && canPressE)
+		{
+			if (Keyboard::isKeyPressed(Keyboard::E)) {
+				sprite.setPosition(110 * 96, 38 * 96);
+				canPressE = false;
+				ClockCanPressE.restart();
+			}
 		}
 	}
-	if (isOnCarpet && sprite.getPosition().x >= 58 * 96 && sprite.getPosition().y >= 31 * 96
-		&& sprite.getPosition().x <= 61 * 96 && sprite.getPosition().y <= 32 * 96 && canPressE)
+	else if (prop->id == CHEST && prop->opened == false)
 	{
-		if (Keyboard::isKeyPressed(Keyboard::E)) {
-			sprite.setPosition(19 * 96, 5 * 96);
-			canPressE = false;
-			ClockCanPressE.restart();
+		
+		FloatRect playerGB = sprite.getGlobalBounds();
+		Vector2f detectionZone{ 32, 32 };
+		playerGB.top -= detectionZone.x;
+		playerGB.left -= detectionZone.y;
+		playerGB.width += 2 * detectionZone.x;
+		playerGB.height += 2 * detectionZone.y;
+		if (playerGB.intersects(prop->sprite.getGlobalBounds()))
+		{
+			closeToChest = true;
+			DrawPressE(window);
+			
+			if (Keyboard::isKeyPressed(Keyboard::E))
+			{
+				closeToChest = false;
+				prop->opened = true;
+				if (!prop->texture.loadFromFile("Assets/chestOpened.png")) throw("Erreur lors du chargement de la texture : coffre ouvert");
+				prop->sprite.setTexture(prop->texture);
+				keyCounter++;
+				collect.play();
+			}
 		}
 	}
-	if (isOnCarpet && sprite.getPosition().x >= 3 * 96 && sprite.getPosition().y >= 5 * 96
-		&& sprite.getPosition().x <= 5 * 96 && sprite.getPosition().y <= 6 * 96 && canPressE)
+	if (chestCanPressEClock.getElapsedTime().asSeconds() > chestCanPressETimeToDisapear.asSeconds() && closeToChest)
 	{
-		if (Keyboard::isKeyPressed(Keyboard::E)) {
-			sprite.setPosition(48.5 * 96, 38.5 * 96);
-			canPressE = false;
-			ClockCanPressE.restart();
-		}
-	}
-	if (isOnCarpet && sprite.getPosition().x >= 20 * 96 && sprite.getPosition().y >= 5 * 96
-		&& sprite.getPosition().x <= 21 * 96 && sprite.getPosition().y <= 6 * 96 && canPressE)
-	{
-		if (Keyboard::isKeyPressed(Keyboard::E)) {
-			sprite.setPosition(57.9 * 96, 32 * 96);
-			canPressE = false;
-			ClockCanPressE.restart();
-		}
-	}
-	if (isOnCarpet && sprite.getPosition().x >= 40 * 96 && sprite.getPosition().y >= 22 * 96
-		&& sprite.getPosition().x <= 43 * 96 && sprite.getPosition().y <= 23 * 96 && canPressE)
-	{
-		if (Keyboard::isKeyPressed(Keyboard::E)) {
-			sprite.setPosition(110 * 96, 38 * 96);
-			canPressE = false;
-			ClockCanPressE.restart();
-		}
+		closeToChest = false;
+		chestCanPressEClock.restart();
 	}
 }
 
@@ -309,3 +348,14 @@ void Player::swordAttackCheck()
 	}
 }
 
+void Player::drawInterface(View& view, RenderWindow& window)
+{
+	keyInterface.setPosition(view.getCenter().x + 275, view.getCenter().y + 175);
+	keyNumber.setPosition(view.getCenter().x + 350, view.getCenter().y + 200);
+	if (keyCounter > 0)
+	{
+		window.draw(keyInterface);
+		keyNumber.setString("x" + to_string(keyCounter));
+		window.draw(keyNumber);
+	}
+}

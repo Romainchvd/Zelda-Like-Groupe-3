@@ -9,6 +9,9 @@ public:
 	Sprite sprite;
 	virtual void update(float deltaTime) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
+	int health;
+	int attack;
+	int maxHealth;
 	Sound hit;
 	SoundBuffer hitB;
 };

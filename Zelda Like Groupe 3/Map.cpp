@@ -176,6 +176,9 @@ void Prop::setTexture()
 		case CASTLE_SQUARE_UL:
 			if (!texture.loadFromFile("assets/castleWallSquareUL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
+		case CHEST:
+			if (!texture.loadFromFile("assets/chestClosed.png")) cerr << "Erreur lors du chargement de la texture de coffre" << endl;
+			break;
 		default:
 			break;
 		}
@@ -375,6 +378,8 @@ void PropManager::readFile()
 				creerProp(GATE, position.x, position.y, SECOND_LAYER, true, false);
 			else if (c == 'V')
 				creerProp(CWALLD, position.x, position.y, SECOND_LAYER, true, false);
+			else if (c == 'W')
+				creerProp(CHEST, position.x, position.y, SECOND_LAYER, true, true);
 			
 
 

@@ -11,7 +11,6 @@ using namespace sf;
 
 class Player :public Entity {
 private:
-	int attack = 10;
 	bool isMoving;
 	bool isMovingLeft;
 	bool isMovingRight;
@@ -33,6 +32,7 @@ private:
 	Vector2f position;
 public:
 	bool isOnCarpet = false;
+	bool closeToChest = false;
 	bool canPressE = true;
 	bool canAttack = true;
 	bool isAttacking = false;
@@ -47,7 +47,7 @@ public:
 	void loadTexture();
 	void Mouvement();
 	void Colision(unique_ptr<Prop>& prop);
-	void Interact(unique_ptr<Prop>& prop);
+	void Interact(unique_ptr<Prop>& prop, RenderWindow& window);
 	void DrawPressE(RenderWindow& window);
 	Vector2f getPosition() const;
 	FloatRect getHitbox() const;
@@ -56,9 +56,11 @@ public:
 	Clock ClockCanPressE;
 	Clock swordClock;
 	Clock isUsingSwordClock;
+	Clock chestCanPressEClock;
 	Time swordUsingDuration = seconds(0.1);
 	Time swordCooldown = seconds(1);
 	Time CanPressEDiration = seconds(3.0f);
+	Time chestCanPressETimeToDisapear = seconds(0.1);
 	Sound sword;
 	Sound chest;
 	Sound collect;
@@ -67,8 +69,12 @@ public:
 	SoundBuffer chestB;
 	SoundBuffer collectB;
 	SoundBuffer solvedB;
+	Text keyNumber;
+	Font UIFont;
+	Sprite keyInterface;
+	Texture keyInterfaceTexture;
 	void swordAttackCheck();
-
+	void drawInterface(View& view, RenderWindow& window);
 	template<typename T1>
 	void swordAttack(T1& enemy)
 	{

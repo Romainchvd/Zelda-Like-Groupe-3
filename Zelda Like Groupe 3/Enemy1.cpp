@@ -31,6 +31,9 @@ Enemy1::Enemy1(Vector2f startPosition) : position(startPosition), currentFrame(1
 	enemy1sprite.setScale(0.4f, 0.4f);
     enemy1sprite.setOrigin(73, 73);
     maxHealth = 100.0f;
+    enemy1sprite.setOrigin(12, 20);
+    maxHealth = 100;
+    health = maxHealth;
 }
 
 void Enemy1::updateMovement(const Player& player) {
