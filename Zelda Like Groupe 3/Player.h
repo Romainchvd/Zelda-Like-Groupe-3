@@ -59,7 +59,7 @@ public:
 	Clock chestCanPressEClock;
 	Time swordUsingDuration = seconds(0.1);
 	Time swordCooldown = seconds(1);
-	Time CanPressEDiration = seconds(3.0f);
+	Time CanPressEDiration = seconds(1);
 	Time chestCanPressETimeToDisapear = seconds(0.1);
 	Sound sword;
 	Sound chest;
@@ -84,7 +84,7 @@ public:
 			{
 				cout << "Good" << endl;
 				enemy->health -= attack;
-				cout << enemy->health << endl;
+				enemy->hit.play();
 				isAttacking = false;
 			}
 		}
