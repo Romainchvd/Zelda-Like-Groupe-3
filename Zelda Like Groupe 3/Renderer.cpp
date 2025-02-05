@@ -61,7 +61,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 		window.setView(camera);
 		for (int i = 0; i < propManager.getSecondLayer().size(); i++)
 		{
-			propManager.getSecondLayer()[i]->addKey(player, propManager);
+			propManager.getSecondLayer()[i]->collectProp(player, propManager);
 			propManager.getSecondLayer()[i]->useKey(player, propManager);
 
 		}

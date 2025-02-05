@@ -333,6 +333,14 @@ FloatRect Player::getHitbox() const {
 
 void Player::swordAttackCheck()
 {
+	if (hasSword)
+	{
+		attack = 20;
+	}
+	else
+	{
+		attack = 10;
+	}
 	if (swordClock.getElapsedTime().asSeconds() > swordCooldown.asSeconds() && canAttack == false)
 	{
 		canAttack = true;
@@ -344,7 +352,8 @@ void Player::swordAttackCheck()
 	if (canAttack && Mouse::isButtonPressed(Mouse::Left))
 	{
 		swordClock.restart();
-		sword.play();
+		if (hasSword)
+			sword.play();
 		isAttacking = true;
 	}
 }

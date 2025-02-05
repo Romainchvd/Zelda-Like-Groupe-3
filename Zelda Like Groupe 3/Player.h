@@ -36,6 +36,7 @@ public:
 	bool canPressE = true;
 	bool canAttack = true;
 	bool isAttacking = false;
+	bool hasSword = false;
 	Sprite sprite;
 	Sprite PressE;
 	int speed;
