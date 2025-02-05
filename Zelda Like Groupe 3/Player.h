@@ -69,7 +69,12 @@ public:
 	SoundBuffer chestB;
 	SoundBuffer collectB;
 	SoundBuffer solvedB;
+	Text keyNumber;
+	Font UIFont;
+	Sprite keyInterface;
+	Texture keyInterfaceTexture;
 	void swordAttackCheck();
+	void drawInterface(View& view, RenderWindow& window);
 	template<typename T1>
 	void swordAttack(T1& enemy)
 	{

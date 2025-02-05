@@ -25,6 +25,10 @@ Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFram
 	health = 100;
 	maxHealth = health;
 	attack = 10;
+	if (!UIFont.loadFromFile("Assets/Font/victoryFont.ttf")) throw("Erreur lors du chargement de la police d'interface de jeu");
+	keyNumber.setFont(UIFont);
+	if (keyInterfaceTexture.loadFromFile("Assets/key.png"));
+	keyInterface.setTexture(keyInterfaceTexture);
 }
 
 void Player::update(float deltatime) {
@@ -344,3 +348,14 @@ void Player::swordAttackCheck()
 	}
 }
 
+void Player::drawInterface(View& view, RenderWindow& window)
+{
+	keyInterface.setPosition(view.getCenter().x + 275, view.getCenter().y + 175);
+	keyNumber.setPosition(view.getCenter().x + 350, view.getCenter().y + 200);
+	if (keyCounter > 0)
+	{
+		window.draw(keyInterface);
+		keyNumber.setString("x" + to_string(keyCounter));
+		window.draw(keyNumber);
+	}
+}
