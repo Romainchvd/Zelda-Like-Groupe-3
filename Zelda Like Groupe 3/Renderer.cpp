@@ -26,13 +26,13 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 		window.draw(propManager.getFirstLayer()[i]->sprite);
 	for (int i = 0; i < propManager.getSecondLayer().size(); i++)
 		window.draw(propManager.getSecondLayer()[i]->sprite);
+	player.draw(window);
 	for (auto i = 0; i < enemy1.size(); i++) {
 		if (enemy1[i]->health > 0)
 		{
 			enemy1[i]->draw(window);
 		}
 	}
-	player.draw(window);
 	/*window.draw(player.PressE);*/
 	player.drawInterface(view, window);
 	window.display();
@@ -41,6 +41,7 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, Game& game) {
 	player.loadTexture();
 	musicThread = thread(&Renderer::musicThreadF, this, std::ref(game), std::ref(player), std::ref(propManager), std::ref(running));
+	//player.getPosition() = player.sprite.getPosition();
 	for (auto& enemy : enemy1) {
 		enemy->loadTexture();
 	}
