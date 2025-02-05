@@ -63,16 +63,21 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 		{
 			propManager.getSecondLayer()[i]->addKey(player, propManager);
 			propManager.getSecondLayer()[i]->useKey(player, propManager);
-
 		}
 		//colision player
 		for (int i = 0; i < propManager.getFirstLayer().size(); i++) {
 			player.Colision(propManager.getFirstLayer()[i]);
 			player.Interact(propManager.getFirstLayer()[i], window);
+			for (auto& enemy : enemy1) {
+				enemy->Colision(propManager.getFirstLayer()[i]);
+			}
 		}
 		for (int i = 0; i < propManager.getSecondLayer().size(); i++) {
 			player.Colision(propManager.getSecondLayer()[i]);
 			player.Interact(propManager.getSecondLayer()[i], window);
+			for (auto& enemy : enemy1) {
+				enemy->Colision(propManager.getSecondLayer()[i]);
+			}
 		}
 		//
 		while (window.pollEvent(event))

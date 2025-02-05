@@ -35,7 +35,7 @@ Enemy1::Enemy1(Vector2f startPosition) : position(startPosition), currentFrame(1
 }
 
 void Enemy1::updateMovement(const Player& player) {
-    Vector2f direction = player.getPosition() - position;
+    direction = player.getPosition() - position;
     float distance = hypot(direction.x, direction.y);
     
     if (Keyboard::isKeyPressed(Keyboard::T)) {
@@ -50,11 +50,16 @@ void Enemy1::updateMovement(const Player& player) {
     if (!isDead) {
      
         if (distance < 300) {
-            direction /= distance;
-            position += direction * 0.4f;
+            //direction /= distance;
+            //position += direction * 0.4f;
+            if (enemy1sprite.getPosition().y <= player.sprite.getPosition().y)
+            {
+                cout << "il est à mois de 300" << endl;
+                enemy1sprite.move(Vector2f(0.0f, 1.0f));
+            }
         }
         else {
-            position.x -= 0.2f;
+            //position.x -= 0.2f;
         }
     }
     else if (isDead) {
@@ -114,4 +119,15 @@ void Enemy1::update(float deltatime) {
 				//sprite.setOrigin(16, 16);	
 		//}
 	//}
+}
+
+void Enemy1::Colision(unique_ptr<Prop>& prop) {
+    if (prop->isPossibleColision)
+    {
+        if (enemy1sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()))
+        { 
+            
+            
+        }
+    }
 }
