@@ -1,10 +1,13 @@
 #pragma once
 #include <iostream>
 #include "Player.h"
+#include "Map.h"
 #include <cmath>
 #include <memory>
 using namespace std;
 using namespace sf;
+
+
 
 class Enemy1 :public Entity {
 protected:
@@ -33,4 +36,5 @@ public:
 	FloatRect getHitbox() const;
 	FloatRect getFollowHitbox() const;
 	void update(float deltaTime) override;
+	void Colision(unique_ptr<Prop>& prop);
 };

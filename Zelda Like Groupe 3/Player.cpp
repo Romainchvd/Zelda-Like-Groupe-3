@@ -127,10 +127,6 @@ void Player::update(float deltatime) {
 
 void Player::draw(RenderWindow& window) {
 	window.draw(sprite);
-	RectangleShape hitboxShape(sf::Vector2f(Phitbox.width, Phitbox.height));
-	hitboxShape.setPosition(Phitbox.left, Phitbox.top);
-	hitboxShape.setFillColor(sf::Color(255, 0, 0, 128));
-	window.draw(hitboxShape);
 	if (isOnCarpet == true || closeToChest == true)
 	{
 		//cout << "il passse dedans" << endl;
@@ -181,8 +177,8 @@ void Player::loadTexture() {
 
 //  sprite.setPosition(20*96, 96*5); //Maison garde
 //	sprite.setPosition(112 * 96, 38 * 96); //Donjon Entrée
-//	position.x = 48.5 * 96;
-//	position.y = 37.5 * 96;
+	position = sprite.getPosition();
+	
 //	sprite.setPosition(48.5 * 96, 37.5 * 96); // Exterieur
 	//sprite.setTexture(TexturePlayer);
 	sprite.setOrigin(10, 14);
@@ -190,7 +186,7 @@ void Player::loadTexture() {
 }
 
 void Player::Mouvement() {
-	//cout << position.x << " " << position.y << endl;
+	cout << position.x << " " << position.y << endl;
 	isMoving = false;
 	isMovingUp = false;
 	isMovingDown = false;
@@ -202,11 +198,7 @@ void Player::Mouvement() {
 		isMovingUp = true;
 		sprite.move(Vector2f(0.0f, -1.5f));
 		position.y -= 1.5f;
-		Phitbox = sprite.getGlobalBounds();
-		Phitbox.width = 100.0f;
-		Phitbox.height = 70.0f;
-		Phitbox.left = position.x + 4558;
-		Phitbox.top = position.y + 2240;
+
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S))
 	{
@@ -214,11 +206,6 @@ void Player::Mouvement() {
 		isMovingDown = true;
 		sprite.move(Vector2f(0.0f, 1.5f));
 		position.y += 1.5f;
-		Phitbox = sprite.getGlobalBounds();
-		Phitbox.width = 100.0f;
-		Phitbox.height = 70.0f;
-		Phitbox.left = position.x + 4558;
-		Phitbox.top = position.y + 2310;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Q))
 	{
@@ -227,11 +214,6 @@ void Player::Mouvement() {
 		isMovingLeft = true;
 		sprite.move(Vector2f(-1.5f, 0.0f));
 		position.x -= 1.5f;
-		Phitbox = sprite.getGlobalBounds();
-		Phitbox.width = 70.0f;
-		Phitbox.height = 100.0f;
-		Phitbox.left = position.x + 4546;
-		Phitbox.top = position.y + 2260;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
@@ -240,11 +222,6 @@ void Player::Mouvement() {
 		isMovingRight = true;
 		sprite.move(Vector2f(1.5f, 0.0f));
 		position.x += 1.5f;
-		Phitbox = sprite.getGlobalBounds();
-		Phitbox.width = 70.0f;
-		Phitbox.height = 100.0f;
-		Phitbox.left = position.x + 4600;
-		Phitbox.top = position.y + 2260;
 	}
 }
 void Player::Colision(unique_ptr<Prop>& prop) {
@@ -337,6 +314,7 @@ void Player::Interact(unique_ptr<Prop>& prop, RenderWindow& window) {
 				ClockCanPressE.restart();
 			}
 		}
+		position = sprite.getPosition();
 	}
 	else if (prop->id == CHEST && prop->opened == false)
 	{
