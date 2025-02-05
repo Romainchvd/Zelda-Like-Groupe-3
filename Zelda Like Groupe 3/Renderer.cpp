@@ -26,8 +26,11 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 		window.draw(propManager.getFirstLayer()[i]->sprite);
 	for (int i = 0; i < propManager.getSecondLayer().size(); i++)
 		window.draw(propManager.getSecondLayer()[i]->sprite);
-	for (auto& enemy : enemy1) {
-		enemy->draw(window);
+	for (auto i = 0; i < enemy1.size(); i++) {
+		if (enemy1[i]->health > 0)
+		{
+			enemy1[i]->draw(window);
+		}
 	}
 	player.draw(window);
 	/*window.draw(player.PressE);*/
@@ -43,7 +46,9 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
 	camera.setSize(Vector2f(1920.f/2, 1080.f/2));
 	while (window.isOpen()) {
-
+		player.swordAttackCheck();
+		if (player.isAttacking)
+			player.swordAttack(enemy1[0]);
 		player.Mouvement();
 		player.update(1);
 		for (auto& enemy : enemy1) {

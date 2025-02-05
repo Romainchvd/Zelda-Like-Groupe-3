@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Entity.h"
 
+class Enemy1;
 class Prop;
 class PropManager;
 
@@ -10,14 +11,12 @@ using namespace sf;
 
 class Player :public Entity {
 private:
-	
+	int attack = 10;
 	bool isMoving;
 	bool isMovingLeft;
 	bool isMovingRight;
 	bool isMovingDown;
 	bool isMovingUp;
-	bool canAttack;
-	bool isAttacking = false;
 	float animationSpeed = 0.1f;
 	float elapsedTime;
 	int currentFrame = 0;
@@ -35,6 +34,8 @@ private:
 public:
 	bool isOnCarpet = false;
 	bool canPressE = true;
+	bool canAttack = true;
+	bool isAttacking = false;
 	Sprite sprite;
 	Sprite PressE;
 	int speed;
@@ -54,6 +55,8 @@ public:
 	Time PressEDiration = seconds(0.2f);
 	Clock ClockCanPressE;
 	Clock swordClock;
+	Clock isUsingSwordClock;
+	Time swordUsingDuration = seconds(0.1);
 	Time swordCooldown = seconds(1);
 	Time CanPressEDiration = seconds(3.0f);
 	Sound sword;
@@ -64,5 +67,17 @@ public:
 	SoundBuffer chestB;
 	SoundBuffer collectB;
 	SoundBuffer solvedB;
-	void swordAttack();
+	void swordAttackCheck();
+
+	template<typename T1>
+	void swordAttack(T1& enemy)
+	{
+		if constexpr (is_same_v<T1, unique_ptr<Enemy1>>)
+		{
+			cout << "Good" << endl;
+			enemy->health -= attack;
+			cout << enemy->health << endl;
+			isAttacking = false;
+		}
+	}
 };

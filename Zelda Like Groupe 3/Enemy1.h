@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Player.h"
 #include <cmath>
-
+#include <memory>
 using namespace std;
 using namespace sf;
 

@@ -5,6 +5,7 @@
 #include "MusicPlayer.h"
 #include "Enemy1.h"
 
+
 enum GAME_STATE { MENU, PLAYING, WIN, LOSE };
 class Game {
 private:

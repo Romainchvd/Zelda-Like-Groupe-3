@@ -1,7 +1,10 @@
 #include "Player.h"
 #include "Map.h"
+#include "Enemy1.h"
+#include <type_traits>
 using namespace std;
 using namespace sf;
+
 
 Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFrame3(1), currentFrame4(1), animationSpeed(15.0f), elapsedTime(0.0f), isMoving(false), isMovingLeft(false), isMovingRight(false) {
 	if (!TexturePressE.loadFromFile("assets/InputTools/PressE.png")) {
@@ -17,6 +20,9 @@ Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFram
 	solved.setBuffer(solvedB);
 	if (!collectB.loadFromFile("Assets/sounds/collected.ogg")) throw("Erreur lors du chargement du son: coffre");
 	collect.setBuffer(collectB);
+	if (!swordB.loadFromFile("Assets/sounds/slash.ogg")) throw("Erreur lors du chargement du son: attaque à l'épée");
+	sword.setBuffer(swordB);
+
 }
 
 void Player::update(float deltatime) {
@@ -73,7 +79,7 @@ void Player::update(float deltatime) {
 		}
 	}
 	PressE.setPosition(sprite.getPosition().x + 20,sprite.getPosition().y -110);
-	cout << canPressE << endl;
+	//cout << canPressE << endl;
 }
 
 void Player::draw(RenderWindow& window) {
@@ -84,7 +90,7 @@ void Player::draw(RenderWindow& window) {
 	window.draw(hitboxShape);
 	if (isOnCarpet == true)
 	{
-		cout << "il passse dedans" << endl;
+		//cout << "il passse dedans" << endl;
 		DrawPressE(window);
 	}
 
@@ -277,10 +283,21 @@ FloatRect Player::getHitbox() const {
 	return Phitbox;
 }
 
-void Player::swordAttack()
+void Player::swordAttackCheck()
 {
-	if (swordClock.getElapsedTime().asSeconds() > swordCooldown.asSeconds())
+	if (swordClock.getElapsedTime().asSeconds() > swordCooldown.asSeconds() && canAttack == false)
 	{
 		canAttack = true;
 	}
+	else
+	{
+		canAttack = false;
+	}
+	if (canAttack && Mouse::isButtonPressed(Mouse::Left))
+	{
+		swordClock.restart();
+		sword.play();
+		isAttacking = true;
+	}
 }
+
