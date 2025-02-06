@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include <SFML/Audio.hpp>
+class Garde;
 class MusicPlayer
 {
 public:
