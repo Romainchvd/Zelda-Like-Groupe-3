@@ -31,6 +31,8 @@ Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFram
 	keyNumber.setFont(UIFont);
 	if (keyInterfaceTexture.loadFromFile("Assets/key.png"));
 	keyInterface.setTexture(keyInterfaceTexture);
+	healthTxt.setFont(UIFont);
+
 }
 
 void Player::update(float deltatime) {
@@ -508,12 +510,17 @@ void Player::swordAttackCheck2()
 
 void Player::drawInterface(View& view, RenderWindow& window)
 {
+	
 	keyInterface.setPosition(view.getCenter().x + 275, view.getCenter().y + 175);
 	keyNumber.setPosition(view.getCenter().x + 350, view.getCenter().y + 200);
+	healthTxt.setPosition(view.getCenter().x -400, view.getCenter().y + 200);
+	window.draw(healthTxt);
+	healthTxt.setString("Health: " + to_string(health) + "/" + to_string(maxHealth));
 	if (keyCounter > 0)
 	{
 		window.draw(keyInterface);
 		keyNumber.setString("x" + to_string(keyCounter));
 		window.draw(keyNumber);
 	}
+	
 }

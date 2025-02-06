@@ -37,10 +37,15 @@ protected:
 	Texture playerSwordDown[4];
 	Texture playerSwordUp[4];
 	Texture playerSwordRun[6];
+	Text healthTxt;
 	Texture TexturePressE;
 	Sprite playersprite;
 	Vector2f position;
 public:
+	Texture healthbar5;
+	Texture healthbar10;
+	Sprite healthbar;
+	bool enhancedHP = false;
 	bool isOnCarpet = false;
 	bool closeToChest = false;
 	bool canPressE = true;

@@ -183,6 +183,9 @@ void Prop::setTexture()
 		case SWORD:
 			if (!texture.loadFromFile("assets/sword.png")) cerr << "Erreur lors du chargement de la texture de l'epee" << endl;
 			break;
+		case HEART:
+			if (!texture.loadFromFile("assets/heartContainer.png")) cerr << "Erreur lors du chargement de la texture de l'epee" << endl;
+			break;
 		default:
 			break;
 		}
@@ -244,7 +247,7 @@ void PropManager::readFile(Game& game)
 	}
 	if (file.is_open() == false)
 	{
-		throw("Erreur critique : le fichier de la carte du jeu est introuvable.");
+		throw runtime_error("Erreur critique : le fichier de la carte du jeu est introuvable.");
 	}
 	string line;
 	Vector2f position(0, 0);
@@ -324,7 +327,7 @@ void PropManager::readFile(Game& game)
 	}
 	if (file.is_open() == false)
 	{
-		throw("Erreur critique : le fichier de la carte du l'editeur est introuvable.");
+		throw runtime_error("Erreur critique : le fichier de la carte du l'editeur est introuvable.");
 	}
 	position.x = 0; position.y = 0;
 	while (true)
@@ -405,6 +408,8 @@ void PropManager::readFile(Game& game)
 				creerProp(CHEST, position.x, position.y, SECOND_LAYER, true, true);
 			else if (c == 'X')
 				creerProp(SWORD, position.x, position.y, SECOND_LAYER, false, false);
+			else if (c == 'Y')
+				creerProp(HEART, position.x, position.y, SECOND_LAYER, false, false);
 			
 
 
@@ -425,6 +430,21 @@ void Prop::collectProp(Player& player, PropManager& manager)
 		if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()))
 		{
 			player.keyCounter++;
+			player.collect.play();
+
+			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
+				[this](const unique_ptr<Prop>& p) { return p.get() == this; });
+
+			if (it != manager.getSecondLayer().end())
+				manager.getSecondLayer().erase(it);
+		}
+	}
+	if (id == HEART)
+	{
+		if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()))
+		{
+			player.maxHealth = 200;
+			player.health = player.maxHealth;
 			player.collect.play();
 
 			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),

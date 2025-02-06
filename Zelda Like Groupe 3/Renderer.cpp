@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include <stdexcept>
 Renderer::Renderer() : event(), window(sf::VideoMode(1920, 1080), "Zelda Like", Style::Fullscreen) {
 	window.setFramerateLimit(144);
 }
@@ -52,6 +52,9 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 	}
 	/*window.draw(player.PressE);*/
 	player.drawInterface(view, window);
+		player.healthbar.setScale(1, 1);
+	player.healthbar.setPosition(player.sprite.getPosition());
+	//healthbar.setScale(0.4, 0.4);
 	window.display();
 }
 
@@ -63,7 +66,13 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 	while (window.isOpen()) {
 		if ((game.state == PLAYING && game.doInitialiaze )|| (game.state == EDITOR && game.doInitialiaze))
 		{
-			game.propManager.readFile(game);
+			try {
+				game.propManager.readFile(game);
+			}
+			catch (const std::exception& e) {
+				std::cerr << "ERREUR : " << e.what() << std::endl;
+			}
+			
 			player.loadTexture();
 			boss.loadTexture();
 			//player.getPosition() = player.sprite.getPosition();
