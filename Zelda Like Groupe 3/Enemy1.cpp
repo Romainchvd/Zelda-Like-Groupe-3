@@ -51,12 +51,8 @@ void Enemy1::updateMovement(const Player& player) {
             direction /= distance;
             position += direction * 0.6f;
             isMoving = true;
-            
-            
-           
         }
         else {
-            cout << "il est à mois de 300" << endl;
             isMoving = false;
             position.x -= 0.0f;
         }
