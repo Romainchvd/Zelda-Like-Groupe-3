@@ -39,7 +39,6 @@ Enemy1::Enemy1(Vector2f startPosition) : position(startPosition), currentFrame(1
 void Enemy1::updateMovement(const Player& player) {
     direction = player.getPosition() - position;
     float previousX = position.x;
-    Vector2f direction = player.getPosition() - position;
     float distance = hypot(direction.x, direction.y);
     
     if (enemy1sprite.getGlobalBounds().intersects(player.sprite.getGlobalBounds())) {
@@ -115,7 +114,8 @@ void Enemy1::Colision(unique_ptr<Prop>& prop) {
     {
         if (enemy1sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()))
         { 
-            cout << "enemi est colision" << endl;
+          position += direction * -0.6f;
+          isMoving = true;
         }
     }
 }
