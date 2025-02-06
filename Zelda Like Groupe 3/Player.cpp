@@ -35,18 +35,32 @@ void Player::update(float deltatime) {
 	elapsedTime += deltatime;
 	if (sword.getStatus() == Sound::Playing && hasSword) {
 		if (elapsedTime >= animationSpeed) {
-			elapsedTime = 0.0f;
-			currentFrame2++;
-			currentFrame2 %= 4;
-			sprite.setTexture(playerAttackSwordTexture[currentFrame2]);
-			sprite.setOrigin(10, 14);
-			sprite.setTextureRect(IntRect(0, 0, 35, 31));
-			if (isMovingRight) {
-				sprite.setScale(2.2f, 2.2f);
+			if(isMovingRight || isMovingLeft)
+			{
+				elapsedTime = 0.0f;
+				currentFrame2++;
+				currentFrame2 %= 4;
+				sprite.setTexture(playerAttackSwordTexture[currentFrame2]);
+				sprite.setOrigin(10, 14);
+				sprite.setTextureRect(IntRect(0, 0, 35, 31));
+				if (isMovingRight) {
+					sprite.setScale(2.2f, 2.2f);
+				}
+				else if (isMovingLeft) {
+					sprite.setScale(-2.2f, 2.2f);
+				}
 			}
-			else if (isMovingLeft) {
-				sprite.setScale(-2.2f, 2.2f);
+			else if (isMovingDown) {
+				if (elapsedTime >= animationSpeed) {
+					elapsedTime = 0.0f;
+					currentFrame4++;
+					currentFrame4 %= 4;
+					sprite.setTexture(playerAttackSwordTextureDown[currentFrame4]);
+					sprite.setOrigin(10, 14);
+					sprite.setTextureRect(IntRect(0, 0, 28, 32));
+				}
 			}
+			
 		}
 	}
 	else if (!isMoving && hasSword && sword.getStatus() != Sound::Playing) {
@@ -110,6 +124,7 @@ void Player::update(float deltatime) {
 				sprite.setTextureRect(IntRect(0, 0, 20, 28));
 			}
 		}
+		
 		else if (isMovingDown && !hasSword && sword.getStatus() != Sound::Playing) {
 			if (elapsedTime >= animationSpeed) {
 				elapsedTime = 0.0f;
@@ -120,6 +135,7 @@ void Player::update(float deltatime) {
 				sprite.setTextureRect(IntRect(0, 0, 20, 28));
 			}
 		}
+		
 	}
 	PressE.setPosition(sprite.getPosition().x + 20,sprite.getPosition().y -110);
 	//cout << canPressE << endl;
@@ -171,6 +187,12 @@ void Player::loadTexture() {
 	{
 		if (!playerIdleSwordTexture[i].loadFromFile("Assets/Player/sword_idle/" + to_string(i+1) + ".png")) {
 			cerr << "Erreur lors du chargement de l'image swordAttack du joueur" << endl;
+		}
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		if (!playerAttackSwordTextureDown[i].loadFromFile("Assets/Player/sword_attack_down/" + to_string(i + 1) + ".png")) {
+			cerr << "Erreur lors du chargement de l'image swordAttack down du joueur" << endl;
 		}
 	}
 	sprite.setPosition(250, 296); //Maison
