@@ -253,7 +253,7 @@ void Player::loadTexture() {
 }
 
 void Player::Mouvement() {
-	cout << position.x << " " << position.y << endl;
+	//cout << position.x << " " << position.y << endl;
 	isMoving = false;
 	isMovingUp = false;
 	isMovingDown = false;

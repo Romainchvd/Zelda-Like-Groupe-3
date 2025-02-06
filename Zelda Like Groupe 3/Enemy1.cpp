@@ -36,13 +36,19 @@ Enemy1::Enemy1(Vector2f startPosition) : position(startPosition), currentFrame(1
     hit.setBuffer(hitB);
 }
 
-void Enemy1::updateMovement(const Player& player) {
+void Enemy1::updateMovement(Player& player, float deltatime) {
+    elapsedTime2 += deltatime;
     direction = player.getPosition() - position;
     float previousX = position.x;
     float distance = hypot(direction.x, direction.y);
     
     if (enemy1sprite.getGlobalBounds().intersects(player.sprite.getGlobalBounds())) {
-        cout << "ok" << endl;
+        if (elapsedTime2 >= cooldown) {
+            elapsedTime2 = 0.0f;
+            player.health -= 10;
+            cout << player.health << endl;
+           hit.play();
+        } 
     }
     if (!isDead) {
      
