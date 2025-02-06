@@ -147,8 +147,10 @@
     <ClCompile Include="MusicPlayer.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Boss.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
