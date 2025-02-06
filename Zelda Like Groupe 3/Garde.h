@@ -40,3 +40,13 @@ public:
 	void update(float deltaTime) override;
 	void Colision(unique_ptr<Prop>& prop);
 };
+
+class GardeManager
+{
+protected:
+	vector<unique_ptr<Garde>> garde;
+public:
+	void creerGarde(int x, int y);
+	void detruireGarde(unique_ptr<Garde>& enemy);
+	//void readFile();
+};
