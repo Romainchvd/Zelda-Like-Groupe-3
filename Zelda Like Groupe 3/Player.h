@@ -72,10 +72,12 @@ public:
 	Sound chest;
 	Sound collect;
 	Sound solved;
+	Sound fist;
 	SoundBuffer swordB;
 	SoundBuffer chestB;
 	SoundBuffer collectB;
 	SoundBuffer solvedB;
+	SoundBuffer fistB;
 	Text keyNumber;
 	Font UIFont;
 	Sprite keyInterface;

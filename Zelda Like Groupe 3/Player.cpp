@@ -22,6 +22,8 @@ Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFram
 	collect.setBuffer(collectB);
 	if (!swordB.loadFromFile("Assets/sounds/slash.ogg")) throw("Erreur lors du chargement du son: attaque à l'épée");
 	sword.setBuffer(swordB);
+	if (!fistB.loadFromFile("Assets/sounds/fist.ogg")) throw("Erreur lors du chargement du son de coup de poing");
+	fist.setBuffer(fistB);
 	health = 100;
 	maxHealth = health;
 	attack = 10;
@@ -446,6 +448,8 @@ void Player::swordAttackCheck()
 		swordClock.restart();
 		if (hasSword)
 			sword.play();
+		else
+			fist.play();
 		isAttacking = true;
 	}
 }
