@@ -35,11 +35,11 @@ Player::Player(int s) : speed(s), currentFrame(1), currentFrame2(1), currentFram
 
 void Player::update(float deltatime) {
 	elapsedTime += deltatime;
-	if (hasSword)
+	if (hasSword) //Si le joueur a une épée
 	{
-		if (sword.getStatus() == Sound::Playing && hasSword) {
+		if (sword.getStatus() == Sound::Playing && hasSword) { // Si le joueur attaque à l'épée
 			if (elapsedTime >= animationSpeed) {
-				if (isMovingRight || isMovingLeft)
+				if (isMovingRight || isMovingLeft) // Droite ou gauche
 				{
 					elapsedTime = 0.0f;
 					currentFrame2++;
@@ -50,17 +50,17 @@ void Player::update(float deltatime) {
 					if (isMovingRight) {
 						sprite.setScale(2.2f, 2.2f);
 					}
-					else if (isMovingLeft) {
+				    else if (isMovingLeft) {
 						sprite.setScale(-2.2f, 2.2f);
 					}
 				}
-				else if (isMovingDown || isMovingUp ) {
+				else if (isMovingDown || isMovingUp ) { //Haut ou bas
 					if (elapsedTime >= animationSpeed) {
 						elapsedTime = 0.0f;
 						currentFrame4++;
 						currentFrame4 %= 4;
 						sprite.setOrigin(10, 14);
-						sprite.setTextureRect(IntRect(0, 0, 28, 32));
+						sprite.setTextureRect(IntRect(0, 0, 28, 29));
 						if (isMovingUp)
 						{
 							sprite.setTexture(playerAttackSwordTextureUp[currentFrame4]);
@@ -74,7 +74,7 @@ void Player::update(float deltatime) {
 
 			}
 		}
-		else if (!isMoving) {
+		else if (!isMoving) { //Si le joueur ne bouge pas mais a une épée
 			if (elapsedTime >= animationSpeed) {
 				elapsedTime = 0.0f;
 				currentFrame++;
@@ -90,7 +90,7 @@ void Player::update(float deltatime) {
 				}
 			}
 		}
-		else if (isMovingDown || isMovingUp)
+		else if (isMovingDown || isMovingUp) //S'il va en haut ou en bas sans attaquer
 		{
 			if (elapsedTime >= animationSpeed) {
 				elapsedTime = 0.0f;
@@ -104,9 +104,24 @@ void Player::update(float deltatime) {
 					sprite.setTexture(playerSwordUp[currentFrame3]);
 			}
 		}
+		else if (isMovingRight || isMovingLeft) //S'il va à droite ou a gauche sans attaquer
+		{
+			if (elapsedTime >= animationSpeed) {
+				elapsedTime = 0.0f;
+				currentFrame3++;
+				currentFrame3 %= 6;
+				sprite.setOrigin(10, 14);
+				sprite.setTextureRect(IntRect(0, 0, 32, 27));
+				sprite.setTexture(playerSwordRun[currentFrame3]);
+				if (isMovingRight)
+					sprite.setScale(2.2f, 2.2f);
+				else if (isMovingLeft)
+					sprite.setScale(-2.2f, 2.2f);
+			}
+		}
 	}
-		else if (!hasSword) {
-		 if (!isMoving) {
+		else if (!hasSword) { //Si le joueur n'a pas d'épée
+		 if (!isMoving) { //S'il ne bouge pas
 			if (elapsedTime >= animationSpeed) {
 				elapsedTime = 0.0f;
 				currentFrame++;
@@ -125,7 +140,7 @@ void Player::update(float deltatime) {
 	}
 	
 	
-		if (isMovingRight || isMovingLeft) {
+		if (isMovingRight || isMovingLeft) { //S'il va a droite ou a gauche
 			if (elapsedTime >= animationSpeed) {
 				elapsedTime = 0.0f;
 				currentFrame2++;
@@ -142,7 +157,7 @@ void Player::update(float deltatime) {
 			}
 		}
 		
-		else if (isMovingUp && !hasSword && sword.getStatus() != Sound::Playing) {
+		else if (isMovingUp && !hasSword && sword.getStatus() != Sound::Playing) { // S'il va en haut sans attaquer
 			if (elapsedTime >= animationSpeed) {
 				elapsedTime = 0.0f;
 				currentFrame3++;
@@ -153,7 +168,7 @@ void Player::update(float deltatime) {
 			}
 		}
 		
-		else if (isMovingDown && !hasSword && sword.getStatus() != Sound::Playing) {
+		else if (isMovingDown && !hasSword && sword.getStatus() != Sound::Playing) { //Même chose en bas
 			if (elapsedTime >= animationSpeed) {
 				elapsedTime = 0.0f;
 				currentFrame4++;
@@ -238,6 +253,12 @@ void Player::loadTexture() {
 	{
 		if (!playerAttackSwordTextureUp[i].loadFromFile("Assets/Player/sword_attack_up/" + to_string(i + 1) + ".png")) {
 			cerr << "Erreur lors du chargement de l'image swordAttack up du joueur" << endl;
+		}
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		if (!playerSwordRun[i].loadFromFile("Assets/Player/sword_run/" + to_string(i + 1) + ".png")) {
+			throw ("Erreur lors du chargement de l'image run sword up du joueur");
 		}
 	}
 	sprite.setPosition(250, 296); //Maison

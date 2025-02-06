@@ -36,6 +36,7 @@ protected:
 	Texture playerAttackSwordTextureDown[4];
 	Texture playerSwordDown[4];
 	Texture playerSwordUp[4];
+	Texture playerSwordRun[6];
 	Texture TexturePressE;
 	Sprite playersprite;
 	Vector2f position;
