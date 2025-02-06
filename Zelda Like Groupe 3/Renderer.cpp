@@ -65,7 +65,8 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			player.swordAttack(enemy1[0]);
 			player.swordAttack(garde[0]);
 		}
-		
+		boss.Movement(player);
+		boss.update(1);
 		player.Mouvement();
 		player.update(1);
 		for (auto& enemy : enemy1) {
