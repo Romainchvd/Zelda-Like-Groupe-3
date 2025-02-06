@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Enemy1.cpp" />
-    <ClCompile Include="Enemy1Manager.cpp" />
     <ClCompile Include="Enemy2.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />

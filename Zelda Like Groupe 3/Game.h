@@ -20,9 +20,12 @@ public:
 	GAME_STATE state = MENU;
 	void endGame(RenderWindow& window);
 	PropManager propManager;
+	Enemy1Manager enemy1Manager;
+	Enemy2Manager enemy2Manager;
+	GardeManager  gardeManager;
 	MusicPlayer musicManager;
-	//vector<unique_ptr<Enemy1>> enemy1;
-	//vector<unique_ptr<Enemy2>> enemy2;
+	vector<unique_ptr<Enemy1>> enemy1;
+	vector<unique_ptr<Enemy2>> enemy2;
 	Sprite TitleScreenS;
 	Sprite wonS;
 	Sprite lostS;

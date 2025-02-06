@@ -24,8 +24,8 @@ void Renderer::musicThreadF(Game& game, Player& player, PropManager& propManager
 }
 
 
-void Renderer::Draw(Player& player, PropManager& propManager, Enemy1Manager& enemy1, Enemy2Manager& enemy2,
-	GardeManager& garde, View& view, vector<unique_ptr<Boss>>& Boss){
+void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2,
+	vector<unique_ptr<Garde>>& garde, View& view, vector<unique_ptr<Boss>>& Boss){
 	window.clear();
 	for (int i = 0; i < propManager.getFirstLayer().size(); i++)
 		window.draw(propManager.getFirstLayer()[i]->sprite);
@@ -58,8 +58,8 @@ void Renderer::Draw(Player& player, PropManager& propManager, Enemy1Manager& ene
 	window.display();
 }
 
-void Renderer::run(Player& player, PropManager& propManager, Enemy1Manager& enemy1, Enemy2Manager& enemy2,
-	GardeManager& garde, Game& game, vector<unique_ptr<Boss>>& Boss) {
+void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2,
+	vector<unique_ptr<Garde>>& garde, Game& game, vector<unique_ptr<Boss>>& Boss) {
 	
 	musicThread = thread(&Renderer::musicThreadF, this, std::ref(game), std::ref(player), std::ref(propManager), std::ref(running));
 	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
