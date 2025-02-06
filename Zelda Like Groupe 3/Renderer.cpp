@@ -7,13 +7,16 @@ Renderer::Renderer() : event(), window(sf::VideoMode(1920, 1080), "Zelda Like", 
 void Renderer::musicThreadF(Game& game, Player& player, PropManager& propManager, atomic<bool>& running) {
 	while (running.load()) {
 		{
-			std::lock_guard<mutex> lock(propMutex); 
+			if(game.state == PLAYING)
+			{
+				std::lock_guard<mutex> lock(propMutex);
 
-			for (auto& prop : propManager.getFirstLayer())
-				game.musicManager.playMusic(player, prop);
+				for (auto& prop : propManager.getFirstLayer())
+					game.musicManager.playMusic(player, prop);
 
-			for (auto& prop : propManager.getSecondLayer())
-				game.musicManager.playMusic(player, prop);
+				for (auto& prop : propManager.getSecondLayer())
+					game.musicManager.playMusic(player, prop);
+			}
 		}
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
