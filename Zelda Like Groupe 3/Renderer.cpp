@@ -105,6 +105,9 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			for (auto& boss : Boss) {
 				boss->Movement(player);
 				boss->update(1);
+				if (boss->BossHP <= 0) {
+					game.state = WIN;
+				}
 			}
 			player.Mouvement();
 			player.update(1);
@@ -124,6 +127,9 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			{
 				game.state = LOSE;
 			}
+			
+	
+			
 			Draw(player, propManager, enemy1, enemy2, garde, camera, Boss);
 			camera.setCenter(player.sprite.getPosition());
 			window.setView(camera);
