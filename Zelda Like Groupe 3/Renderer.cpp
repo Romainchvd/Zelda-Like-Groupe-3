@@ -58,7 +58,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 		boss.update(1);
 		for (auto& enemy : enemy1) {
 			enemy->update(1);
-			enemy->updateMovement(player);
+			enemy->updateMovement(player,0.05f);
 		}
 		Draw(player, propManager, enemy1, camera, boss);
 		camera.setCenter(player.sprite.getPosition());

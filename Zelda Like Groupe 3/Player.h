@@ -29,6 +29,10 @@ protected:
 	Texture playerIdleTexture[4];
 	Texture playerIdleSwordTexture[4];
 	Texture playerAttackSwordTexture[4];
+	Texture playerAttackSwordTextureUp[4];
+	Texture playerAttackSwordTextureDown[4];
+	Texture playerSwordDown[4];
+	Texture playerSwordUp[4];
 	Texture TexturePressE;
 	Sprite playersprite;
 	Vector2f position;
@@ -68,10 +72,12 @@ public:
 	Sound chest;
 	Sound collect;
 	Sound solved;
+	Sound fist;
 	SoundBuffer swordB;
 	SoundBuffer chestB;
 	SoundBuffer collectB;
 	SoundBuffer solvedB;
+	SoundBuffer fistB;
 	Text keyNumber;
 	Font UIFont;
 	Sprite keyInterface;

@@ -14,12 +14,14 @@ protected:
 	bool isMoving;
 	float animationSpeed = 0.1f;
 	float elapsedTime;
+	float elapsedTime2;
 	int currentFrame = 0;
 	int currentFrame2 = 0;
 	Texture enemy1RunTexture[4];
 	Texture enemy1IdleTexture[4];
 	Vector2f position;
 public:
+	float cooldown = 10.0f;
 	Sprite enemy1sprite;
 	float health = 100.0f;
 	float maxHealth;
@@ -30,7 +32,7 @@ public:
 	Vector2f getPosition() const;
 	void checkDeath();
 	Enemy1(Vector2f startPosition);
-	void updateMovement(const Player& player);
+	void updateMovement(Player& player, float deltatime);
 	void draw(sf::RenderWindow& window) override;
 	void loadTexture();
 	FloatRect getHitbox() const;
