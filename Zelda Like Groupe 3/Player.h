@@ -3,6 +3,7 @@
 #include "Entity.h"
 
 class Enemy1;
+class Garde;
 class Prop;
 class PropManager;
 
@@ -83,13 +84,23 @@ public:
 	Sprite keyInterface;
 	Texture keyInterfaceTexture;
 	void swordAttackCheck();
+	void swordAttackCheck2();
 	void drawInterface(View& view, RenderWindow& window);
 	template<typename T1>
 	void swordAttack(T1& enemy)
 	{
 		if constexpr (is_same_v<T1, unique_ptr<Enemy1>>)
 		{
-			if(sprite.getGlobalBounds().intersects(enemy->enemy1sprite.getGlobalBounds()))
+			if (sprite.getGlobalBounds().intersects(enemy->enemy1sprite.getGlobalBounds()))
+			{
+				cout << "Good" << endl;
+				enemy->health -= attack;
+				enemy->hit.play();
+				isAttacking = false;
+			}
+		}
+		if constexpr (is_same_v<T1, unique_ptr<Garde>>) {
+			if (sprite.getGlobalBounds().intersects(enemy->gardesprite.getGlobalBounds()))
 			{
 				cout << "Good" << endl;
 				enemy->health -= attack;
