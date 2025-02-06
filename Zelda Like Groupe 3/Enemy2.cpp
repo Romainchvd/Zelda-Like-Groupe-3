@@ -17,7 +17,7 @@ void Enemy2::loadTexture() {
         }
     }
     enemy2sprite.setTexture(enemy2IdleTexture[1]);
-    enemy2sprite.setScale(Vector2f(2.2f, 2.2f));
+    enemy2sprite.setScale(Vector2f(3.2f, 3.2f));
 }
 
 Enemy2::Enemy2(Vector2f startPosition) : position(startPosition), currentFrame(1), currentFrame2(1), animationSpeed(15.0f), elapsedTime(0.0f), isMoving(false) {
@@ -30,7 +30,7 @@ Enemy2::Enemy2(Vector2f startPosition) : position(startPosition), currentFrame(1
     followHitbox.top = position.y;
     enemy2sprite.setScale(0.4f, 0.4f);
     enemy2sprite.setOrigin(11, 17);
-    maxHealth = 100.0f;
+    maxHealth = 120.0f;
     health = maxHealth;
     if (!hitB.loadFromFile("Assets/sounds/hit.ogg")) throw("Erreur lors du chargement du son hit pour l'ennemi");
     hit.setBuffer(hitB);
@@ -45,7 +45,7 @@ void Enemy2::updateMovement(Player& player, float deltatime) {
     if (enemy2sprite.getGlobalBounds().intersects(player.sprite.getGlobalBounds())) {
         if (elapsedTime2 >= cooldown) {
             elapsedTime2 = 0.0f;
-            player.health -= 10;
+            player.health -= 15;
             cout << player.health << endl;
             hit.play();
         }
@@ -54,7 +54,7 @@ void Enemy2::updateMovement(Player& player, float deltatime) {
 
         if (distance < 300 && distance > 10) {
             direction /= distance;
-            position += direction * 0.6f;
+            position += direction * 1.0f;
             isMoving = true;
         }
         else {
@@ -63,10 +63,10 @@ void Enemy2::updateMovement(Player& player, float deltatime) {
         }
     }
     if (position.x > previousX) {
-        enemy2sprite.setScale(2.2f, 2.2f);
+        enemy2sprite.setScale(3.2f, 3.2f);
     }
     else {
-        enemy2sprite.setScale(-2.2f, 2.2f);
+        enemy2sprite.setScale(-3.2f, 3.2f);
     }
     enemy2sprite.setPosition(position);
 
@@ -120,7 +120,7 @@ void Enemy2::Colision(unique_ptr<Prop>& prop) {
     {
         if (enemy2sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()))
         {
-            position += direction * -0.6f;
+            position += direction * -1.0f;
             isMoving = true;
         }
     }

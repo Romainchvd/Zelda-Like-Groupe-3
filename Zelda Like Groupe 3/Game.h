@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "MusicPlayer.h"
 #include "Enemy1.h"
+#include "Enemy2.h"
 #include "Garde.h"
 
 
@@ -20,6 +21,7 @@ public:
 	PropManager propManager;
 	MusicPlayer musicManager;
 	vector<unique_ptr<Enemy1>> enemy1;
+	vector<unique_ptr<Enemy2>> enemy2;
 	Sprite TitleScreenS;
 	Sprite wonS;
 	Sprite lostS;

@@ -24,7 +24,7 @@ void Renderer::musicThreadF(Game& game, Player& player, PropManager& propManager
 }
 
 
-void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde , View& view, Boss & boss){
+void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2, vector<unique_ptr<Garde>>& garde , View& view, Boss & boss){
 	window.clear();
 	for (int i = 0; i < propManager.getFirstLayer().size(); i++)
 		window.draw(propManager.getFirstLayer()[i]->sprite);
@@ -38,6 +38,12 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 			enemy1[i]->draw(window);
 		}
 	}
+	for (auto i = 0; i < enemy2.size(); i++) {
+		if (enemy2[i]->health > 0)
+		{
+			enemy2[i]->draw(window);
+		}
+	}
 	for (auto i = 0; i < garde.size(); i++) {
 		if (garde[i]->health > 0)
 		{
@@ -49,7 +55,7 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 	window.display();
 }
 
-void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde, Game& game, Boss& boss) {
+void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2, vector<unique_ptr<Garde>>& garde, Game& game, Boss& boss) {
 	player.loadTexture();
 	boss.loadTexture();
 	musicThread = thread(&Renderer::musicThreadF, this, std::ref(game), std::ref(player), std::ref(propManager), std::ref(running));
@@ -60,6 +66,9 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 	for (auto& enemy : enemy1) {
 		enemy->loadTexture();
 	}
+	for (auto& enemy2 : enemy2) {
+		enemy2->loadTexture();
+	}
 	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
 	camera.setSize(Vector2f(1920.f / 2, 1080.f / 2));
 	while (window.isOpen()) {
@@ -68,6 +77,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			player.swordAttackCheck();
 			if (player.isAttacking) {
 				player.swordAttack(enemy1[0]);
+				player.swordAttack(enemy2[0]);
 				player.swordAttack(garde[0]);
 			}
 			boss.Movement(player);
@@ -78,11 +88,15 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 				enemy->update(1);
 				enemy->updateMovement(player, 0.05f);
 			}
+			for (auto& enemy2 : enemy2) {
+				enemy2->update(1);
+				enemy2->updateMovement(player, 0.05f);
+			}
 			for (auto& garde1 : garde) {
 				garde1->update(1);
 				garde1->updateMovement(player, 0.05f);
 			}
-			Draw(player, propManager, enemy1, garde, camera, boss);
+			Draw(player, propManager, enemy1, enemy2, garde, camera, boss);
 			camera.setCenter(player.sprite.getPosition());
 			window.setView(camera);
 			for (int i = 0; i < propManager.getSecondLayer().size(); i++)
@@ -97,6 +111,9 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 				for (auto& enemy : enemy1) {
 					enemy->Colision(propManager.getFirstLayer()[i]);
 				}
+				for (auto& enemy2 : enemy2) {
+					enemy2->Colision(propManager.getFirstLayer()[i]);
+				}
 				for (auto& garde1 : garde) {
 					garde1->Colision(propManager.getFirstLayer()[i]);
 				}
@@ -106,6 +123,9 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 				player.Interact(propManager.getSecondLayer()[i], window);
 				for (auto& enemy : enemy1) {
 					enemy->Colision(propManager.getSecondLayer()[i]);
+				}
+				for (auto& enemy2 : enemy2) {
+					enemy2->Colision(propManager.getSecondLayer()[i]);
 				}
 				for (auto& garde1 : garde) {
 					garde1->Colision(propManager.getSecondLayer()[i]);
