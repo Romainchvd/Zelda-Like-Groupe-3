@@ -20,13 +20,14 @@ void Renderer::musicThreadF(Game& game, Player& player, PropManager& propManager
 	}
 }
 
-void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, View& view){
+void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, View& view, Boss& boss){
 	window.clear();
 	for (int i = 0; i < propManager.getFirstLayer().size(); i++)
 		window.draw(propManager.getFirstLayer()[i]->sprite);
 	for (int i = 0; i < propManager.getSecondLayer().size(); i++)
 		window.draw(propManager.getSecondLayer()[i]->sprite);
 	player.draw(window);
+	boss.draw(window);
 	for (auto i = 0; i < enemy1.size(); i++) {
 		if (enemy1[i]->health > 0)
 		{
@@ -38,8 +39,9 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 	window.display();
 }
 
-void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, Game& game) {
+void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, Game& game, Boss& boss) {
 	player.loadTexture();
+	boss.loadTexture();
 	musicThread = thread(&Renderer::musicThreadF, this, std::ref(game), std::ref(player), std::ref(propManager), std::ref(running));
 	//player.getPosition() = player.sprite.getPosition();
 	for (auto& enemy : enemy1) {
@@ -53,11 +55,12 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			player.swordAttack(enemy1[0]);
 		player.Mouvement();
 		player.update(1);
+		boss.update(1);
 		for (auto& enemy : enemy1) {
 			enemy->update(1);
 			enemy->updateMovement(player);
 		}
-		Draw(player, propManager, enemy1, camera);
+		Draw(player, propManager, enemy1, camera, boss);
 		camera.setCenter(player.sprite.getPosition());
 		window.setView(camera);
 		for (int i = 0; i < propManager.getSecondLayer().size(); i++)

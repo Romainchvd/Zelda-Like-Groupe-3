@@ -6,7 +6,7 @@ using namespace std;
 
 
 Player player1(10);
-
+Boss boss;
 int main()
 {
 	Game game(1920, 1080);
@@ -14,7 +14,7 @@ int main()
 	player1.loadTexture();
 	game.propManager.readFile();
 	Renderer renderer;
-	renderer.run(player1, game.propManager , game.enemy1, game);
+	renderer.run(player1, game.propManager , game.enemy1, game, boss);
 	
 	return 0;
 }
