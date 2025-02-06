@@ -1,5 +1,5 @@
 #include "map.h"
-
+#include "Game.h"
 
 
 void Prop::setTexture()
@@ -229,11 +229,19 @@ void PropManager::detruireProp(unique_ptr<Prop>& prop)
 }
 
 
-void PropManager::readFile()
+void PropManager::readFile(Game& game)
 {
 	//First Layer
+	ifstream file;
+	if(game.state == PLAYING)
+	{
+		file.open("assets/map/1stLayer.txt");
+	}
+	else if (game.state == EDITOR)
+	{
+		file.open("assets/map/1stLayerEdit.txt");
 
-	ifstream file("assets/map/1stLayer.txt");
+	}
 	if (file.is_open() == false)
 	{
 		throw("Erreur critique : le fichier de la carte du jeu est introuvable.");
@@ -306,7 +314,18 @@ void PropManager::readFile()
 		position.y += 96;
 
 	}
-	file.open("assets/map/2ndLayer.txt");
+	if(game.state == PLAYING)
+	{
+		file.open("assets/map/2ndLayer.txt");
+	}
+	else if (game.state == EDITOR)
+	{
+		file.open("assets/map/2ndLayerEdit.txt");
+	}
+	if (file.is_open() == false)
+	{
+		throw("Erreur critique : le fichier de la carte du l'editeur est introuvable.");
+	}
 	position.x = 0; position.y = 0;
 	while (true)
 	{
@@ -399,44 +418,6 @@ void PropManager::readFile()
 vector<unique_ptr<Prop>>& PropManager::getFirstLayer() { return firstLayer; }
 vector<unique_ptr<Prop>>& PropManager::getSecondLayer() { return secondLayer; }
 
-Spikes::Spikes()
-{
-	if (!spikesActivated.loadFromFile("assets/spikesT.png")) cerr << "Erreur lors du chargement de la texture de pics on" << endl;
-	if (!spikesDisabled.loadFromFile("assets/spikesF.png")) cerr << "Erreur lors du chargement de la texture de pics off" << endl;
-	if (!interruptorActivated.loadFromFile("assets/interruptorT.png")) cerr << "Erreur lors du chargement de la texture d'interrupteur on" << endl;
-	if (!interruptorDisabled.loadFromFile("assets/interruptorF.png")) cerr << "Erreur lors du chargement de la texture d'interrupteur off" << endl;
-	if (interruptorIsActivated)
-	{
-		sprite.setTexture(spikesDisabled);
-		interruptor.setTexture(interruptorActivated);
-	}
-	else
-	{
-		sprite.setTexture(spikesActivated);
-		interruptor.setTexture(interruptorDisabled);
-	}
-}
-void Spikes::checkInterruptor(Player& player)
-{
-	if (interruptorCanChangeState)
-	{
-		if (player.sprite.getGlobalBounds().intersects(interruptor.getGlobalBounds()))
-		{
-			if (interruptorIsActivated)
-			{
-				interruptor.setTexture(interruptorDisabled);
-				sprite.setTexture(spikesActivated);
-				interruptorCanChangeState = false;
-			}
-			else if (!interruptorIsActivated)
-			{
-				interruptor.setTexture(interruptorActivated);
-				sprite.setTexture(spikesDisabled);
-				interruptorCanChangeState = false;
-			}
-		}
-	}
-}
 void Prop::collectProp(Player& player, PropManager& manager)
 {
 	if (id == KEY)

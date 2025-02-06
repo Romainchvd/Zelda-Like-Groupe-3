@@ -8,7 +8,7 @@
 #include "Garde.h"
 
 
-enum GAME_STATE { MENU, PLAYING, WIN, LOSE };
+enum GAME_STATE { MENU, PLAYING, WIN, LOSE, EDITOR };
 class Game {
 private:
 public:

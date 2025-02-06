@@ -61,9 +61,9 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
 	camera.setSize(Vector2f(1920.f / 2, 1080.f / 2));
 	while (window.isOpen()) {
-		if (game.state == PLAYING && game.doInitialiaze)
+		if ((game.state == PLAYING && game.doInitialiaze )|| (game.state == EDITOR && game.doInitialiaze))
 		{
-			game.propManager.readFile();
+			game.propManager.readFile(game);
 			player.loadTexture();
 			boss.loadTexture();
 			//player.getPosition() = player.sprite.getPosition();
@@ -78,7 +78,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			}
 			game.doInitialiaze = false;
 		}
-		if (game.state == PLAYING && game.doInitialiaze == false)
+		if ((game.state == PLAYING && game.doInitialiaze == false) || (game.state == EDITOR && game.doInitialiaze == false))
 		{
 			player.swordAttackCheck();
 			if (player.isAttacking) {
@@ -192,7 +192,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 						window.close();
 					}
 					if (game.editorS.getGlobalBounds().contains(static_cast<Vector2f>(game.mousePosition)))
-						game.state = PLAYING;
+						game.state = EDITOR;
 				}
 			}
 			window.clear();
