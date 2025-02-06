@@ -3,6 +3,7 @@
 #include "Entity.h"
 
 class Enemy1;
+class Enemy2;
 class Garde;
 class Boss;
 class Prop;
@@ -109,6 +110,16 @@ public:
 				isAttacking = false;
 			}
 		}
+		if constexpr (is_same_v<T1, unique_ptr<Enemy2>>) {
+			if (sprite.getGlobalBounds().intersects(enemy->enemy2sprite.getGlobalBounds()))
+			{
+				cout << "Good" << endl;
+				enemy->health -= attack;
+				enemy->hit.play();
+				isAttacking = false;
+			}
+		}
+	}
 		if constexpr (is_same_v<T1, Boss>) {
 			if (sprite.getGlobalBounds().intersects(enemy.BossSprite.getGlobalBounds()))
 			{

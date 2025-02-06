@@ -51,6 +51,16 @@ void MusicPlayer::playHouse()
 		house.play();
 	}
 }
+void MusicPlayer::playGuard()
+{
+	field.stop();
+	castle.stop();
+	house.stop();
+	if (guard.getStatus() != Sound::Playing)
+	{
+		guard.play();
+	}
+}
 void MusicPlayer::playMusic(Player& player, unique_ptr<Prop>& prop)
 {
 	if (player.sprite.getGlobalBounds().intersects(prop->sprite.getGlobalBounds()))
