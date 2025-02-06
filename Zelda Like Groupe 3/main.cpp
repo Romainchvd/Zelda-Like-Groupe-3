@@ -12,7 +12,6 @@ int main()
 	Game game(1920, 1080);
 	game.musicManager.loadFile();
 	player1.loadTexture();
-	game.propManager.readFile();
 	Renderer renderer;
 	renderer.run(player1, game.propManager , game.enemy1, game.enemy2, game.garde, game, boss);
 	

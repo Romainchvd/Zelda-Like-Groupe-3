@@ -6,6 +6,7 @@ void Prop::setTexture()
 {
 	if (this != nullptr)
 	{
+
 		switch (id)
 		{
 		case HOUSEDL:

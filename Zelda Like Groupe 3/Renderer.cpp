@@ -56,23 +56,29 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 }
 
 void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2, vector<unique_ptr<Garde>>& garde, Game& game, Boss& boss) {
-	player.loadTexture();
-	boss.loadTexture();
+	
 	musicThread = thread(&Renderer::musicThreadF, this, std::ref(game), std::ref(player), std::ref(propManager), std::ref(running));
-	//player.getPosition() = player.sprite.getPosition();
-	for (auto& garde1 : garde) {
-		garde1->loadTexture();
-	}
-	for (auto& enemy : enemy1) {
-		enemy->loadTexture();
-	}
-	for (auto& enemy2 : enemy2) {
-		enemy2->loadTexture();
-	}
 	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
 	camera.setSize(Vector2f(1920.f / 2, 1080.f / 2));
 	while (window.isOpen()) {
-		if (game.state == PLAYING)
+		if (game.state == PLAYING && game.doInitialiaze)
+		{
+			game.propManager.readFile();
+			player.loadTexture();
+			boss.loadTexture();
+			//player.getPosition() = player.sprite.getPosition();
+			for (auto& garde1 : garde) {
+				garde1->loadTexture();
+			}
+			for (auto& enemy : enemy1) {
+				enemy->loadTexture();
+			}
+			for (auto& enemy2 : enemy2) {
+				enemy2->loadTexture();
+			}
+			game.doInitialiaze = false;
+		}
+		if (game.state == PLAYING && game.doInitialiaze == false)
 		{
 			player.swordAttackCheck();
 			if (player.isAttacking) {

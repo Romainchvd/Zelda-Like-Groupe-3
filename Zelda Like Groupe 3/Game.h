@@ -35,6 +35,7 @@ public:
 	Texture editorT;
 	Texture exitT;
 	Vector2i mousePosition;
+	bool doInitialiaze = true;
 
 	
 	vector<unique_ptr<Garde>> garde;
