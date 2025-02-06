@@ -23,9 +23,8 @@ public:
 	mutex propMutex;
 	atomic<bool> running = true; //Note: sert à éviter d'utiliser un autre mutex (je pouvais pas pour les vecteurs sans refaire tout le code lié) ne pas toucher merci
 	Renderer();
-	void run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, Game& game, Boss& Boss);
-	void Draw(Player& player, PropManager& manager, vector<unique_ptr<Enemy1>>& enemy1, View& view, Boss& Boss);
-	void run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde, Game& game);
-	void Draw(Player& player, PropManager& manager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde, View& view);
+
+	void run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde, Game& game, Boss& Boss);
+	void Draw(Player& player, PropManager& manager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde, View& view, Boss& Boss);
 	void musicThreadF(Game& game, Player& player, PropManager& propManager, atomic<bool>& running);
 };

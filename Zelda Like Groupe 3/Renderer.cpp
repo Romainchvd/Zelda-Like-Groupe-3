@@ -20,8 +20,8 @@ void Renderer::musicThreadF(Game& game, Player& player, PropManager& propManager
 	}
 }
 
-void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, View& view, Boss& boss){
-void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde , View& view){
+
+void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde , View& view, Boss & boss){
 	window.clear();
 	for (int i = 0; i < propManager.getFirstLayer().size(); i++)
 		window.draw(propManager.getFirstLayer()[i]->sprite);
@@ -46,7 +46,7 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 	window.display();
 }
 
-void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, Game& game, Boss& boss) {
+void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde, Game& game, Boss& boss) {
 	player.loadTexture();
 	boss.loadTexture();
 	musicThread = thread(&Renderer::musicThreadF, this, std::ref(game), std::ref(player), std::ref(propManager), std::ref(running));
@@ -76,7 +76,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			garde1->update(1);
 			garde1->updateMovement(player, 0.05f);
 		}
-		Draw(player, propManager, enemy1, garde, camera);
+		Draw(player, propManager, enemy1, garde, camera, boss);
 		camera.setCenter(player.sprite.getPosition());
 		window.setView(camera);
 		for (int i = 0; i < propManager.getSecondLayer().size(); i++)
@@ -195,7 +195,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 				enemy->update(1);
 				enemy->updateMovement(player, 0.05f);
 			}
-			Draw(player, propManager, enemy1, camera, boss);
+			Draw(player, propManager, enemy1, garde, camera, boss);
 			camera.setCenter(player.sprite.getPosition());
 			window.setView(camera);
 			for (int i = 0; i < propManager.getSecondLayer().size(); i++)
@@ -235,8 +235,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 				}
 			}
 		}
-	}
 	running = false;
-	if (musicThread.joinable())
+	if (musicThread.joinable()) 
 		musicThread.join();
 }
