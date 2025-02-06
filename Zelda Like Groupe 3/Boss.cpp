@@ -36,7 +36,6 @@ void Boss::update(float deltaTime) {
 	else {
 		
 	}
-	cout << BossHP << endl;
 	BossSprite.setPosition(BossSprite.getPosition());
 }
 

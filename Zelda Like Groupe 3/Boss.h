@@ -14,9 +14,9 @@ private:
 	Texture BossTextureRun[4];
 	int currentFrame2;
 	float BossSpeed;
+public:
 	int BossHP;
 	int MaxBossHP;
-public:
 	Sprite BossSprite;
 	Boss();
 	void draw(sf::RenderWindow& window) override;

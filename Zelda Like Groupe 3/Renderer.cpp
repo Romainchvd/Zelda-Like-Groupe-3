@@ -69,6 +69,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			if (player.isAttacking) {
 				player.swordAttack(enemy1[0]);
 				player.swordAttack(garde[0]);
+				player.swordAttack(boss);
 			}
 			boss.Movement(player);
 			boss.update(1);
