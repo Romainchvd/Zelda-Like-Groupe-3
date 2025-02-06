@@ -3,7 +3,7 @@
 using namespace std;
 using namespace sf;
 
-Boss::Boss() : currentFrame(1), elapsedTime(0.0f), animationSpeed(15.0f), isMoving(false) {
+Boss::Boss() : currentFrame(1), elapsedTime(0.0f), animationSpeed(15.0f), isMoving(false), BossSpeed(0.5f) {
 	BossSprite.setPosition(Vector2f(48.5 * 96, 37.5 * 96));
 }
 
@@ -33,5 +33,30 @@ void Boss::loadTexture() {
 	
 	BossSprite.setTexture(BossTextureIdle[1]);
 	BossSprite.setScale(Vector2f(2.0f, 2.0f));
+}
+
+void Boss::Movement(Player& player) {
+	direction = player.sprite.getPosition() - BossSprite.getPosition();
+	float distance = hypot(direction.x, direction.y);
+
+	if (distance < 500)
+	{
+		if (BossSprite.getPosition().x <= player.getPosition().x)
+		{
+			BossSprite.move(Vector2f(BossSpeed, 0.0f));
+		}
+		if (BossSprite.getPosition().x >= player.getPosition().x)
+		{
+			BossSprite.move(Vector2f(-BossSpeed, 0.0f));
+		}
+		if (BossSprite.getPosition().y <= player.getPosition().y)
+		{
+			BossSprite.move(Vector2f(0.0f, BossSpeed));
+		}
+		if (BossSprite.getPosition().y >= player.getPosition().y)
+		{
+			BossSprite.move(Vector2f(0.0f, -BossSpeed));
+		}
+	}
 }
 

@@ -56,6 +56,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 		player.Mouvement();
 		player.update(1);
 		boss.update(1);
+		boss.Movement(player);
 		for (auto& enemy : enemy1) {
 			enemy->update(1);
 			enemy->updateMovement(player,0.05f);

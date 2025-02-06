@@ -11,10 +11,12 @@ private:
 	float elapsedTime;
 	Texture BossTextureIdle[4];
 	int currentFrame = 0;
+	float BossSpeed;
 public:
 	Sprite BossSprite;
 	Boss();
 	void draw(sf::RenderWindow& window) override;
 	void update(float deltaTime) override;
+	void Movement(Player& player);
 	void loadTexture();
 };
