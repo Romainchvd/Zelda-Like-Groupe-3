@@ -8,7 +8,7 @@
 #include "Garde.h"
 
 
-enum GAME_STATE { MENU, PLAYING, WIN, LOSE };
+enum GAME_STATE { MENU, PLAYING, WIN, LOSE, EDITOR };
 class Game {
 private:
 public:
@@ -35,6 +35,7 @@ public:
 	Texture editorT;
 	Texture exitT;
 	Vector2i mousePosition;
+	bool doInitialiaze = true;
 
 	
 	vector<unique_ptr<Garde>> garde;

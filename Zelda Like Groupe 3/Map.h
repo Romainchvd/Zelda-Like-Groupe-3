@@ -1,7 +1,8 @@
 #pragma once
+#include<SFML/Graphics.hpp>
 #include "Player.h"
 #include <fstream>
-
+class Game;
 using namespace std;
 using namespace sf;
 enum Id {
@@ -38,27 +39,7 @@ protected:
 public:
 	void creerProp(Id id, int x, int y, Layer layer, bool c, bool i);
 	void detruireProp(unique_ptr<Prop>& prop);
-	void readFile();
+	void readFile(Game& game);
 	vector<unique_ptr<Prop>>& getFirstLayer();
 	vector<unique_ptr<Prop>>& getSecondLayer();
-};
-//Les classes suivantes sont en développement et ne doivent pas être utilisée car non flexibles.
-class Interruptor
-{
-public:
-	Texture interruptorActivated;
-	Texture interruptorDisabled;
-	Sprite interruptor;
-	bool interruptorIsActivated = false;
-	bool interruptorCanChangeState = true;
-};
-
-class Spikes : public Interruptor
-{
-public:
-	Texture spikesActivated;
-	Texture spikesDisabled;
-	Sprite sprite;
-	void checkInterruptor(Player& player);
-	Spikes();
 };
