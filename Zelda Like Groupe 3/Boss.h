@@ -7,12 +7,17 @@ using namespace sf;
 class Boss : public Entity {
 private:
 	bool isMoving;
+	bool Phase2;
 	float animationSpeed;
 	float elapsedTime;
-	Texture BossTextureIdle[4];
+	Texture BossTextureIdle1[4];
 	int currentFrame1;
-	Texture BossTextureRun[4];
+	Texture BossTextureRun1[4];
 	int currentFrame2;
+	Texture BossTextureIdle2[3];
+	int currentFrame3;
+	Texture BossTextureRun2[4];
+	int currentFrame4;
 	float BossSpeed;
 public:
 	int BossHP;
