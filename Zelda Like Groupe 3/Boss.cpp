@@ -4,7 +4,7 @@ using namespace std;
 using namespace sf;
 
 Boss::Boss() : currentFrame1(1), currentFrame2(1), currentFrame3(1), currentFrame4(1), elapsedTime(0.0f), animationSpeed(15.0f), isMoving(false), BossSpeed(0.5f), MaxBossHP(300), BossHP(300), Phase2(false) {
-	BossSprite.setPosition(Vector2f(48.5 * 96, 37.5 * 96));
+	BossSprite.setPosition(Vector2f(114*96, 14*96));
 }
 
 void Boss::draw(sf::RenderWindow& window) {
