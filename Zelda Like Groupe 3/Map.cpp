@@ -186,6 +186,9 @@ void Prop::setTexture()
 		case HEART:
 			if (!texture.loadFromFile("assets/heartContainer.png")) cerr << "Erreur lors du chargement de la texture de l'epee" << endl;
 			break;
+		case HEART_CHARGE:
+			if (!texture.loadFromFile("assets/heart.png")) cerr << "Erreur lors du chargement de la texture de l'epee" << endl;
+			break;
 		default:
 			break;
 		}
@@ -410,6 +413,8 @@ void PropManager::readFile(Game& game)
 				creerProp(SWORD, position.x, position.y, SECOND_LAYER, false, false);
 			else if (c == 'Y')
 				creerProp(HEART, position.x, position.y, SECOND_LAYER, false, false);
+			else if (c == 'Z')
+				creerProp(HEART_CHARGE, position.x, position.y, SECOND_LAYER, false, false);
 			
 
 
@@ -445,6 +450,22 @@ void Prop::collectProp(Player& player, PropManager& manager)
 		{
 			player.maxHealth = 200;
 			player.health = player.maxHealth;
+			player.collect.play();
+
+			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
+				[this](const unique_ptr<Prop>& p) { return p.get() == this; });
+
+			if (it != manager.getSecondLayer().end())
+				manager.getSecondLayer().erase(it);
+		}
+	}
+	if (id == HEART_CHARGE)
+	{
+		if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()))
+		{
+			player.health += 30;
+			if (player.health > player.maxHealth)
+				player.health = player.maxHealth;
 			player.collect.play();
 
 			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
