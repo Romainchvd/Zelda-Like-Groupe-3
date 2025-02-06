@@ -13,7 +13,7 @@ int main()
 	game.musicManager.loadFile();
 	player1.loadTexture();
 	Renderer renderer;
-	renderer.run(player1, game.propManager , game.enemy1, game.enemy2, game.garde, game, boss);
+	renderer.run(player1, game.propManager , game.enemy1, game.enemy2, game.garde, game, game.boss);
 	
 	return 0;
 }

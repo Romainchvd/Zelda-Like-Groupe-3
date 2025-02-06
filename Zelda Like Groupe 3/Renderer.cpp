@@ -24,14 +24,14 @@ void Renderer::musicThreadF(Game& game, Player& player, PropManager& propManager
 }
 
 
-void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2, vector<unique_ptr<Garde>>& garde , View& view, Boss & boss){
+void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2,
+	vector<unique_ptr<Garde>>& garde, View& view, vector<unique_ptr<Boss>>& Boss){
 	window.clear();
 	for (int i = 0; i < propManager.getFirstLayer().size(); i++)
 		window.draw(propManager.getFirstLayer()[i]->sprite);
 	for (int i = 0; i < propManager.getSecondLayer().size(); i++)
 		window.draw(propManager.getSecondLayer()[i]->sprite);
 	player.draw(window);
-	boss.draw(window);
 	for (auto i = 0; i < enemy1.size(); i++) {
 		if (enemy1[i]->health > 0)
 		{
@@ -50,6 +50,9 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 			garde[i]->draw(window);
 		}
 	}
+	for (auto i = 0; i < Boss.size(); i++) {
+		Boss[i]->draw(window);
+	}
 	/*window.draw(player.PressE);*/
 	player.drawInterface(view, window);
 		player.healthbar.setScale(1, 1);
@@ -58,7 +61,8 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 	window.display();
 }
 
-void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2, vector<unique_ptr<Garde>>& garde, Game& game, Boss& boss) {
+void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2,
+	vector<unique_ptr<Garde>>& garde, Game& game, vector<unique_ptr<Boss>>& Boss) {
 	
 	musicThread = thread(&Renderer::musicThreadF, this, std::ref(game), std::ref(player), std::ref(propManager), std::ref(running));
 	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
@@ -74,7 +78,6 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			}
 			
 			player.loadTexture();
-			boss.loadTexture();
 			//player.getPosition() = player.sprite.getPosition();
 			for (auto& garde1 : garde) {
 				garde1->loadTexture();
@@ -85,6 +88,9 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 			for (auto& enemy2 : enemy2) {
 				enemy2->loadTexture();
 			}
+			for (auto& boss : Boss) {
+				boss->loadTexture();
+			}
 			game.doInitialiaze = false;
 		}
 		if ((game.state == PLAYING && game.doInitialiaze == false) || (game.state == EDITOR && game.doInitialiaze == false))
@@ -94,10 +100,12 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 				player.swordAttack(enemy1[0]);
 				player.swordAttack(enemy2[0]);
 				player.swordAttack(garde[0]);
-				player.swordAttack(boss);
+				player.swordAttack(Boss[0]);
 			}
-			boss.Movement(player);
-			boss.update(1);
+			for (auto& boss : Boss) {
+				boss->Movement(player);
+				boss->update(1);
+			}
 			player.Mouvement();
 			player.update(1);
 			for (auto& enemy : enemy1) {
@@ -112,7 +120,11 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 				garde1->update(1);
 				garde1->updateMovement(player, 0.05f);
 			}
-			Draw(player, propManager, enemy1, enemy2, garde, camera, boss);
+			if (player.health <= 0)
+			{
+				game.state = LOSE;
+			}
+			Draw(player, propManager, enemy1, enemy2, garde, camera, Boss);
 			camera.setCenter(player.sprite.getPosition());
 			window.setView(camera);
 			for (int i = 0; i < propManager.getSecondLayer().size(); i++)

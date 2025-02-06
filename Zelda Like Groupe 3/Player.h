@@ -125,13 +125,13 @@ public:
 				isAttacking = false;
 			}
 		}
-		if constexpr (is_same_v<T1, Boss>) {
-			if (sprite.getGlobalBounds().intersects(enemy.BossSprite.getGlobalBounds()))
+		if constexpr (is_same_v<T1, unique_ptr<Boss>>) {
+			if (sprite.getGlobalBounds().intersects(enemy->BossSprite.getGlobalBounds()))
 			{
 				cout << "le player touche le boss" << endl;
-				enemy.BossHP -= attack;
-				enemy.hit.play();
-				cout << enemy.getHP() << endl;
+				enemy->BossHP -= attack;
+				enemy->hit.play();
+				cout << enemy->getHP() << endl;
 				isAttacking = false;
 			}
 		}
