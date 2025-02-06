@@ -6,6 +6,7 @@
 #include "Enemy1.h"
 #include "Enemy2.h"
 #include "Garde.h"
+#include "Boss.h"
 
 
 enum GAME_STATE { MENU, PLAYING, WIN, LOSE, EDITOR };
@@ -37,7 +38,7 @@ public:
 	Vector2i mousePosition;
 	bool doInitialiaze = true;
 
-	
 	vector<unique_ptr<Garde>> garde;
+	vector<unique_ptr<Boss>> boss;
 	};
 	
