@@ -158,6 +158,10 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 						game.state = PLAYING;
 					if (game.exitS.getGlobalBounds().contains(static_cast<Vector2f>(game.mousePosition)))
 					{
+						running = false;
+						if (musicThread.joinable()) {
+							musicThread.join();
+						}
 						window.close();
 					}
 					if (game.editorS.getGlobalBounds().contains(static_cast<Vector2f>(game.mousePosition)))
