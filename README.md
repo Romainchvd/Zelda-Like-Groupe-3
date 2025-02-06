@@ -2,7 +2,23 @@
 Zelda Like 2D Groupe 3
 Romain, Ethan, Rayen, Liam
 
-Perso Principal: Kinl
+INTRODUCTION
+
+Ce projet, effectué dans le cadre de la pédagogie par projet du Gaming Campus, est un jeu à partie rapide, destiné à un public d'au moins 14 ans (en raison de l'écran de victoire
+pouvant heurter la sensibilité des plus jeunes). Celui-ci propose une rejouabilité avec un éditeur de fichiers texte.
+
+CONCEPT
+
+Le jeu est un jeu d'aventure en PVE, dans lequel le joueur se rend jusqu'au château du royaume afin d'en déloger le maître. Le gameplay est ouvertement inspiré du jeu vidéo Zelda et se
+déroule en 2D avec vue top-down.
+
+GAME DESIGN, SOUND DESIGN & ASPECTS TECHNIQUES
+Direction artistique: le jeu utilise des visuels venant ou dérivés du site itch.io . Il propose des visuels colorés en pixel-art.
+Le jeu dispose de trois zones: les maisons, la plaine et le château. Il dispose d'animations simples et ne requiert pas un ordinateur puissant pour fonctionner. En fonction de votre
+écran, vous n'aurez ainsi aucune difficulté à le faire tourner en 60fps à 144 fps. La musique est issue de jeux nintendo: Zeldae et Lufia, et les effets sonores viennent de minecraft,
+Zelda et de bruitages libres de droits. La musique du jeu est gérée par un thread afin de soulager le thread principal. Le jeu est développé en C++ à l'aide du moteur graphique SFML et
+utilise des pointeurs intelligents pour éviter les fuites de mémoire.
+
 
 Histoire:
 
@@ -10,9 +26,14 @@ Synopsis: Le jeu se déroule dans un petit Royaume dont le roi a été assassin�
 Le seul hic, c'est que le tyran lui aussi, était bleu...
 
 Compétences:
-Le joueur dispose d'une attaque excécutée à l'aide du clic droit de la souris. En fonction de son équipement, il s'agit soit d'un coup de poing, soit d'une épée.
+Le joueur dispose d'une attaque excécutée à l'aide du clic droit de la souris. En fonction de son équipement, qu'il améliore au fil de la partie,
+il s'agit soit d'un coup de poing, soit d'une épée.
 
 Le joueur dispose de 100 PV qui peuvent être portés à 200 au fil du jeu. Il n'y a pas de regénération de la vie.
+
+L'interface utilisateur est constituée d'un compteur de clé et d'un indicateur de vie.
+
+Difficulté: ce jeu peut être réalisé en contournant les ennemis. Dans ce cas, il s'agit d'un jeu facile. Cependant, choisir de vaincre tous les ennemis est un défi exigeant.
 
 Menu de jeu:
 -Bouton Play
@@ -125,3 +146,29 @@ V: Muraille de château verticale
 W: Coffre contenant une clé
 X: Epée (se ramasse)
 Y: Receptacle de coeur (double vos PV, se ramasse. Ne peut pas être cumulé)
+
+REPARTITION DES ROLES
+
+Joueur, animations et ennemis : Ethan, Rayen
+Déplacements, collisions et interactions: Liam
+Menu, direction artistique: Rayen, Romain
+Carte du jeu et éditeur: Romain
+Musiques et sons: Romain
+Présentation PowerPoint: Liam
+Doc: Liam, Romain
+
+PLANNING ET ECHEANCES
+
+Jour 1: Bases du projet et structuration
+Jour 2: Lobby, Plaine, consolidation de la structure
+Jour 3: Joueur, poursuite de la carte
+Jour 4: mécanismes interactifs pour le donjon, finalisation du joueur
+Jour 5: Ennemis, musique, sons
+Jour 6: Donjon
+Jour 7: Menus, interface, boss
+Jour 8: Crédits, scénario
+
+CONCLUSIONS ET PERSPECTIVES
+
+Le projet s'est révélé être trop ambitieux. Le jeu est jouable mais n'est clairement pas terminé. Plusieurs raisons sont à soulever: le début du projet a été marqué par une stricte
+répartition des rôles et à une spécialisation dans les tâches, mais également par une désorganisation dans le code, rapidement résolue. L'un des membres du projet étant tombé malade (grippe), le jeu a accumulé un retard considérable au niveau des ennemis et les autres développeurs ont dû interrompre leurs tâches afin de soulager la personne concernée, ce qui a provoqué à la fois un jeu final avec des ennemis non finalisés et plusieurs fonctionnalités manquantes. Le jeu possède néanmoins du potentiel et gagnerait à évoluer, avec une meilleure communication et explication du code (Nottamment par le moyen de commentaires). L'ajout d'une régénération de vie était prêt mais n'a pas pu être livré à temps. Pourraient être ajoutés un gameplay à distance et une amélioration du donjon et du boss final pour compléter le projet.
