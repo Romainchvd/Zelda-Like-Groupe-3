@@ -17,7 +17,7 @@ void Enemy2::loadTexture() {
         }
     }
     enemy2sprite.setTexture(enemy2IdleTexture[1]);
-    enemy2sprite.setScale(Vector2f(3.2f, 3.2f));
+    enemy2sprite.setScale(Vector2f(2.2f, 2.2f));
 }
 
 Enemy2::Enemy2(Vector2f startPosition) : position(startPosition), currentFrame(1), currentFrame2(1), animationSpeed(15.0f), elapsedTime(0.0f), isMoving(false) {
@@ -63,10 +63,10 @@ void Enemy2::updateMovement(Player& player, float deltatime) {
         }
     }
     if (position.x > previousX) {
-        enemy2sprite.setScale(3.2f, 3.2f);
+        enemy2sprite.setScale(2.2f, 2.2f);
     }
     else {
-        enemy2sprite.setScale(-3.2f, 3.2f);
+        enemy2sprite.setScale(-2.2f, 2.2f);
     }
     enemy2sprite.setPosition(position);
 
