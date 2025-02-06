@@ -14,7 +14,7 @@ int main()
 	player1.loadTexture();
 	game.propManager.readFile();
 	Renderer renderer;
-	renderer.run(player1, game.propManager , game.enemy1, game);
+	renderer.run(player1, game.propManager , game.enemy1, game.garde, game);
 	
 	return 0;
 }

@@ -454,6 +454,37 @@ void Player::swordAttackCheck()
 	}
 }
 
+void Player::swordAttackCheck2()
+{
+	if (hasSword)
+	{
+		attack = 20;
+	}
+	else
+	{
+		attack = 10;
+	}
+	if (swordClock.getElapsedTime().asSeconds() > swordCooldown.asSeconds() && canAttack == false)
+	{
+		canAttack = true;
+	}
+	else
+	{
+		canAttack = false;
+	}
+	if (canAttack && Mouse::isButtonPressed(Mouse::Left))
+	{
+		swordClock.restart();
+		if (hasSword)
+			sword.play();
+		else
+			fist.play();
+		isAttacking = true;
+	}
+}
+
+
+
 void Player::drawInterface(View& view, RenderWindow& window)
 {
 	keyInterface.setPosition(view.getCenter().x + 275, view.getCenter().y + 175);
