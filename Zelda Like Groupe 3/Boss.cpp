@@ -3,7 +3,7 @@
 using namespace std;
 using namespace sf;
 
-Boss::Boss() : currentFrame1(1), currentFrame2(1), elapsedTime(0.0f), animationSpeed(15.0f), isMoving(false), BossSpeed(0.5f), MaxBossHP(300), BossHP(300) {
+Boss::Boss() : currentFrame1(1), currentFrame2(1), currentFrame3(1), currentFrame4(1), elapsedTime(0.0f), animationSpeed(15.0f), isMoving(false), BossSpeed(0.5f), MaxBossHP(300), BossHP(300), Phase2(false) {
 	BossSprite.setPosition(Vector2f(48.5 * 96, 37.5 * 96));
 }
 
@@ -13,47 +13,89 @@ void Boss::draw(sf::RenderWindow& window) {
 
 void Boss::update(float deltaTime) {
 	elapsedTime += deltaTime;
-	if (!isMoving)
+	if (BossHP == MaxBossHP / 2) {
+		Phase2 = true;
+	}
+	if (!Phase2)
 	{
-		if (elapsedTime >= animationSpeed)
+		if (!isMoving)
 		{
-			elapsedTime = 0.0f;
-			currentFrame1++;
-			currentFrame1 %= 4;
-			BossSprite.setTexture(BossTextureIdle[currentFrame1]);
+			if (elapsedTime >= animationSpeed)
+			{
+				elapsedTime = 0.0f;
+				currentFrame1++;
+				currentFrame1 %= 4;
+				BossSprite.setTexture(BossTextureIdle1[currentFrame1]);
+			}
+		}
+		else
+		{
+			if (elapsedTime >= animationSpeed)
+			{
+				elapsedTime = 0.0f;
+				currentFrame2++;
+				currentFrame2 %= 4;
+				BossSprite.setTexture(BossTextureRun1[currentFrame2]);
+			}
 		}
 	}
-	else if (MaxBossHP == MaxBossHP / 2)
+	else
 	{
-		if (elapsedTime >= animationSpeed)
+		if (!isMoving)
 		{
-			elapsedTime = 0.0f;
-			currentFrame2++;
-			currentFrame2 %= 4;
-			BossSprite.setTexture(BossTextureRun[currentFrame2]);
+			if (elapsedTime >= animationSpeed)
+			{
+				elapsedTime = 0.0f;
+				currentFrame3++;
+				currentFrame3 %= 3;
+				BossSprite.setTexture(BossTextureIdle2[currentFrame3]);
+				BossSprite.setTextureRect(IntRect(0, 0, 38, 38));
+			}
+		} 
+		else
+		{
+			if (elapsedTime >= animationSpeed)
+			{
+				elapsedTime = 0.0f;
+				currentFrame4++;
+				currentFrame4 %= 4;
+				BossSprite.setTexture(BossTextureRun2[currentFrame4]);
+				BossSprite.setTextureRect(IntRect(0, 0, 38, 40));
+			}
 		}
-	}
-	else {
-		
 	}
 	BossSprite.setPosition(BossSprite.getPosition());
 }
 
 void Boss::loadTexture() {
 	for (int i = 0; i < 4; ++i) {
-		if (!BossTextureIdle[i].loadFromFile("Assets/Boss/Idle/BossIdle" + to_string(i) + ".png"))
+		if (!BossTextureIdle1[i].loadFromFile("Assets/Boss/Idle/Boss1Idle" + to_string(i) + ".png"))
 		{
-			cerr << "erreur de chargement des asset Idle du boss" << endl;
+			cerr << "erreur de chargement des asset Idle1 du boss" << endl;
+		}
+	}
+	for (int i = 0; i < 3; ++i)
+	{
+		if (!BossTextureIdle2[i].loadFromFile("Assets/Boss/Idle/Boss2Idle" + to_string(i) + ".png"))
+		{
+			cerr << "erreur de chargement des asset Idle2 du boss" << endl;
 		}
 	}
 	for (int i = 0; i < 4; ++i)
 	{
-		if (!BossTextureRun[i].loadFromFile("Assets/Boss/Run/RunBoss" + to_string(i) + ".png"))
+		if (!BossTextureRun1[i].loadFromFile("Assets/Boss/Run/Run1Boss" + to_string(i) + ".png"))
 		{
-			cerr << "erreur de chargement des asset Run du Boss" << endl;
+			cerr << "erreur de chargement des asset run du boss" << endl;
 		}
 	}
-	BossSprite.setTexture(BossTextureIdle[1]);
+	for (int i = 0; i < 4; ++i)
+	{
+		if (!BossTextureRun2[i].loadFromFile("Assets/Boss/Run/Run2Boss" + to_string(i) + ".png"))
+		{
+			cerr << "erreur de chargement des asset run du boss" << endl;
+		}
+	}
+	BossSprite.setTexture(BossTextureIdle1[1]);
 	BossSprite.setScale(Vector2f(2.0f, 2.0f));
 }
 
@@ -61,7 +103,7 @@ void Boss::Movement(Player& player) {
 	direction = player.sprite.getPosition() - BossSprite.getPosition();
 	float distance = hypot(direction.x, direction.y);
 	
-	if (distance < 500)
+	if (distance < 400)
 	{
 		isMoving = true;
 		if (BossSprite.getPosition().x <= player.getPosition().x)
@@ -80,6 +122,10 @@ void Boss::Movement(Player& player) {
 		{
 			BossSprite.move(Vector2f(0.0f, -BossSpeed));
 		}
+	}
+	else
+	{
+		isMoving = false;
 	}
 }
 

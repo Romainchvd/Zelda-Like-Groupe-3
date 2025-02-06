@@ -11,7 +11,8 @@ Game::Game(float x, float y) {
 	shape.setFillColor(sf::Color::Black);
 	/*enemy1.emplace_back(std::make_unique<Enemy1>(Vector2f(4800.0f, 3650.f)));
 	enemy2.emplace_back(std::make_unique<Enemy2>(Vector2f(4600.0f, 2850.f)));
-	garde.emplace_back(std::make_unique<Garde>(Vector2f(22 * 96, 4 * 96)));*/
+	garde.emplace_back(std::make_unique<Garde>(Vector2f(22 * 96, 4 * 96)));
+	boss.emplace_back(make_unique<Boss>());
 	for (auto it = enemy2.begin(); it != enemy2.end();) {
 		std::cout << "ok" << endl;
 		it++;
