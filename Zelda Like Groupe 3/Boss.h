@@ -7,11 +7,15 @@ using namespace sf;
 class Boss : public Entity {
 private:
 	bool isMoving;
-	float animationSpeed = 0.1f;
+	float animationSpeed;
 	float elapsedTime;
 	Texture BossTextureIdle[4];
-	int currentFrame = 0;
+	int currentFrame1;
+	Texture BossTextureRun[4];
+	int currentFrame2;
 	float BossSpeed;
+	int BossHP;
+	int MaxBossHP;
 public:
 	Sprite BossSprite;
 	Boss();
@@ -19,4 +23,6 @@ public:
 	void update(float deltaTime) override;
 	void Movement(Player& player);
 	void loadTexture();
+	int getHP() const;
+	void setHP(int _HP);
 };

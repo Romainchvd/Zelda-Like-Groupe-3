@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "MusicPlayer.h"
 #include "Enemy1.h"
+#include "Garde.h"
 
 
 enum GAME_STATE { MENU, PLAYING, WIN, LOSE };
@@ -34,5 +35,6 @@ public:
 	Vector2i mousePosition;
 
 	
+	vector<unique_ptr<Garde>> garde;
 	};
 	

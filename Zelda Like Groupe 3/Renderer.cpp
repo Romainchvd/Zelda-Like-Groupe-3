@@ -23,7 +23,8 @@ void Renderer::musicThreadF(Game& game, Player& player, PropManager& propManager
 	}
 }
 
-void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, View& view, Boss& boss){
+
+void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde , View& view, Boss & boss){
 	window.clear();
 	for (int i = 0; i < propManager.getFirstLayer().size(); i++)
 		window.draw(propManager.getFirstLayer()[i]->sprite);
@@ -37,22 +38,96 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 			enemy1[i]->draw(window);
 		}
 	}
+	for (auto i = 0; i < garde.size(); i++) {
+		if (garde[i]->health > 0)
+		{
+			garde[i]->draw(window);
+		}
+	}
 	/*window.draw(player.PressE);*/
 	player.drawInterface(view, window);
 	window.display();
 }
 
-void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, Game& game, Boss& boss) {
+void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Garde>>& garde, Game& game, Boss& boss) {
 	player.loadTexture();
 	boss.loadTexture();
 	musicThread = thread(&Renderer::musicThreadF, this, std::ref(game), std::ref(player), std::ref(propManager), std::ref(running));
 	//player.getPosition() = player.sprite.getPosition();
+	for (auto& garde1 : garde) {
+		garde1->loadTexture();
+	}
 	for (auto& enemy : enemy1) {
 		enemy->loadTexture();
 	}
 	View camera(View(Vector2f(100, 100), Vector2f(1920.f, 1080.f)));
 	camera.setSize(Vector2f(1920.f / 2, 1080.f / 2));
 	while (window.isOpen()) {
+		player.swordAttackCheck();
+		if (player.isAttacking) {
+			player.swordAttack(enemy1[0]);
+			player.swordAttack(garde[0]);
+		}
+		boss.Movement(player);
+		boss.update(1);
+		player.Mouvement();
+		player.update(1);
+		for (auto& enemy : enemy1) {
+			enemy->update(1);
+			enemy->updateMovement(player,0.05f);
+		}
+		for (auto& garde1 : garde) {
+			garde1->update(1);
+			garde1->updateMovement(player, 0.05f);
+		}
+		Draw(player, propManager, enemy1, garde, camera, boss);
+		camera.setCenter(player.sprite.getPosition());
+		window.setView(camera);
+		for (int i = 0; i < propManager.getSecondLayer().size(); i++)
+		{
+			propManager.getSecondLayer()[i]->collectProp(player, propManager);
+			propManager.getSecondLayer()[i]->useKey(player, propManager);
+		}
+		//colision player
+		for (int i = 0; i < propManager.getFirstLayer().size(); i++) {
+			player.Colision(propManager.getFirstLayer()[i]);
+			player.Interact(propManager.getFirstLayer()[i], window);
+			for (auto& enemy : enemy1) {
+				enemy->Colision(propManager.getFirstLayer()[i]);
+			}
+			for (auto& garde1 : garde) {
+				garde1->Colision(propManager.getFirstLayer()[i]);
+			}
+		}
+		for (int i = 0; i < propManager.getSecondLayer().size(); i++) {
+			player.Colision(propManager.getSecondLayer()[i]);
+			player.Interact(propManager.getSecondLayer()[i], window);
+			for (auto& enemy : enemy1) {
+				enemy->Colision(propManager.getSecondLayer()[i]);
+			}
+			for (auto& garde1 : garde) {
+				garde1->Colision(propManager.getSecondLayer()[i]);
+			}
+		}
+		//
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+			{
+				window.close();
+				running = false;
+			}
+			if (event.type == Event::KeyPressed)
+			{
+				if (event.key.code == Keyboard::Enter)
+				{
+					window.close();
+					running = false;
+				}
+			}
+		}
+	}
+	musicThread.join();
 		if (game.state == MENU)
 		{
 			while (window.pollEvent(event))
@@ -124,7 +199,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 				enemy->update(1);
 				enemy->updateMovement(player, 0.05f);
 			}
-			Draw(player, propManager, enemy1, camera, boss);
+			Draw(player, propManager, enemy1, garde, camera, boss);
 			camera.setCenter(player.sprite.getPosition());
 			window.setView(camera);
 			for (int i = 0; i < propManager.getSecondLayer().size(); i++)
@@ -164,8 +239,7 @@ void Renderer::run(Player& player, PropManager& propManager, vector<unique_ptr<E
 				}
 			}
 		}
-	}
 	running = false;
-	if (musicThread.joinable())
+	if (musicThread.joinable()) 
 		musicThread.join();
 }
