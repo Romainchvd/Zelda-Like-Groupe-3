@@ -14,20 +14,20 @@ Game::Game(float x, float y) {
 		std::cout << "ok" << endl;
 		it++;
 	}
+	if (!playT.loadFromFile("Assets/buttonPlay.png")) throw("Erreur texture bouton play");
+	if (!exitT.loadFromFile("Assets/buttonExit.png")) throw("Erreur texture bouton exit");
+	if (!editorT.loadFromFile("Assets/buttonEdit.png")) throw("Erreur texture bouton edit");
+	if (!TitleScreenT.loadFromFile("Assets/titleScreen.png")) throw("Erreur texture ecran titre");
+	if (!LostT.loadFromFile("Assets/lost.png")) throw("Erreur texture ecran defaite");
+	if (!WonT.loadFromFile("Assets/win.png")) throw("Erreur texture ecran victoire");
+	playS.setTexture(playT);
+	exitS.setTexture(exitT);
+	editorS.setTexture(editorT);
+	TitleScreenS.setTexture(TitleScreenT);
+	lostS.setTexture(LostT);
+	wonS.setTexture(WonT);
+	playS.setPosition(10, 700);
+	exitS.setPosition(711, 700);
+	editorS.setPosition(1410, 700);
 }
-void Game::endGame(RenderWindow& window) {
-		
-		if (state == WIN) {
-			victoryText.setString("Congratulations, You won!");	
-			
-		}
-		if (state == LOSE) {
-			victoryText.setString("You lost, try again!");
-			
-				
-		}
-		window.draw(shape);
-		window.draw(victoryText);
-}
-	
 
