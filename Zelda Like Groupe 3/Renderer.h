@@ -25,11 +25,11 @@ public:
 	atomic<bool> running = true; //Note: sert à éviter d'utiliser un autre mutex (je pouvais pas pour les vecteurs sans refaire tout le code lié) ne pas toucher merci
 	Renderer();
 
-	void run(Player& player, PropManager& propManager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2,
-		vector<unique_ptr<Garde>>& garde, Game& game, vector<unique_ptr<Boss>>& Boss);
+	void run(Player& player, PropManager& propManager, Enemy1Manager& enemy1, Enemy2Manager& enemy2,
+		GardeManager& garde, Game& game, vector<unique_ptr<Boss>>& Boss);
 
-	void Draw(Player& player, PropManager& manager, vector<unique_ptr<Enemy1>>& enemy1, vector<unique_ptr<Enemy2>>& enemy2, 
-		vector<unique_ptr<Garde>>& garde, View& view, vector<unique_ptr<Boss>>& Boss);
+	void Draw(Player& player, PropManager& manager , Enemy1Manager& enemy1, Enemy2Manager& enemy2,
+		GardeManager& garde, View& view, vector<unique_ptr<Boss>>& Boss);
 	
 	void musicThreadF(Game& game, Player& player, PropManager& propManager, atomic<bool>& running);
 };
