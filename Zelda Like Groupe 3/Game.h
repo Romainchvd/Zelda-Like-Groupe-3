@@ -20,8 +20,8 @@ public:
 	void endGame(RenderWindow& window);
 	PropManager propManager;
 	MusicPlayer musicManager;
-	vector<unique_ptr<Enemy1>> enemy1;
-	vector<unique_ptr<Enemy2>> enemy2;
+	//vector<unique_ptr<Enemy1>> enemy1;
+	//vector<unique_ptr<Enemy2>> enemy2;
 	Sprite TitleScreenS;
 	Sprite wonS;
 	Sprite lostS;

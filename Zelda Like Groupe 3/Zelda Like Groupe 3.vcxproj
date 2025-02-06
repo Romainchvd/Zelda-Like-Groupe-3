@@ -140,10 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Enemy1.cpp" />
+    <ClCompile Include="Enemy1Manager.cpp" />
     <ClCompile Include="Enemy2.cpp" />
+    <ClCompile Include="Enemy2Manager.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Garde.cpp" />
+    <ClCompile Include="GardeManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MusicPlayer.cpp" />
@@ -154,10 +157,13 @@
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Enemy1.h" />
+    <ClInclude Include="Enemy1Manager.h" />
     <ClInclude Include="Enemy2.h" />
+    <ClInclude Include="Enemy2Manager.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Garde.h" />
+    <ClInclude Include="GardeManager.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MusicPlayer.h" />
     <ClInclude Include="Player.h" />
