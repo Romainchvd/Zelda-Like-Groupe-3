@@ -1,11 +1,12 @@
 #include "map.h"
-
+#include "Game.h"
 
 
 void Prop::setTexture()
 {
-	if(this != nullptr)
+	if (this != nullptr)
 	{
+
 		switch (id)
 		{
 		case HOUSEDL:
@@ -131,6 +132,63 @@ void Prop::setTexture()
 		case FLAG:
 			if (!texture.loadFromFile("assets/flag.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
 			break;
+		case CASTLEFLOOR:
+			if (!texture.loadFromFile("assets/castleFloor.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_RIGHT:
+			if (!texture.loadFromFile("assets/castleWallR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_UP:
+			if (!texture.loadFromFile("assets/castleWallU.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_DOWN:
+			if (!texture.loadFromFile("assets/castleWallD.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_LEFT:
+			if (!texture.loadFromFile("assets/castleWallL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_DOWNLEFT:
+			if (!texture.loadFromFile("assets/castleWallDL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_DOWNRIGHT:
+			if (!texture.loadFromFile("assets/castleWallDR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_DOWNLEFTE:
+			if (!texture.loadFromFile("assets/castleWallDLE.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_DOWNRIGHTE:
+			if (!texture.loadFromFile("assets/castleWallDRE.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_UPRIGHT:
+			if (!texture.loadFromFile("assets/castleWallUR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLEWALL_UPLEFT:
+			if (!texture.loadFromFile("assets/castleWallUL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case GATE:
+			if (!texture.loadFromFile("assets/gateClosed.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CWALLD:
+			if (!texture.loadFromFile("assets/EcastleWallHD.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLE_SQUARE_UR:
+			if (!texture.loadFromFile("assets/castleWallSquareUR.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CASTLE_SQUARE_UL:
+			if (!texture.loadFromFile("assets/castleWallSquareUL.png")) cerr << "Erreur lors du chargement de la texture de porte" << endl;
+			break;
+		case CHEST:
+			if (!texture.loadFromFile("assets/chestClosed.png")) cerr << "Erreur lors du chargement de la texture de coffre" << endl;
+			break;
+		case SWORD:
+			if (!texture.loadFromFile("assets/sword.png")) cerr << "Erreur lors du chargement de la texture de l'epee" << endl;
+			break;
+		case HEART:
+			if (!texture.loadFromFile("assets/heartContainer.png")) cerr << "Erreur lors du chargement de la texture de l'epee" << endl;
+			break;
+		case HEART_CHARGE:
+			if (!texture.loadFromFile("assets/heart.png")) cerr << "Erreur lors du chargement de la texture de l'epee" << endl;
+			break;
 		default:
 			break;
 		}
@@ -150,41 +208,49 @@ void PropManager::creerProp(Id id, int x, int y, Layer layer, bool c, bool i)
 	p->sprite.setPosition(x, y);
 	p->isPossibleColision = c;
 	p->InteractionPossible = i;
-	if(layer == FIRST_LAYER)
+	if (layer == FIRST_LAYER)
 	{
 		firstLayer.push_back(move(p));
 	}
-	else if(layer == SECOND_LAYER)
+	else if (layer == SECOND_LAYER)
 		secondLayer.push_back(move(p));
-	
+
 }
 
 void PropManager::detruireProp(unique_ptr<Prop>& prop)
 {
 	auto it = std::find_if(firstLayer.begin(), firstLayer.end(),
-        [&prop](const std::unique_ptr<Prop>& p) { return p.get() == prop.get(); });
+		[&prop](const std::unique_ptr<Prop>& p) { return p.get() == prop.get(); });
 
-    if (it != firstLayer.end()) {
-        firstLayer.erase(it);
-    }
+	if (it != firstLayer.end()) {
+		firstLayer.erase(it);
+	}
 
-    it = std::find_if(secondLayer.begin(), secondLayer.end(),
-        [&prop](const std::unique_ptr<Prop>& p) { return p.get() == prop.get(); });
+	it = std::find_if(secondLayer.begin(), secondLayer.end(),
+		[&prop](const std::unique_ptr<Prop>& p) { return p.get() == prop.get(); });
 
-    if (it != secondLayer.end()) {
-        secondLayer.erase(it);
-    }
+	if (it != secondLayer.end()) {
+		secondLayer.erase(it);
+	}
 }
 
 
-void PropManager::readFile()
+void PropManager::readFile(Game& game)
 {
 	//First Layer
+	ifstream file;
+	if(game.state == PLAYING)
+	{
+		file.open("assets/map/1stLayer.txt");
+	}
+	else if (game.state == EDITOR)
+	{
+		file.open("assets/map/1stLayerEdit.txt");
 
-	ifstream file("assets/map/1stLayer.txt");
+	}
 	if (file.is_open() == false)
 	{
-		throw("Erreur critique : le fichier de la carte du jeu est introuvable.");
+		throw runtime_error("Erreur critique : le fichier de la carte du jeu est introuvable.");
 	}
 	string line;
 	Vector2f position(0, 0);
@@ -212,7 +278,18 @@ void PropManager::readFile()
 				creerProp(CASTLE_WALL_E, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == '9')
 				creerProp(CASTLE_WINDOW_E, position.x, position.y, FIRST_LAYER, true, false);
-			//Attention espace vide disponible
+			else if (c == 'A')
+				creerProp(CASTLEWALL_DOWNLEFT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'B')
+				creerProp(CASTLEWALL_DOWNRIGHT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'C')
+				creerProp(CASTLEWALL_UPLEFT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'D')
+				creerProp(CASTLEWALL_UPRIGHT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'E')
+				creerProp(CASTLE_SQUARE_UR, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'F')
+				creerProp(CASTLE_SQUARE_UL, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'G')
 				creerProp(HOUSEWALL, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'H')
@@ -221,7 +298,21 @@ void PropManager::readFile()
 				creerProp(HOUSEROOFL, position.x, position.y, FIRST_LAYER, true, false);
 			else if (c == 'J')
 				creerProp(HOUSEROOFR, position.x, position.y, FIRST_LAYER, true, false);
-			
+			else if (c == 'W')
+				creerProp(CASTLEWALL_RIGHT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'X')
+				creerProp(CASTLEWALL_LEFT, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'Y')
+				creerProp(CASTLEFLOOR, position.x, position.y, FIRST_LAYER, false, false);
+			else if (c == 'Z')
+				creerProp(CASTLEWALL_UP, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'a')
+				creerProp(CASTLEWALL_DOWN, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'b')
+				creerProp(CASTLEWALL_DOWNLEFTE, position.x, position.y, FIRST_LAYER, true, false);
+			else if (c == 'c')
+				creerProp(CASTLEWALL_DOWNRIGHTE, position.x, position.y, FIRST_LAYER, true, false);
+
 
 			position.x += 96;
 		}
@@ -229,7 +320,18 @@ void PropManager::readFile()
 		position.y += 96;
 
 	}
-	file.open("assets/map/2ndLayer.txt");
+	if(game.state == PLAYING)
+	{
+		file.open("assets/map/2ndLayer.txt");
+	}
+	else if (game.state == EDITOR)
+	{
+		file.open("assets/map/2ndLayerEdit.txt");
+	}
+	if (file.is_open() == false)
+	{
+		throw runtime_error("Erreur critique : le fichier de la carte du l'editeur est introuvable.");
+	}
 	position.x = 0; position.y = 0;
 	while (true)
 	{
@@ -301,6 +403,20 @@ void PropManager::readFile()
 				creerProp(CARPET_OUTDOOR, position.x, position.y, SECOND_LAYER, false, true);
 			else if (c == 'T')
 				creerProp(FLAG, position.x, position.y, SECOND_LAYER, false, false);
+			else if (c == 'U')
+				creerProp(GATE, position.x, position.y, SECOND_LAYER, true, false);
+			else if (c == 'V')
+				creerProp(CWALLD, position.x, position.y, SECOND_LAYER, true, false);
+			else if (c == 'W')
+				creerProp(CHEST, position.x, position.y, SECOND_LAYER, true, true);
+			else if (c == 'X')
+				creerProp(SWORD, position.x, position.y, SECOND_LAYER, false, false);
+			else if (c == 'Y')
+				creerProp(HEART, position.x, position.y, SECOND_LAYER, false, false);
+			else if (c == 'Z')
+				creerProp(HEART_CHARGE, position.x, position.y, SECOND_LAYER, false, false);
+			
+
 
 			position.x += 96;
 		}
@@ -312,55 +428,65 @@ void PropManager::readFile()
 vector<unique_ptr<Prop>>& PropManager::getFirstLayer() { return firstLayer; }
 vector<unique_ptr<Prop>>& PropManager::getSecondLayer() { return secondLayer; }
 
-Spikes::Spikes()
+void Prop::collectProp(Player& player, PropManager& manager)
 {
-	if (!spikesActivated.loadFromFile("assets/spikesT.png")) cerr << "Erreur lors du chargement de la texture de pics on" << endl;
-	if (!spikesDisabled.loadFromFile("assets/spikesF.png")) cerr << "Erreur lors du chargement de la texture de pics off" << endl;
-	if (!interruptorActivated.loadFromFile("assets/interruptorT.png")) cerr << "Erreur lors du chargement de la texture d'interrupteur on" << endl;
-	if (!interruptorDisabled.loadFromFile("assets/interruptorF.png")) cerr << "Erreur lors du chargement de la texture d'interrupteur off" << endl;
-	if (interruptorIsActivated)
+	if (id == KEY)
 	{
-		sprite.setTexture(spikesDisabled);
-		interruptor.setTexture(interruptorActivated);
-	}
-	else
-	{
-		sprite.setTexture(spikesActivated);
-		interruptor.setTexture(interruptorDisabled);
-	}
-}
-void Spikes::checkInterruptor(Player& player)
-{
-	if (interruptorCanChangeState)
-	{
-		if (player.sprite.getGlobalBounds().intersects(interruptor.getGlobalBounds()))
+		if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()))
 		{
-			if (interruptorIsActivated)
-			{
-				interruptor.setTexture(interruptorDisabled);
-				sprite.setTexture(spikesActivated);
-				interruptorCanChangeState = false;
-			}
-			else if (!interruptorIsActivated)
-			{
-				interruptor.setTexture(interruptorActivated);
-				sprite.setTexture(spikesDisabled);
-				interruptorCanChangeState = false;
-			}
+			player.keyCounter++;
+			player.collect.play();
+
+			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
+				[this](const unique_ptr<Prop>& p) { return p.get() == this; });
+
+			if (it != manager.getSecondLayer().end())
+				manager.getSecondLayer().erase(it);
 		}
 	}
-}
-void Prop::addKey(Player& player, PropManager& manager)
-{
-	if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == KEY)
+	if (id == HEART)
 	{
-		player.keyCounter++;
+		if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()))
+		{
+			player.maxHealth = 200;
+			player.health = player.maxHealth;
+			player.collect.play();
 
-		auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
-			[this](const unique_ptr<Prop>& p) { return p.get() == this; });
+			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
+				[this](const unique_ptr<Prop>& p) { return p.get() == this; });
 
-		if (it != manager.getSecondLayer().end())
-			manager.getSecondLayer().erase(it);
+			if (it != manager.getSecondLayer().end())
+				manager.getSecondLayer().erase(it);
+		}
+	}
+	if (id == HEART_CHARGE)
+	{
+		if (player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()))
+		{
+			player.health += 30;
+			if (player.health > player.maxHealth)
+				player.health = player.maxHealth;
+			player.collect.play();
+
+			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
+				[this](const unique_ptr<Prop>& p) { return p.get() == this; });
+
+			if (it != manager.getSecondLayer().end())
+				manager.getSecondLayer().erase(it);
+		}
+	}
+	else if (id == SWORD)
+	{
+		if(player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()))
+		{
+			player.hasSword = true;
+			player.collect.play();
+			auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
+				[this](const unique_ptr<Prop>& p) { return p.get() == this; });
+
+			if (it != manager.getSecondLayer().end())
+				manager.getSecondLayer().erase(it);
+		}
 	}
 }
 
@@ -369,11 +495,19 @@ void Prop::useKey(Player& player, PropManager& manager)
 	if (player.keyCounter > 0 && player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == DOOR)
 	{
 		player.keyCounter--;
-		
+		player.solved.play();
 		auto it = std::find_if(manager.getSecondLayer().begin(), manager.getSecondLayer().end(),
 			[this](const unique_ptr<Prop>& p) { return p.get() == this; });
 
 		if (it != manager.getSecondLayer().end())
 			manager.getSecondLayer().erase(it);
+	}
+	else if (player.keyCounter > 0 && player.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds()) && id == GATE)
+	{
+		player.keyCounter--;
+		player.solved.play();
+		if (!this->texture.loadFromFile("Assets/gateOpened.png")) cerr << "Erreur lors du chargement de texture de porte ouverte";
+		this->sprite.setTexture(this->texture);
+		this->isPossibleColision = false;
 	}
 }

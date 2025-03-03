@@ -5,15 +5,15 @@
 using namespace std;
 
 
-
 Player player1(10);
-
+Boss boss;
 int main()
 {
-	Game game;
+	Game game(1920, 1080);
+	game.musicManager.loadFile();
 	player1.loadTexture();
-	game.propManager.readFile();
 	Renderer renderer;
-	renderer.run(player1, game.propManager , game.enemy1);
+	renderer.run(player1, game.propManager , game.enemy1, game.enemy2, game.garde, game, game.boss);
+	
 	return 0;
 }

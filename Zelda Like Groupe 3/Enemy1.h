@@ -1,25 +1,28 @@
 #pragma once
-#ifndef ENEMY1_H
-#define ENEMY1_H
 #include <iostream>
 #include "Player.h"
+#include "Map.h"
 #include <cmath>
-
+#include <memory>
 using namespace std;
 using namespace sf;
 
+
+
 class Enemy1 :public Entity {
-private:
+protected:
 	bool isMoving;
 	float animationSpeed = 0.1f;
 	float elapsedTime;
+	float elapsedTime2;
 	int currentFrame = 0;
 	int currentFrame2 = 0;
-	Sprite enemy1sprite;
 	Texture enemy1RunTexture[4];
 	Texture enemy1IdleTexture[4];
 	Vector2f position;
 public:
+	float cooldown = 10.0f;
+	Sprite enemy1sprite;
 	float health = 100.0f;
 	float maxHealth;
 	bool isFollowing = false;
@@ -29,12 +32,21 @@ public:
 	Vector2f getPosition() const;
 	void checkDeath();
 	Enemy1(Vector2f startPosition);
-	void updateMovement(const Player& player);
+	void updateMovement(Player& player, float deltatime);
 	void draw(sf::RenderWindow& window) override;
 	void loadTexture();
 	FloatRect getHitbox() const;
 	FloatRect getFollowHitbox() const;
 	void update(float deltaTime) override;
+	void Colision(unique_ptr<Prop>& prop);
 };
 
-#endif
+class Enemy1Manager
+{
+protected:
+	vector<unique_ptr<Enemy1>> enemy1;
+public:
+	void creerEnemy1(int x, int y);
+	void detruireEnemy1(unique_ptr<Enemy1>& enemy);
+	//void readFile();
+};
