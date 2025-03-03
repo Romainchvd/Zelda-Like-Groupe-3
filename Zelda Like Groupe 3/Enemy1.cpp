@@ -36,7 +36,7 @@ Enemy1::Enemy1(Vector2f startPosition) : position(startPosition), currentFrame(1
 void Enemy1::updateMovement(const Player& player) {
     Vector2f direction = player.getPosition() - position;
     float distance = hypot(direction.x, direction.y);
-    
+    float previousX = position.x;
     if (Keyboard::isKeyPressed(Keyboard::T)) {
         cout << "Position ennemi:" << position.x << "  " << position.y << endl;
         cout << "Position joueur:" << player.getPosition().x << "  " << player.getPosition().y << endl;
@@ -47,7 +47,6 @@ void Enemy1::updateMovement(const Player& player) {
         cout << "ok" << endl;
     }
     if (!isDead) {
-     
         if (distance < 300) {
             direction /= distance;
             position += direction * 0.4f;
@@ -59,7 +58,12 @@ void Enemy1::updateMovement(const Player& player) {
     else if (isDead) {
         position.x -= 1.f;
     }
-  
+    float currentX = position.x;
+
+    // Détection de l'augmentation de la position x
+    if (currentX > previousX) {
+        std::cout << "La position x a augmenté : " << currentX << std::endl;
+    }
     // cout << followHitbox.getPosition().x << endl;
     // cout << followHitbox.getPosition().y << endl;
     enemy1sprite.setPosition(position);

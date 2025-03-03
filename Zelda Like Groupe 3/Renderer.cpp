@@ -11,10 +11,10 @@ void Renderer::Draw(Player& player, PropManager& propManager, vector<unique_ptr<
 		window.draw(propManager.getFirstLayer()[i]->sprite);
 	for (int i = 0; i < propManager.getSecondLayer().size(); i++)
 		window.draw(propManager.getSecondLayer()[i]->sprite);
+	player.draw(window);
 	for (auto& enemy : enemy1) {
 		enemy->draw(window);
 	}
-	player.draw(window);
 	/*window.draw(player.PressE);*/
 	window.display();
 }
