@@ -84,83 +84,83 @@ Le code des props est défini comme suit:
 
 - firstLayerEditor.txt:
 
-0: Planches en bois (sol)
-1: Mur bas de maison
-5: Texture d'herbe
-6: Sol en pierre
-7: Porte de château
-8: Mur de château
-9: Fenêtre de château
-A: Mur de château bas-gauche
-B: Mur de château bas-droit
-C: Mur de château haut-gauche
-D: Mur de château haut-droit
-E: Carré-mur de château haut-droit (utile pour les coins exterieurs)
-F: Carré-mur de château haut-gauche
-G: Mur de maison (planches de bois)
-H: Mur haut de maison
-I: Mur gauche de maison
-J: Mur droit de maison
-W: Mur droit de château
-X: Mur gauche de château
-Y: Sol de château
-Z: Mur haut de château
-a: Mur bas de château
-b: Mur bas gauche de château (un coin situé au nord d'un sol de château)
-c: Mur bas droite de château (idem)
+0: Planches en bois (sol)  
+1: Mur bas de maison  
+5: Texture d'herbe  
+6: Sol en pierre  
+7: Porte de château  
+8: Mur de château  
+9: Fenêtre de château  
+A: Mur de château bas-gauche  
+B: Mur de château bas-droit  
+C: Mur de château haut-gauche  
+D: Mur de château haut-droit  
+E: Carré-mur de château haut-droit (utile pour les coins exterieurs)  
+F: Carré-mur de château haut-gauche  
+G: Mur de maison (planches de bois)  
+H: Mur haut de maison  
+I: Mur gauche de maison  
+J: Mur droit de maison  
+W: Mur droit de château  
+X: Mur gauche de château  
+Y: Sol de château  
+Z: Mur haut de château  
+a: Mur bas de château  
+b: Mur bas gauche de château (un coin situé au nord d'un sol de château)  
+c: Mur bas droite de château (idem)  
 
-- secondLayer.txt:
+- secondLayer.txt:  
 
-0: Texture haute du lit
-1: Evier
-2: Comptoir
-3: Plaques de cuisson
-4: Commode
-5: Tapis
-6: Texture basse du lit
-7: Texture basse de tour de château
-8: Texture du milieu de tour de château
-9: Toit de tour de château
-A: Muraille horizontale
-B: Muraille verticale
-C: Maison rouge haut gauche
-D: Maison rouge haut droit
-E: Maison rouge bas gauche
-F: Maison rouge bas droit
-G: Tronc d'arbre
-H: Feuilles d'arbre
-I: Maison bleue haut gauche
-J: Maison bleue haut droit
-K: Maison bleue bas gauche
-L: Maison bleue bas droit
-M: Pics rétractés (Note: cette texture n'est pas utilisée dans le mode normal)
-N: Pics sortis (idem)
-O: Porte (se déverouille avec une clé)
-P: Clé (Peut être récupérée)
-Q: Barrière horizontale (Cette texture n'est pas utilisée dans le mode normal)
-R: Barrière verticale
-S: Tapis rectangulaire
-T: Bannière
-U: Portail de château (se dévérouille avec une clé)
-V: Muraille de château verticale
-W: Coffre contenant une clé
-X: Epée (se ramasse)
-Y: Receptacle de coeur (double vos PV, se ramasse. Ne peut pas être cumulé)
+0: Texture haute du lit  
+1: Evier  
+2: Comptoir  
+3: Plaques de cuisson  
+4: Commode  
+5: Tapis  
+6: Texture basse du lit  
+7: Texture basse de tour de château  
+8: Texture du milieu de tour de château  
+9: Toit de tour de château  
+A: Muraille horizontale  
+B: Muraille verticale  
+C: Maison rouge haut gauche  
+D: Maison rouge haut droit  
+E: Maison rouge bas gauche  
+F: Maison rouge bas droit  
+G: Tronc d'arbre  
+H: Feuilles d'arbre  
+I: Maison bleue haut gauche  
+J: Maison bleue haut droit  
+K: Maison bleue bas gauche  
+L: Maison bleue bas droit  
+M: Pics rétractés (Note: cette texture n'est pas utilisée dans le mode normal)  
+N: Pics sortis (idem)  
+O: Porte (se déverouille avec une clé)  
+P: Clé (Peut être récupérée)  
+Q: Barrière horizontale (Cette texture n'est pas utilisée dans le mode normal)  
+R: Barrière verticale  
+S: Tapis rectangulaire  
+T: Bannière  
+U: Portail de château (se dévérouille avec une clé)  
+V: Muraille de château verticale  
+W: Coffre contenant une clé  
+X: Epée (se ramasse)  
+Y: Receptacle de coeur (double vos PV, se ramasse. Ne peut pas être cumulé)  
 
 REPARTITION DES ROLES
 
-Joueur, animations et ennemis : Ethan, Rayen
-Déplacements, collisions et interactions: Liam
-Menu, direction artistique: Rayen, Romain
-Carte du jeu et éditeur: Romain
-Musiques et sons: Romain
-Présentation PowerPoint: Liam
-Doc: Liam, Romain
+Joueur, animations et ennemis : Ethan, Rayen  
+Déplacements, collisions et interactions: Liam  
+Menu, direction artistique: Rayen, Romain  
+Carte du jeu et éditeur: Romain  
+Musiques et sons: Romain  
+Présentation PowerPoint: Liam  
+Doc: Liam, Romain  
 
 PLANNING ET ECHEANCES
 
-Jour 1: Bases du projet et structuration
-Jour 2: Lobby, Plaine, consolidation de la structure
+Jour 1: Bases du projet et structuration  
+Jour 2: Lobby, Plaine, consolidation de la structure  
 Jour 3: Joueur, poursuite de la carte
 Jour 4: mécanismes interactifs pour le donjon, finalisation du joueur
 Jour 5: Ennemis, musique, sons
